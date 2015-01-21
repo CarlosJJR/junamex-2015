@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Junamex</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="action_example">Example action</string>
+    <string name="app_name" translatable="false">Junamex</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="action_example" translatable="false">Example action</string>
     <string name="action_settings">Settings</string>
+
+    <string name="lorem_ipsum" translatable="false">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac tellus diam. Aliquam ut auctor quam, ac dapibus nisl. Ut ut imperdiet ipsum. Cras congue est a nibh consectetur, quis laoreet tellus fermentum. Sed congue sem ut faucibus feugiat. Mauris vulputate orci et tellus elementum eleifend. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac tellus diam. Aliquam ut auctor quam, ac dapibus nisl. Ut ut imperdiet ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac tellus diam. Aliquam ut auctor quam, ac dapibus nisl. Ut ut imperdiet ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac tellus diam. Aliquam ut auctor quam, ac dapibus nisl. Ut ut imperdiet ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac tellus diam. Aliquam ut auctor quam, ac dapibus nisl. Ut ut imperdiet ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac tellus diam. Aliquam ut auctor quam, ac dapibus nisl. Ut ut imperdiet ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac tellus diam. Aliquam ut auctor quam, ac dapibus nisl. Ut ut imperdiet ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac tellus diam. Aliquam ut auctor quam, ac dapibus nisl. Ut ut imperdiet ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac tellus diam. Aliquam ut auctor quam, ac dapibus nisl. Ut ut imperdiet ipsum. </string>
+
+    <string name="parse_application_key" translatable="false">vngVuNe897up4BW8iPw0j89NsQMGOjYl5qaV8E0U</string>
+    <string name="parse_client_key" translatable="false">ANNIg3Rr9dZ2tZ2uhDl7lDPSVTwfnkYCEhCnFTGi</string>
+
+    <string-array name="navigation_drawer_items">
+        <item>Schedule</item>
+        <item>Map</item>
+        <item>People I\'ve met</item>
+    </string-array>
 
 </resources>

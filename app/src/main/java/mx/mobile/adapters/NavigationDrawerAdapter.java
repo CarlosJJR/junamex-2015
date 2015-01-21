@@ -20,7 +20,7 @@ import mx.mobile.utils.TextViewFont;
  */
 public class NavigationDrawerAdapter extends BaseAdapter {
 
-    ArrayList<String> items;
+    String[] items;
     LayoutInflater inflater;
     Context context;
     public NavigationDrawerAdapter(Context context) {
@@ -28,41 +28,32 @@ public class NavigationDrawerAdapter extends BaseAdapter {
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.context = context;
 
-        items = new ArrayList<>();
-        items.add(context.getString(R.string.title_section1));
-        items.add(context.getString(R.string.title_section2));
-        items.add(context.getString(R.string.title_section3));
-        items.add(context.getString(R.string.title_section3));
-        items.add(context.getString(R.string.title_section3));
-        items.add(context.getString(R.string.title_section3));
-        items.add(context.getString(R.string.title_section3));
-        items.add(context.getString(R.string.title_section3));
-        items.add(context.getString(R.string.title_section3));
+        items = context.getResources().getStringArray(R.array.navigation_drawer_items);
     }
 
-    @Override
-    public int getViewTypeCount() {
-        return 2;
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return position == 4 ? 1 : 0;
-    }
-
-    @Override
-    public boolean isEnabled(int position) {
-        return position != 4;
-    }
+//    @Override
+//    public int getViewTypeCount() {
+//        return 2;
+//    }
+//
+//    @Override
+//    public int getItemViewType(int position) {
+//        return position == 4 ? 1 : 0;
+//    }
+//
+//    @Override
+//    public boolean isEnabled(int position) {
+//        return position != 4;
+//    }
 
     @Override
     public int getCount() {
-        return items.size();
+        return items.length;
     }
 
     @Override
     public Object getItem(int position) {
-        return items.get(position);
+        return items[position];
     }
 
     @Override
@@ -73,7 +64,7 @@ public class NavigationDrawerAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        if (position != 4) {
+//        if (position != 4) {
 
             ViewHolder holder;
             if (convertView == null) {
@@ -86,17 +77,17 @@ public class NavigationDrawerAdapter extends BaseAdapter {
             } else
                 holder = (ViewHolder) convertView.getTag();
 
-            holder.title.setText(items.get(position));
+            holder.title.setText(items[position]);
 
-        } else {
-
-            TextView sectionTitle = (TextView) inflater.inflate(R.layout.list_section_header, parent, false);
-            sectionTitle.setTextColor(Color.GRAY);
-            sectionTitle.setText(items.get(position));
-
-            convertView = sectionTitle;
-
-        }
+//        } else {
+//
+//            TextView sectionTitle = (TextView) inflater.inflate(R.layout.list_section_header, parent, false);
+//            sectionTitle.setTextColor(Color.GRAY);
+//            sectionTitle.setText(items.get(position));
+//
+//            convertView = sectionTitle;
+//
+//        }
 
         return convertView;
     }
