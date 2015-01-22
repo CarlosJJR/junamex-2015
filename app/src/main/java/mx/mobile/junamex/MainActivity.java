@@ -54,16 +54,20 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onNavigationDrawerItemSelected(int position) {
 
-        if (position == 0) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        switch (position) {
 
-            startActivity(new Intent(MainActivity.this, ScheduleFragment.class));
+            case 0:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, new ScheduleViewPagerFragment())
+                        .commit();
+                break;
 
-        } else {
-            // update the main content by replacing fragments
-            FragmentManager fragmentManager = getSupportFragmentManager();
+            default:
             fragmentManager.beginTransaction()
                     .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
                     .commit();
+                break;
         }
     }
 

@@ -93,7 +93,7 @@
 
         </LinearLayout>
 
-        <include layout="@layout/toolbar_actionbar" />
+        <include layout="@layout/toolbar" />
 
     </FrameLayout>
 

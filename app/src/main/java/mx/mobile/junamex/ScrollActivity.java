@@ -204,7 +204,7 @@ public class ScrollActivity extends ActionBarActivity implements ObservableScrol
 
     protected Toolbar getActionBarToolbar() {
         if (mActionBarToolbar == null) {
-            mActionBarToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
+            mActionBarToolbar = (Toolbar) findViewById(R.id.toolbar);
             if (mActionBarToolbar != null) {
                 setSupportActionBar(mActionBarToolbar);
             }
