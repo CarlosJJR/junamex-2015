@@ -31,20 +31,20 @@ public class NavigationDrawerAdapter extends BaseAdapter {
         items = context.getResources().getStringArray(R.array.navigation_drawer_items);
     }
 
-//    @Override
-//    public int getViewTypeCount() {
-//        return 2;
-//    }
-//
-//    @Override
-//    public int getItemViewType(int position) {
-//        return position == 4 ? 1 : 0;
-//    }
-//
-//    @Override
-//    public boolean isEnabled(int position) {
-//        return position != 4;
-//    }
+    @Override
+    public int getViewTypeCount() {
+        return 2;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position == 4 ? 1 : 0;
+    }
+
+    @Override
+    public boolean isEnabled(int position) {
+        return position != 4;
+    }
 
     @Override
     public int getCount() {
@@ -64,14 +64,13 @@ public class NavigationDrawerAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-//        if (position != 4) {
+        if (position != 4) {
 
             ViewHolder holder;
             if (convertView == null) {
                 convertView = inflater.inflate(R.layout.item_navigation_drawer, parent, false);
 
                 holder = new ViewHolder(convertView);
-
                 convertView.setTag(holder);
 
             } else
@@ -79,15 +78,9 @@ public class NavigationDrawerAdapter extends BaseAdapter {
 
             holder.title.setText(items[position]);
 
-//        } else {
-//
-//            TextView sectionTitle = (TextView) inflater.inflate(R.layout.list_section_header, parent, false);
-//            sectionTitle.setTextColor(Color.GRAY);
-//            sectionTitle.setText(items.get(position));
-//
-//            convertView = sectionTitle;
-//
-//        }
+        } else {
+            convertView = inflater.inflate(R.layout.navigation_drawer_divider, parent, false);
+        }
 
         return convertView;
     }

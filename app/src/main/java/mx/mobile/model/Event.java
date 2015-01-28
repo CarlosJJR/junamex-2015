@@ -1,90 +1,130 @@
 package mx.mobile.model;
 
-import com.google.android.gms.maps.model.LatLng;
+import android.content.Context;
+import android.text.format.DateUtils;
+
+import com.parse.ParseClassName;
+import com.parse.ParseFile;
+import com.parse.ParseObject;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
- * Created by desarrollo16 on 20/01/15.
+ * Created by desarrollo16 on 27/01/15.
  */
-public class Event {
+@ParseClassName("Event")
+public class Event extends ParseObject {
 
-    private String id;
-    private String eventName;
-    private String eventAbstract;
-    private String locationName;
-    private LatLng location;
-    private Date startTime;
-    private Date endTime;
+    public static final String NAME = "name";
+    public static final String ABSTRACT = "description";
+    public static final String START_TIME = "startTime";
+    public static final String DURATION = "durationMinutes";
+    public static final String PHOTO = "eventPhoto";
+    public static final String PALETTE_COLOR = "paletteColor";
+    public static final String SPEAKER = "speaker";
+    public static final String LOCATION = "location";
 
-    public String getId() {
-        return id;
-    }
-
-    public Event setId(String id) {
-        this.id = id;
-        return this;
+    public Event() {
+        super();
     }
 
     public String getEventName() {
-        return eventName;
+        return getString(NAME);
     }
 
-    public Event setEventName(String eventName) {
-        this.eventName = eventName;
-        return this;
+    public void setEventName(String eventName) {
+        put(NAME, eventName);
     }
 
     public String getEventAbstract() {
-        return eventAbstract;
+        return getString(ABSTRACT);
     }
 
-    public Event setEventAbstract(String eventAbstract) {
-        this.eventAbstract = eventAbstract;
-        return this;
-    }
-
-    public String getLocationName() {
-        return locationName;
-    }
-
-    public Event setLocationName(String locationName) {
-        this.locationName = locationName;
-        return this;
-    }
-
-    public LatLng getLocation() {
-        return location;
-    }
-
-    public Event setLocation(LatLng location) {
-        this.location = location;
-        return this;
+    public void setEventAbstract(String eventAbstract) {
+        put(ABSTRACT, eventAbstract);
     }
 
     public Date getStartTime() {
-        return startTime;
+        return getDate(START_TIME);
     }
 
-    public Event setStartTime(Date startTime) {
-        this.startTime = startTime;
-        return this;
+    public void setStartTime(Date startTime) {
+        put(START_TIME, startTime);
     }
 
-    public Date getEndTime() {
-        return endTime;
+    public int getDurationMinutes() {
+        return getInt(DURATION);
     }
 
-    public Event setEndTime(Date endTime) {
-        this.endTime = endTime;
-        return this;
+    public void setDurationMinutes(int durationMinutes) {
+        put(DURATION, durationMinutes);
+    }
+
+    public ParseFile getEventPhoto() {
+        return getParseFile(PHOTO);
+    }
+
+    public int getPaletteColor() {
+        return getInt(PALETTE_COLOR);
+    }
+
+    public void setPaletteColor(int paletteColor) {
+        put(PALETTE_COLOR, paletteColor);
+    }
+
+    public Speaker getSpeaker() {
+        return (Speaker) getParseObject(SPEAKER);
+    }
+
+    public Location getLocation() {
+        return (Location) getParseObject(LOCATION);
+    }
+
+    public boolean hasPhoto() {
+        return getEventPhoto() != null;
+    }
+
+    public boolean hasSpeaker() {
+        return getSpeaker() != null;
     }
 
     public String getStartTimeString() {
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm", Locale.US);
-        return dateFormat.format(this.startTime);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        return dateFormat.format(getStartTime());
+    }
+
+    public String getFormattedTime(Context context) {
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(convertFromUTC(getStartTime()));
+        Date start = c.getTime();
+
+        c.add(Calendar.MINUTE, getDurationMinutes());
+        Date end = c.getTime();
+
+        return DateUtils.formatDateRange(
+                context,
+                start.getTime(),
+                end.getTime(),
+                DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_WEEKDAY | DateUtils.FORMAT_ABBREV_TIME | DateUtils.FORMAT_12HOUR);
+    }
+
+
+    public Date convertFromUTC(Date dt) {
+
+        TimeZone fromTimezone = TimeZone.getDefault();
+        TimeZone toTimezone = TimeZone.getTimeZone("UTC");
+
+        long fromOffset = fromTimezone.getOffset(dt.getTime());
+        long toOffset = toTimezone.getOffset(dt.getTime());
+
+        long convertedTime = dt.getTime() - (fromOffset - toOffset);
+        return new Date(convertedTime);
     }
 }

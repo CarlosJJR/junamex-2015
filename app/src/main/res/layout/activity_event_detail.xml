@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:overScrollMode="never"
     android:fillViewport="true"
-    android:background="#fff">
+    android:background="@color/white">
 
     <FrameLayout
         android:id="@+id/scroll_view_child"
@@ -14,10 +14,19 @@
         android:layout_height="wrap_content"
         android:clipChildren="false">
 
+        <ProgressBar
+            android:id="@android:id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            style="@style/MyProgressBar"/>
+
         <!-- Background photo -->
         <FrameLayout android:id="@+id/session_photo_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="invisible">
 
             <com.parse.ParseImageView
                 android:id="@+id/session_photo"
@@ -31,27 +40,41 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#fff"
+            android:visibility="invisible"
             android:paddingTop="16dp"
             android:clipToPadding="false">
 
             <TextView android:id="@+id/session_abstract"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:paddingStart="72dp"
-                android:paddingEnd="16dp"/>
+                android:paddingRight="@dimen/activity_vertical_margin"
+                android:paddingLeft="72dp"/>
 
             <LinearLayout android:id="@+id/session_speakers_block"
                 android:orientation="vertical"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/activity_vertical_margin"
+                    android:layout_marginEnd="@dimen/activity_vertical_margin"
+                    android:layout_marginLeft="72dp"
+                    android:layout_marginStart="72dp"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:layout_marginBottom="@dimen/activity_vertical_margin"
+                    android:background="?android:attr/listDivider"/>
 
                 <TextView android:layout_width="match_parent"
                     android:id="@+id/session_speakers_header"
                     android:clickable="true"
                     android:focusable="true"
                     android:layout_height="wrap_content"
-                    android:text="@string/abc_action_bar_up_description"/>
+                    android:paddingLeft="72dp"
+                    android:textSize="20sp"
+                    android:text="@string/speakers_header"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -65,8 +88,13 @@
             android:clipToPadding="false"
             android:orientation="vertical"
             android:background="@color/colorPrimary"
-            android:paddingBottom="16dp"
-            android:paddingEnd="16dp"
+            android:gravity="center_vertical"
+            android:visibility="invisible"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingEnd="@dimen/activity_vertical_margin"
+            android:paddingRight="@dimen/activity_vertical_margin"
+            android:paddingLeft="72dp"
             android:paddingStart="72dp">
 
             <!-- Session title -->
@@ -74,22 +102,18 @@
                 android:layout_width="match_parent"
                 android:layout_marginBottom="0dp"
                 android:id="@+id/session_title"
-                android:maxLines="4"
+                android:maxLines="2"
                 android:ellipsize="end"
                 android:textSize="20sp"
                 android:lineSpacingMultiplier="1.1"
-                android:textColor="@color/primary_material_light"
-                android:textAlignment="viewStart" />
+                android:textColor="@color/white" />
 
             <!-- Session subtitle -->
             <TextView android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:id="@+id/session_subtitle"
-                android:maxLines="2"
-                android:ellipsize="end"
                 android:textSize="16sp"
-                android:textColor="@color/primary_material_light"
-                android:textAlignment="viewStart" />
+                android:textColor="@color/white_secondary" />
 
         </LinearLayout>
 

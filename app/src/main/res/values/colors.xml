@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/material_blue_grey_800</color>
-    <color name="colorPrimaryDark">@color/material_blue_grey_900</color>
+    <color name="colorPrimary">#673AB7</color>
+    <color name="colorPrimaryDark">#512DA8</color>
+    <color name="colorAccent">#80D8FF</color>
 
     <color name="colorSecondary">@color/material_deep_teal_200</color>
     <color name="colorSecondaryDark">@color/material_deep_teal_500</color>
 
     <color name="windowBackgroundColor">#333333</color>
     <color name="black_translucent">#80000000</color>
-    <color name="black_87">#DE000000</color>
-    <color name="black_54">#8A000000</color>
+    <color name="black_translucent_2">#20000000</color>
+    <color name="primary_text_color">#DE000000</color>
+    <color name="secondary_text_color">#8A000000</color>
+    <color name="disabled_text_color">#3B000000</color>
+    <color name="primary_text_color_inverse">#FFF</color>
+    <color name="secondary_text_color_inverse">#B2FFFFFF</color>
+    <color name="disabled_text_color_inverse">#4CFFFFFF</color>
     <color name="white">#FFF</color>
+    <color name="white_secondary">#EEE</color>
 
 
 </resources>

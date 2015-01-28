@@ -3,10 +3,18 @@
 
     <string name="action_settings">Ajustes</string>
 
+    <string name="speakers_header">Ponentes</string>
+    <string name="event_detail_subtitle">%1$s en %2$s</string>
+
     <string-array name="navigation_drawer_items">
         <item>Horario</item>
         <item>Mapa</item>
         <item>Nuevos contactos</item>
+        <item>Museo Wesley</item>
+        <item>list_divider</item>
+        <item>Ajustes</item>
     </string-array>
+    <string name="show_map">Ver mapa</string>
+    <string name="rate_session">Calificar</string>
 
 </resources>

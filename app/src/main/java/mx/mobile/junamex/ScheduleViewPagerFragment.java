@@ -28,6 +28,7 @@ public class ScheduleViewPagerFragment extends Fragment {
 
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);
         viewPager.setAdapter(new ViewPagerAdapter(getChildFragmentManager()));
+//        viewPager.setOffscreenPageLimit(5);
 
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
         tabs.setViewPager(viewPager);

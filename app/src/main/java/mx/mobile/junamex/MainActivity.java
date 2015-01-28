@@ -15,8 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 
-import com.parse.Parse;
-
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -106,7 +104,7 @@ public class MainActivity extends ActionBarActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Intent i = new Intent(MainActivity.this, ScrollActivity.class);
+            Intent i = new Intent(MainActivity.this, EventDetailActivity.class);
             startActivity(i);
             return true;
         }

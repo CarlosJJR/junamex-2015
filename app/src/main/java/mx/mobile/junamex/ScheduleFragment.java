@@ -2,7 +2,6 @@ package mx.mobile.junamex;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseGeoPoint;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.text.SimpleDateFormat;
@@ -44,6 +40,9 @@ public class ScheduleFragment extends ListFragment {
     private ScheduleAdapter adapter;
     private ArrayList<Event> eventList;
 
+    private View loadingView;
+    private String day;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,17 +52,18 @@ public class ScheduleFragment extends ListFragment {
         setListAdapter(adapter);
 
         Bundle args = getArguments();
-        String day = TUES;
+        day = TUES;
         if (args != null)
             day = args.getString(DAY_KEY);
-
-        loadDataForDay(day);
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        getListView().setDivider(null);
-        super.onViewCreated(view, savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_schedule, container, false);
+
+        loadingView = view.findViewById(android.R.id.progress);
+        loadDataForDay(day);
+        return view;
     }
 
     public static ScheduleFragment newInstance(String day) {
@@ -93,35 +93,23 @@ public class ScheduleFragment extends ListFragment {
         Date dayEnd = c.getTime();
 
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
-        query.whereGreaterThan("time", dayStart);
-        query.whereLessThan("time", dayEnd);
+        ParseQuery<Event> query = ParseQuery.getQuery(Event.class);
+        query.include(Event.LOCATION);
+        query.setCachePolicy(ParseQuery.CachePolicy.CACHE_THEN_NETWORK);
+        query.whereGreaterThan(Event.START_TIME, dayStart);
+        query.whereLessThan(Event.START_TIME, dayEnd);
 
-        query.findInBackground(new FindCallback<ParseObject>() {
+        loadingView.setVisibility(View.VISIBLE);
+        query.findInBackground(new FindCallback<Event>() {
             @Override
-            public void done(List<ParseObject> parseObjects, ParseException e) {
+            public void done(List<Event> queriedEventList, ParseException e) {
                 if (e == null) {
 
-                    for (ParseObject object : parseObjects) {
-                        Event event = new Event();
-
-                        String id = object.getObjectId();
-                        String eventName = object.getString("name");
-                        String eventAbstract = object.getString("description");
-                        Date startTime = object.getDate("time");
-                        ParseGeoPoint locationRaw = object.getParseGeoPoint("location");
-                        LatLng location = new LatLng(locationRaw.getLatitude(), locationRaw.getLongitude());
-                        String locationName = object.getString("locationName");
-
-                        event.setId(id)
-                                .setEventName(eventName)
-                                .setEventAbstract(eventAbstract)
-                                .setStartTime(startTime)
-                                .setLocation(location)
-                                .setLocationName(locationName);
-
+                    eventList.clear();
+                    for (Event event : queriedEventList) {
                         eventList.add(event);
                     }
+                    loadingView.setVisibility(View.GONE);
                     adapter.notifyDataSetChanged();
 
                 } else {
@@ -136,8 +124,14 @@ public class ScheduleFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        Intent intent = new Intent(getActivity(), ScrollActivity.class);
-        intent.putExtra("event_id", eventList.get(position).getId());
+        Intent intent = new Intent(getActivity(), EventDetailActivity.class);
+
+        Event event = eventList.get(position);
+        intent.putExtra(EventDetailActivity.EVENT_KEY, event.getObjectId());
+
+        if (event.getPaletteColor() != 0)
+            intent.putExtra(EventDetailActivity.PALETTE_KEY, event.getPaletteColor());
+
         startActivity(intent);
     }
 }
