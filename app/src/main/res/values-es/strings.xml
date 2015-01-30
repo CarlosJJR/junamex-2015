@@ -9,7 +9,7 @@
     <string-array name="navigation_drawer_items">
         <item>Horario</item>
         <item>Mapa</item>
-        <item>Nuevos contactos</item>
+        <item>Gente que conocí</item>
         <item>Museo Wesley</item>
         <item>list_divider</item>
         <item>Ajustes</item>

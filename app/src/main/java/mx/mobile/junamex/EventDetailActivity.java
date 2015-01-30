@@ -32,7 +32,7 @@ import mx.mobile.utils.ObservableScrollView;
 /**
  * Created by desarrollo16 on 13/01/15.
  */
-public class EventDetailActivity extends ActionBarActivity implements ObservableScrollView.Callbacks {
+public class EventDetailActivity extends BaseActivity implements ObservableScrollView.Callbacks {
 
     private static final float PHOTO_ASPECT_RATIO = 1.3333333f;
 
@@ -64,15 +64,10 @@ public class EventDetailActivity extends ActionBarActivity implements Observable
     private LinearLayout mSpeakersBlock;
     private TextView mSpeakersHeader;
 
-    private Toolbar mActionBarToolbar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event_detail);
-
-        final Toolbar toolbar = getActionBarToolbar();
 
 //        toolbar.setNavigationIcon(shouldBeFloatingWindow
 //                ? R.drawable.ic_ab_close : R.drawable.ic_up);
@@ -113,6 +108,11 @@ public class EventDetailActivity extends ActionBarActivity implements Observable
         ViewCompat.setTransitionName(mPhotoView, TRANSITION_NAME_PHOTO);
     }
 
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.activity_event_detail;
+    }
+
     private void getData(String eventID) {
 
         ParseQuery<Event> query = new ParseQuery<> (Event.class);
@@ -133,7 +133,7 @@ public class EventDetailActivity extends ActionBarActivity implements Observable
     private void recomputePhotoAndScrollingMetrics() {
         mHeaderHeightPixels = mHeaderBox.getHeight();
 
-        mPhotoHeightPixels = mActionBarToolbar.getHeight();
+        mPhotoHeightPixels = toolbar.getHeight();
 
         if (mHasPhoto) {
             mPhotoHeightPixels = (int) (mPhotoView.getWidth() / PHOTO_ASPECT_RATIO);
@@ -183,36 +183,26 @@ public class EventDetailActivity extends ActionBarActivity implements Observable
         // Reposition the header bar -- it's normally anchored to the top of the content,
         // but locks to the top of the screen on scroll
         int scrollY = mScrollView.getScrollY();
-        int topMargin = scrollY + mActionBarToolbar.getHeight();
+        int topMargin = scrollY + toolbar.getHeight();
 
         float newTop = Math.max(mPhotoHeightPixels, topMargin);
         ViewCompat.setTranslationY(mHeaderBox, newTop);
-        ViewCompat.setTranslationY(mActionBarToolbar, scrollY);
+        ViewCompat.setTranslationY(toolbar, scrollY);
 
         // Move background photo (parallax effect)
         ViewCompat.setTranslationY(mPhotoViewContainer, scrollY * 0.5f);
 
         if (topMargin >= mPhotoHeightPixels) {
             if (toolbarTransparent) {
-                mActionBarToolbar.setBackgroundColor(paletteColor);
+                toolbar.setBackgroundColor(paletteColor);
                 toolbarTransparent = false;
             }
         } else {
             if (!toolbarTransparent) {
-                mActionBarToolbar.setBackgroundResource(R.drawable.dark_translucent_overlay);
+                toolbar.setBackgroundResource(R.drawable.dark_gradient_top_to_bottom);
                 toolbarTransparent = true;
             }
         }
-    }
-
-    protected Toolbar getActionBarToolbar() {
-        if (mActionBarToolbar == null) {
-            mActionBarToolbar = (Toolbar) findViewById(R.id.toolbar);
-            if (mActionBarToolbar != null) {
-                setSupportActionBar(mActionBarToolbar);
-            }
-        }
-        return mActionBarToolbar;
     }
 
     @Override

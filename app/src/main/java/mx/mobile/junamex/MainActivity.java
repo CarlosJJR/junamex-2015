@@ -61,6 +61,19 @@ public class MainActivity extends ActionBarActivity
                         .commit();
                 break;
 
+            case 1:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, new MapFragment())
+                        .commit();
+                break;
+
+            case 3:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, new MuseumFragment())
+                        .commit();
+                break;
+
+
             default:
             fragmentManager.beginTransaction()
                     .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))

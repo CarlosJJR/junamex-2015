@@ -8,6 +8,7 @@ import com.parse.ParseObject;
 import mx.mobile.junamex.R;
 import mx.mobile.model.Event;
 import mx.mobile.model.Location;
+import mx.mobile.model.MuseumItem;
 import mx.mobile.model.Speaker;
 
 /**
@@ -21,6 +22,7 @@ public class ApplicationService extends Application {
         ParseObject.registerSubclass(Event.class);
         ParseObject.registerSubclass(Speaker.class);
         ParseObject.registerSubclass(Location.class);
+        ParseObject.registerSubclass(MuseumItem.class);
         Parse.initialize(this, getString(R.string.parse_application_key), getString(R.string.parse_client_key));
     }
 }

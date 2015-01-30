@@ -1,13 +1,18 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/activity_vertical_margin">
+    android:id="@+id/frame_container"
+    android:animateLayoutChanges="true">
 
     <ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@null"
+        android:paddingRight="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_vertical_margin"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
         android:listSelector="@android:color/transparent"/>
 
     <ProgressBar

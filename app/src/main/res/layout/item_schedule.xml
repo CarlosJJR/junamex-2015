@@ -35,14 +35,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:fontName="Roboto-Medium.ttf"
-                android:textStyle="bold"
                 android:textColor="@color/primary_text_color"/>
 
             <mx.mobile.utils.TextViewFont
                 android:id="@+id/schedule_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:fontName="Roboto-Medium.ttf"
+                app:fontName="Roboto-Regular.ttf"
                 android:textColor="@color/secondary_text_color"/>
 
             </LinearLayout>
