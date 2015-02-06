@@ -24,5 +24,7 @@ public class ApplicationService extends Application {
         ParseObject.registerSubclass(Location.class);
         ParseObject.registerSubclass(MuseumItem.class);
         Parse.initialize(this, getString(R.string.parse_application_key), getString(R.string.parse_client_key));
+
+        Utilities.overrideFont(getApplicationContext(), "SERIF", "fonts/8bitOperatorPlus-Regular.ttf");
     }
 }

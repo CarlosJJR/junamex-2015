@@ -8,10 +8,12 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/people_photo"
         android:layout_width="96dp"
-        android:layout_height="96dp" />
+        android:layout_height="96dp"
+        android:src="@drawable/museum_placeholder"/>
 
     <TextView
         android:id="@+id/people_name"
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

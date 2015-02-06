@@ -16,5 +16,6 @@
     </string-array>
     <string name="show_map">Ver mapa</string>
     <string name="rate_session">Calificar</string>
+    <string name="nothing_to_see">Por ahora no hay nada aqui. Regresa depués</string>
 
 </resources>

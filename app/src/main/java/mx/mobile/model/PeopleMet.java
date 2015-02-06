@@ -1,8 +1,12 @@
 package mx.mobile.model;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+
+import java.util.ArrayList;
+import java.util.Currency;
 
 /**
  * Created by desarrollo16 on 30/01/15.
@@ -12,38 +16,43 @@ public class PeopleMet {
     public static final String TABLE = "peopleMet";
     public static final String ID = "id";
     public static final String NAME = "name";
+    public static final String CHURCH = "church";
+    public static final String DISTRICT = "district";
     public static final String NOTES = "notes";
     public static final String PHONE = "phone";
     public static final String EMAIL = "email";
     public static final String FACEBOOK = "facebook";
     public static final String TWITTER = "twitter";
-    public static final String PLUS = "plus";
-    public static final String PHOTO = "photo";
 
     public static final String CREATE_TABLE = "CREATE TABLE peopleMet ("
             +"id integer NOT NULL PRIMARY KEY AUTOINCREMENT,"
             +"name varchar(250) NOT NULL,"
+            +"church varchar(250),"
+            +"district varchar(250),"
             +"notes text,"
             +"phone varchar(250),"
             +"email varchar(250),"
-            +"photo text,"
             +"facebook varchar(250),"
-            +"twitter varchar(250),"
-            +"plus varchar(250))";
+            +"twitter varchar(250))";
 
     private int id;
     private String name;
     private String notes;
     private String phone;
     private String email;
-    private Bitmap photo;
-    private String encodedPhoto;
     private String facebook;
     private String twitter;
-    private String gPlus;
+    private String church;
+    private String district;
+    private int tempAvatar;
 
     public int getId() {
         return id;
+    }
+
+    public PeopleMet setId(int id) {
+        this.id = id;
+        return this;
     }
 
     public String getName() {
@@ -82,15 +91,6 @@ public class PeopleMet {
         return this;
     }
 
-    public Bitmap getPhoto() {
-        return photo;
-    }
-
-    public PeopleMet setPhoto(Bitmap photo) {
-        this.photo = photo;
-        return this;
-    }
-
     public String getFacebook() {
         return facebook;
     }
@@ -109,21 +109,31 @@ public class PeopleMet {
         return this;
     }
 
-    public String getgPlus() {
-        return gPlus;
+    public String getChurch() {
+        return church;
     }
 
-    public PeopleMet setgPlus(String gPlus) {
-        this.gPlus = gPlus;
+    public PeopleMet setChurch(String church) {
+        this.church = church;
         return this;
     }
 
-    public String getEncodedPhoto() {
-        return encodedPhoto;
+    public String getDistrict() {
+        return district;
     }
 
-    public void setEncodedPhoto(String encodedPhoto) {
-        this.encodedPhoto = encodedPhoto;
+    public PeopleMet setDistrict(String district) {
+        this.district = district;
+        return this;
+    }
+
+    public int getTempAvatar() {
+        return tempAvatar;
+    }
+
+    public PeopleMet setTempAvatar(int tempAvatar) {
+        this.tempAvatar = tempAvatar;
+        return this;
     }
 
     public int save(SQLiteDatabase database) {
@@ -131,14 +141,79 @@ public class PeopleMet {
         ContentValues cv = new ContentValues();
 
         cv.put(NAME, this.name);
+        cv.put(CHURCH, this.church);
+        cv.put(DISTRICT, this.district);
         cv.put(NOTES, this.notes);
         cv.put(PHONE, this.phone);
         cv.put(EMAIL, this.email);
         cv.put(FACEBOOK, this.facebook);
-        cv.put(TWITTER, this.twitter);
-        cv.put(PLUS, this.gPlus);
-        cv.put(PHOTO, this.encodedPhoto);
 
-        return (int) database.insert(TABLE, null, cv);
+        int id = (int) database.insert(TABLE, null, cv);
+//        database.close();
+        return id;
+    }
+
+    public static ArrayList<PeopleMet> getAll(SQLiteDatabase database) {
+
+        ArrayList<PeopleMet> peopleMets = new ArrayList<>();
+        Cursor cursor = database.query(TABLE, null, ID +"!=?", new String[]{"1"}, null, null, null);
+
+        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+
+            int id = cursor.getInt(cursor.getColumnIndex(ID));
+            String name = cursor.getString(cursor.getColumnIndex(NAME));
+            String notes = cursor.getString(cursor.getColumnIndex(NOTES));
+            String phone = cursor.getString(cursor.getColumnIndex(PHONE));
+            String email = cursor.getString(cursor.getColumnIndex(EMAIL));
+            String facebook = cursor.getString(cursor.getColumnIndex(FACEBOOK));
+            String twitter = cursor.getString(cursor.getColumnIndex(TWITTER));
+
+            PeopleMet people = new PeopleMet();
+            people.setId(id)
+                    .setName(name)
+                    .setNotes(notes)
+                    .setPhone(phone)
+                    .setEmail(email)
+                    .setFacebook(facebook)
+                    .setTwitter(twitter);
+
+            peopleMets.add(people);
+        }
+        cursor.close();
+//        database.close();
+
+        return peopleMets;
+    }
+
+    public static PeopleMet getPeople(SQLiteDatabase database, int id) {
+
+        PeopleMet peopleMet = null;
+        Cursor cursor = database.query(TABLE, null, ID + "=?", new String[]{String.valueOf(id)}, null, null, null);
+
+        if (cursor.moveToFirst()) {
+
+            peopleMet = new PeopleMet();
+
+            String name = cursor.getString(cursor.getColumnIndex(NAME));
+            String notes = cursor.getString(cursor.getColumnIndex(NOTES));
+            String phone = cursor.getString(cursor.getColumnIndex(PHONE));
+            String email = cursor.getString(cursor.getColumnIndex(EMAIL));
+            String facebook = cursor.getString(cursor.getColumnIndex(FACEBOOK));
+            String church = cursor.getString(cursor.getColumnIndex(CHURCH));
+            String district = cursor.getString(cursor.getColumnIndex(DISTRICT));
+
+            peopleMet.setId(id)
+                    .setName(name)
+                    .setNotes(notes)
+                    .setPhone(phone)
+                    .setEmail(email)
+                    .setFacebook(facebook)
+                    .setChurch(church)
+                    .setDistrict(district);
+        }
+        cursor.close();
+//        database.close();
+
+        return peopleMet;
     }
 }

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#673AB7</color>
-    <color name="colorPrimaryDark">#512DA8</color>
-    <color name="colorAccent">#80D8FF</color>
+    <color name="color_primary">#673AB7</color>
+    <color name="color_primary_dark">#512DA8</color>
+    <color name="color_accent">#80D8FF</color>
 
-    <color name="colorSecondary">@color/material_deep_teal_200</color>
-    <color name="colorSecondaryDark">@color/material_deep_teal_500</color>
+    <color name="color_secondary">@color/material_deep_teal_200</color>
+    <color name="color_secondary_dark">@color/material_deep_teal_500</color>
 
-    <color name="colorPrimaryTranslucent">#40673AB7</color>
+    <color name="color_primary_translucent">#40673AB7</color>
 
     <color name="windowBackgroundColor">#333333</color>
     <color name="black_translucent">#80000000</color>
@@ -21,5 +21,6 @@
     <color name="white">#FFF</color>
     <color name="white_secondary">#EEE</color>
 
+    <color name="background_tab_pressed">#1AFFFFFF</color>
 
 </resources>

@@ -1,19 +1,12 @@
 package mx.mobile.junamex;
 
-import android.animation.Animator;
-import android.animation.AnimatorSet;
-import android.animation.LayoutTransition;
-import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.transition.Transition;
-import android.util.Property;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -48,7 +41,7 @@ public class ScheduleFragment extends ListFragment {
     private ScheduleAdapter adapter;
     private ArrayList<Event> eventList;
 
-    private View loadingView;
+    private View loadingView, emptyView, errorView;
     private String day;
 
     @Override
@@ -69,7 +62,20 @@ public class ScheduleFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_schedule, container, false);
 
+        emptyView = view.findViewById(R.id.empty_view);
+        errorView = view.findViewById(R.id.error_view);
         loadingView = view.findViewById(android.R.id.progress);
+
+        emptyView.setVisibility(View.GONE);
+        errorView.setVisibility(View.GONE);
+        errorView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadingView.setVisibility(View.VISIBLE);
+                errorView.setVisibility(View.GONE);
+                loadDataForDay(day);
+            }
+        });
         loadDataForDay(day);
         return view;
     }
@@ -83,6 +89,12 @@ public class ScheduleFragment extends ListFragment {
         scheduleFragment.setArguments(args);
 
         return scheduleFragment;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        ((MainActivity) activity).onSectionAttached(1);
     }
 
     private void loadDataForDay(String day) {
@@ -111,18 +123,30 @@ public class ScheduleFragment extends ListFragment {
         query.findInBackground(new FindCallback<Event>() {
             @Override
             public void done(List<Event> queriedEventList, ParseException e) {
+
                 if (e == null) {
 
+                    errorView.setVisibility(View.GONE);
+                    loadingView.setVisibility(View.GONE);
                     eventList.clear();
+
+                    if (queriedEventList.isEmpty())
+                        emptyView.setVisibility(View.VISIBLE);
+
                     for (Event event : queriedEventList) {
                         eventList.add(event);
                     }
-                    loadingView.setVisibility(View.GONE);
                     adapter.notifyDataSetChanged();
 
                 } else {
                     //Error
-                    Toast.makeText(getActivity(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                    if (isAdded())
+                        Toast.makeText(getActivity(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+
+                    if (e.getCode() != ParseException.CACHE_MISS) {
+                        loadingView.setVisibility(View.GONE);
+                        errorView.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         });

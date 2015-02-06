@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <mx.mobile.utils.TextViewFont
+    <TextView
         android:id="@+id/schedule_time"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:paddingTop="8dp"
-        app:fontName="Roboto-Medium.ttf"
-        android:textStyle="bold"
-        android:textSize="18sp"/>
+        android:textSize="16sp"
+        android:textStyle="bold"/>
 
     <View android:layout_height="match_parent"
         android:layout_width="@dimen/activity_vertical_margin"/>
@@ -30,18 +28,16 @@
             android:orientation="vertical"
             android:background="@drawable/schedule_item_selector">
 
-            <mx.mobile.utils.TextViewFont
+            <TextView
                 android:id="@+id/schedule_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:fontName="Roboto-Medium.ttf"
                 android:textColor="@color/primary_text_color"/>
 
-            <mx.mobile.utils.TextViewFont
+            <TextView
                 android:id="@+id/schedule_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:fontName="Roboto-Regular.ttf"
                 android:textColor="@color/secondary_text_color"/>
 
             </LinearLayout>

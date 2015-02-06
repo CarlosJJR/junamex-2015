@@ -31,7 +31,7 @@ public abstract class BaseActivity extends ActionBarActivity {
     protected abstract int getLayoutResource();
 
     public SQLiteDatabase getDB() {
-        if (database == null)
+        if (database == null || !database.isOpen())
             openDB(this);
         return database;
     }

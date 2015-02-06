@@ -1,5 +1,6 @@
 package mx.mobile.junamex;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -25,6 +26,12 @@ public class MapFragment extends SupportMapFragment implements OnMapReadyCallbac
         map.getUiSettings().setZoomControlsEnabled(true);
         map.getUiSettings().setCompassEnabled(true);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(18.902072, -98.980203), 17));
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        ((MainActivity) activity).onSectionAttached(2);
     }
 
 }

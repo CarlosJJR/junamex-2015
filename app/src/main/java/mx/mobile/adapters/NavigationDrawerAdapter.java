@@ -1,8 +1,7 @@
 package mx.mobile.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Typeface;
+import android.content.res.TypedArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,25 +9,23 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import mx.mobile.junamex.R;
-import mx.mobile.utils.TextViewFont;
 
 /**
  * Created by desarrollo16 on 08/01/15.
  */
 public class NavigationDrawerAdapter extends BaseAdapter {
 
-    String[] items;
-    LayoutInflater inflater;
-    Context context;
+    private String[] items;
+    private TypedArray icons;
+    private LayoutInflater inflater;
+
     public NavigationDrawerAdapter(Context context) {
 
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.context = context;
 
         items = context.getResources().getStringArray(R.array.navigation_drawer_items);
+        icons = context.getResources().obtainTypedArray(R.array.navigation_drawer_icons);
     }
 
     @Override
@@ -77,6 +74,9 @@ public class NavigationDrawerAdapter extends BaseAdapter {
                 holder = (ViewHolder) convertView.getTag();
 
             holder.title.setText(items[position]);
+            holder.icon.setImageResource(icons.getResourceId(position, -1));
+
+            icons.recycle();
 
         } else {
             convertView = inflater.inflate(R.layout.navigation_drawer_divider, parent, false);

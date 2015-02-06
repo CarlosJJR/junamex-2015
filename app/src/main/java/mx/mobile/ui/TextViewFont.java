@@ -1,4 +1,4 @@
-package mx.mobile.utils;
+package mx.mobile.ui;
 
 import android.content.Context;
 import android.content.res.TypedArray;

@@ -4,9 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.graphics.Palette;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,7 +98,7 @@ public class EventDetailActivity extends BaseActivity implements ObservableScrol
         mAbstract = (TextView) findViewById(R.id.session_abstract);
 
         String eventId = getIntent().getStringExtra(EVENT_KEY);
-        paletteColor = getIntent().getIntExtra(PALETTE_KEY, getResources().getColor(R.color.colorPrimary));
+        paletteColor = getIntent().getIntExtra(PALETTE_KEY, getResources().getColor(R.color.color_primary));
         getData(eventId);
 
         mHeaderBox.setBackgroundColor(paletteColor);

@@ -5,12 +5,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.astuetz.PagerSlidingTabStrip
+    <mx.mobile.ui.PagerSlidingTabStrip
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
         android:background="?attr/colorPrimary"
         app:pstsIndicatorHeight="4dp"
         style="@style/Base.Theme.AppCompat"/>

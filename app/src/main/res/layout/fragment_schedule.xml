@@ -4,6 +4,8 @@
     android:id="@+id/frame_container"
     android:animateLayoutChanges="true">
 
+    <include layout="@layout/empty_view"/>
+
     <ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
@@ -23,5 +25,7 @@
         android:visibility="gone"
         android:indeterminate="true"
         style="@style/MyProgressBar"/>
+
+    <include layout="@layout/error_loading_view"/>
 
 </FrameLayout>

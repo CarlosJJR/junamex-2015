@@ -1,5 +1,8 @@
 package mx.mobile.junamex;
 
+import android.content.Intent;
+import android.content.res.TypedArray;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
 import android.support.v7.app.ActionBar;
@@ -20,9 +23,15 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Random;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 import mx.mobile.adapters.NavigationDrawerAdapter;
+import mx.mobile.model.PeopleMet;
+import mx.mobile.utils.Utilities;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -55,6 +64,8 @@ public class NavigationDrawerFragment extends Fragment {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerListView;
     private View mFragmentContainerView;
+    private CircleImageView avatar;
+    private TextView userName;
 
     private int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
@@ -91,8 +102,25 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mDrawerListView = (ListView) inflater.inflate(
-                R.layout.fragment_navigation_drawer, container, false);
+        View view = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
+
+        userName = (TextView) view.findViewById(R.id.user_name);
+        avatar = (CircleImageView) view.findViewById(R.id.avatar);
+        avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (mDrawerLayout != null) {
+                    mDrawerLayout.closeDrawer(mFragmentContainerView);
+                }
+
+                Intent intent = new Intent(getActivity(), PeopleMetDetailActivity.class);
+                intent.putExtra(PeopleMet.TABLE, 1);
+                startActivity(intent);
+            }
+        });
+
+        mDrawerListView = (ListView) view.findViewById(R.id.navigation_drawer_list);
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -101,7 +129,9 @@ public class NavigationDrawerFragment extends Fragment {
         });
         mDrawerListView.setAdapter(new NavigationDrawerAdapter(getActivity()));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
-        return mDrawerListView;
+
+        new LoadAvatar().execute(true);
+        return view;
     }
 
     public boolean isDrawerOpen() {
@@ -265,5 +295,40 @@ public class NavigationDrawerFragment extends Fragment {
          * Called when an item in the navigation drawer is selected.
          */
         void onNavigationDrawerItemSelected(int position);
+    }
+
+    private class LoadAvatar extends AsyncTask<Boolean, Void, PeopleMet> {
+
+        @Override
+        protected PeopleMet doInBackground(Boolean... params) {
+
+            PeopleMet user = PeopleMet.getPeople(((MainActivity) getActivity()).getDB(), 1);
+
+            if (user == null) {
+
+                user = new PeopleMet();
+                user.setName(getString(R.string.default_name));
+                user.save(((MainActivity) getActivity()).getDB());
+            }
+
+            if (user.getFacebook() == null) {
+
+                int resourceId = Utilities.getRandomAvatar(getActivity());
+                user.setTempAvatar(resourceId);
+            }
+            return user;
+        }
+
+        @Override
+        protected void onPostExecute(PeopleMet user) {
+            super.onPostExecute(user);
+
+            if (user.getTempAvatar() != 0)
+                avatar.setImageResource(user.getTempAvatar());
+            else
+                avatar.setImageBitmap(null);
+
+            userName.setText(user.getName());
+        }
     }
 }

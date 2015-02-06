@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="?attr/listPreferredItemHeight"
+    android:background="@drawable/activated_background_indicator"
     android:paddingRight="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_vertical_margin">
 
@@ -10,17 +10,15 @@
         android:id="@+id/drawer_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:src="@drawable/temp_icon"/>
+        android:layout_centerVertical="true"/>
 
-    <mx.mobile.utils.TextViewFont
+    <TextView
         android:id="@+id/drawer_title"
         android:layout_marginLeft="@dimen/navigation_drawer_content_margin"
         android:layout_marginStart="@dimen/navigation_drawer_content_margin"
         android:layout_centerVertical="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#DD000000"
-        app:fontName="Roboto-Medium.ttf"/>
+        android:textColor="@color/primary_text_color"/>
 
 </RelativeLayout>

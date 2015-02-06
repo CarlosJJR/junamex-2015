@@ -8,9 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.astuetz.PagerSlidingTabStrip;
 
 import mx.mobile.adapters.ViewPagerAdapter;
+import mx.mobile.ui.PagerSlidingTabStrip;
 
 /**
  * Created by desarrollo16 on 22/01/15.
@@ -28,7 +28,6 @@ public class ScheduleViewPagerFragment extends Fragment {
 
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);
         viewPager.setAdapter(new ViewPagerAdapter(getChildFragmentManager()));
-//        viewPager.setOffscreenPageLimit(5);
 
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
         tabs.setViewPager(viewPager);
