@@ -10,6 +10,7 @@
     <string name="parse_application_key" translatable="false">vngVuNe897up4BW8iPw0j89NsQMGOjYl5qaV8E0U</string>
     <string name="parse_client_key" translatable="false">ANNIg3Rr9dZ2tZ2uhDl7lDPSVTwfnkYCEhCnFTGi</string>
     <string name="maps_key" translatable="false">AIzaSyCHKTHxUcJkRT4-1VuwKa7DcGcU24hmwhM</string>
+    <string name="facebook_app_id" translatable="false">331558627039469</string>
     <string name="speakers_header">Speakers</string>
     <string name="event_detail_subtitle">%1$s in %2$s</string>
     <string name="show_map">Show map</string>
