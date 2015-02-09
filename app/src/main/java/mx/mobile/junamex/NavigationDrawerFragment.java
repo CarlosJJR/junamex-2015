@@ -14,6 +14,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,6 +26,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.facebook.Request;
+import com.facebook.Response;
+import com.facebook.Session;
+import com.facebook.model.GraphUser;
+import com.parse.ParseFacebookUtils;
+import com.parse.ParseImageView;
+import com.parse.ParseUser;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import java.util.Random;
 
@@ -299,10 +310,12 @@ public class NavigationDrawerFragment extends Fragment {
 
     private class LoadAvatar extends AsyncTask<Boolean, Void, PeopleMet> {
 
+        PeopleMet user;
+
         @Override
         protected PeopleMet doInBackground(Boolean... params) {
 
-            PeopleMet user = PeopleMet.getPeople(((MainActivity) getActivity()).getDB(), 1);
+            user = PeopleMet.getPeople(((MainActivity) getActivity()).getDB(), 1);
 
             if (user == null) {
 
@@ -311,24 +324,38 @@ public class NavigationDrawerFragment extends Fragment {
                 user.save(((MainActivity) getActivity()).getDB());
             }
 
-            if (user.getFacebook() == null) {
+            int resourceId = Utilities.getRandomAvatar(getActivity());
+            user.setTempAvatar(resourceId);
 
-                int resourceId = Utilities.getRandomAvatar(getActivity());
-                user.setTempAvatar(resourceId);
-            }
             return user;
         }
 
         @Override
-        protected void onPostExecute(PeopleMet user) {
+        protected void onPostExecute(final PeopleMet user) {
             super.onPostExecute(user);
+
+            userName.setText(user.getName());
+
+            Request.newMeRequest(ParseFacebookUtils.getSession(), new Request.GraphUserCallback() {
+                @Override
+                public void onCompleted(GraphUser graphUser, Response response) {
+
+                    if (graphUser != null) {
+
+                        user.setName(graphUser.getName());
+                        user.setFacebook(graphUser.getId());
+                        user.setEmail(graphUser.getProperty("email").toString());
+
+                        Picasso.with(getActivity())
+                                .load("https://graph.facebook.com/"+user.getFacebook()+"/picture?type=large&height=60")
+                                .into(avatar);
+                        userName.setText(user.getName());
+                    }
+                }
+            }).executeAsync();
 
             if (user.getTempAvatar() != 0)
                 avatar.setImageResource(user.getTempAvatar());
-            else
-                avatar.setImageBitmap(null);
-
-            userName.setText(user.getName());
         }
     }
 }
