@@ -47,7 +47,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.Holder> {
 
         holder.setClickListener(new Holder.OnItemClickListener() {
             @Override
-            public void onItemClick(View v, int position) {
+            public void onItemClick(int position) {
 
 //                ActivityOptionsCompat options =
 //                        ActivityOptionsCompat.makeSceneTransitionAnimation(
@@ -80,9 +80,9 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.Holder> {
 
             itemView.setOnClickListener(this);
         }
-        public interface OnItemClickListener {
 
-            public void onItemClick(View v, int position);
+        public interface OnItemClickListener {
+            public void onItemClick(int position);
 
         }
 
@@ -92,8 +92,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.Holder> {
 
         @Override
         public void onClick(View v) {
-
-            clickListener.onItemClick(v, getPosition());
+            clickListener.onItemClick(getPosition());
         }
     }
 }

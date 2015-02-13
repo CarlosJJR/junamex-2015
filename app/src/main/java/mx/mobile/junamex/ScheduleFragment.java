@@ -1,13 +1,14 @@
 package mx.mobile.junamex;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
@@ -20,14 +21,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
+import mx.mobile.adapters.NavigationDrawerAdapter;
 import mx.mobile.adapters.ScheduleAdapter;
 import mx.mobile.model.Event;
+import mx.mobile.utils.RecyclerViewDividers;
+import mx.mobile.utils.Utilities;
 
 /**
  * Created by desarrollo16 on 20/01/15.
  */
-public class ScheduleFragment extends ListFragment {
+public class ScheduleFragment extends Fragment {
 
     public static final int DAYS_OF_JUNAMEX = 5;
 
@@ -50,7 +53,6 @@ public class ScheduleFragment extends ListFragment {
 
         eventList = new ArrayList<>();
         adapter = new ScheduleAdapter(getActivity(), eventList);
-        setListAdapter(adapter);
 
         Bundle args = getArguments();
         day = TUES;
@@ -61,6 +63,14 @@ public class ScheduleFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_schedule, container, false);
+
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapter);
+
+        if (Utilities.isLollipop())
+            recyclerView.addItemDecoration(new RecyclerViewDividers(8, 8, 0, 0));
 
         emptyView = view.findViewById(R.id.empty_view);
         errorView = view.findViewById(R.id.error_view);
@@ -94,7 +104,7 @@ public class ScheduleFragment extends ListFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        ((MainActivity) activity).onSectionAttached(1);
+        ((MainActivity) activity).onSectionAttached(NavigationDrawerAdapter.SCHEDULE);
     }
 
     private void loadDataForDay(String day) {
@@ -118,6 +128,8 @@ public class ScheduleFragment extends ListFragment {
         query.setCachePolicy(ParseQuery.CachePolicy.CACHE_THEN_NETWORK);
         query.whereGreaterThan(Event.START_TIME, dayStart);
         query.whereLessThan(Event.START_TIME, dayEnd);
+        query.whereGreaterThan(Event.UPDATED_AT, getLastUpdated());
+        query.orderByAscending(Event.START_TIME);
 
         loadingView.setVisibility(View.VISIBLE);
         query.findInBackground(new FindCallback<Event>() {
@@ -126,17 +138,8 @@ public class ScheduleFragment extends ListFragment {
 
                 if (e == null) {
 
-                    errorView.setVisibility(View.GONE);
-                    loadingView.setVisibility(View.GONE);
-                    eventList.clear();
+                    new ParseData().execute(queriedEventList);
 
-                    if (queriedEventList.isEmpty())
-                        emptyView.setVisibility(View.VISIBLE);
-
-                    for (Event event : queriedEventList) {
-                        eventList.add(event);
-                    }
-                    adapter.notifyDataSetChanged();
 
                 } else {
                     //Error
@@ -152,18 +155,61 @@ public class ScheduleFragment extends ListFragment {
         });
     }
 
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
+    private Date getLastUpdated() {
 
-        Intent intent = new Intent(getActivity(), EventDetailActivity.class);
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, 2014);
+        Date lastUpdate = c.getTime();
 
-        Event event = eventList.get(position);
-        intent.putExtra(EventDetailActivity.EVENT_KEY, event.getObjectId());
+        for (Event event : eventList) {
 
-        if (event.getPaletteColor() != 0)
-            intent.putExtra(EventDetailActivity.PALETTE_KEY, event.getPaletteColor());
+            if (event.getUpdatedAt().after(lastUpdate))
+                lastUpdate = event.getUpdatedAt();
+        }
+        return lastUpdate;
+    }
 
-        startActivity(intent);
+
+    private class ParseData extends AsyncTask<List<Event>, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(List<Event>... params) {
+
+            List<Event> incoming = params[0];
+            Boolean listUpdated = false;
+
+            if (eventList.isEmpty()) {
+                eventList.addAll(incoming);
+                listUpdated = true;
+            } else {
+
+                for (int i = 0; i < eventList.size(); i++) {
+                    for (Event event : incoming) {
+
+                        Event currentEvent = eventList.get(i);
+                        if (event.getObjectId().equals(currentEvent.getObjectId())) {
+                            eventList.set(i, event);
+                            listUpdated = true;
+                        }
+                    }
+                }
+            }
+            return listUpdated;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean listUpdated) {
+            super.onPostExecute(listUpdated);
+
+            if (listUpdated)
+                adapter.notifyDataSetChanged();
+
+            errorView.setVisibility(View.GONE);
+            loadingView.setVisibility(View.GONE);
+
+            if (eventList.isEmpty())
+                emptyView.setVisibility(View.VISIBLE);
+
+        }
     }
 }

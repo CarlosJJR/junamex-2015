@@ -18,6 +18,7 @@
     <string-array name="navigation_drawer_items">
         <item>Schedule</item>
         <item>Map</item>
+        <item>Social feed</item>
         <item>People I\'ve met</item>
         <item>Wesley museum</item>
         <item>list_divider</item>
@@ -27,6 +28,7 @@
     <string-array name="navigation_drawer_icons">
         <item>@drawable/schedule</item>
         <item>@drawable/map</item>
+        <item>@drawable/facebook</item>
         <item>@drawable/contacts</item>
         <item>@drawable/museum</item>
         <item>list_divider</item>
@@ -48,16 +50,38 @@
 
     <string name="rate_session">Rate</string>
 
-    <string name="title_activity_test">TestActivity</string>
+    <string name="title_activity_test" translatable="false">TestActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="title_activity_turorial">Tutorial</string>
+    <string name="title_activity_turorial" translatable="false">Tutorial</string>
 
-    <string name="hello_world">Hello world!</string>
+    <string name="hello_world" translatable="false">Hello world!</string>
     <string name="nothing_to_see">Nothing here yet. Come back later!</string>
-    <string name="error_loading">Uh oh, something went wrong. Tap to retry</string>
+    <string name="error_loading">Uh oh, something went wrong.\nTap to retry</string>
     <string name="edit">Edit</string>
     <string name="default_name">My profile</string>
     <string name="no_people">No contacts found. Why don\'t you add someone?</string>
+    <string name="notes">Notes</string>
+    <string name="district">District</string>
+    <string name="name">Name</string>
+    <string name="save_event">Save event</string>
+
+    <string-array name="districts">
+        <item>Norte</item>
+        <item>Noroccidental</item>
+        <item>Noreste</item>
+        <item>Huasteca</item>
+        <item>Oriente</item>
+        <item>Golfo</item>
+        <item>Centro</item>
+        <item>Occidente</item>
+        <item>Olmeca</item>
+        <item>Sur</item>
+        <item>Sur fronterizo</item>
+        <item>Sierra</item>
+        <item>Sur pacífico</item>
+        <item>Oaxaca</item>
+        <item>Oaxaca norponiente</item>
+    </string-array>
 
 </resources>

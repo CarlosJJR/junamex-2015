@@ -6,25 +6,15 @@ import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 
-import com.facebook.Request;
-import com.facebook.RequestAsyncTask;
-import com.facebook.Response;
-import com.facebook.model.GraphUser;
-import com.parse.LogInCallback;
-import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
-import com.parse.ParseUser;
 
-import java.util.ArrayList;
-
-import mx.mobile.model.PeopleMet;
+import static mx.mobile.adapters.NavigationDrawerAdapter.*;
 
 
 public class MainActivity extends BaseActivity
@@ -40,24 +30,26 @@ public class MainActivity extends BaseActivity
      */
     private CharSequence mTitle;
 
+    private boolean requestingMapPermission;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ArrayList<String> permissions = new ArrayList<>();
-        permissions.add("email");
-        ParseFacebookUtils.logIn(permissions, this, new LogInCallback() {
-            @Override
-            public void done(ParseUser user, ParseException err) {
-                if (user == null) {
-                    Log.d("MyApp", "Uh oh. The user cancelled the Facebook login.");
-                } else if (user.isNew()) {
-                    Log.d("MyApp", "User signed up and logged in through Facebook!");
-                } else {
-                    Log.d("MyApp", "User logged in through Facebook!");
-                }
-            }
-        });
+//        ArrayList<String> permissions = new ArrayList<>();
+//        permissions.add("email");
+//        ParseFacebookUtils.logIn(permissions, this, new LogInCallback() {
+//            @Override
+//            public void done(ParseUser user, ParseException err) {
+//                if (user == null) {
+//                    Log.d("MyApp", "Uh oh. The user cancelled the Facebook login.");
+//                } else if (user.isNew()) {
+//                    Log.d("MyApp", "User signed up and logged in through Facebook!");
+//                } else {
+//                    Log.d("MyApp", "User logged in through Facebook!");
+//                }
+//            }
+//        });
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -80,34 +72,43 @@ public class MainActivity extends BaseActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         switch (position) {
 
-            case 0:
+            case SCHEDULE:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, new ScheduleViewPagerFragment())
                         .commit();
                 break;
 
-            case 1:
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, new MapFragment())
-                        .commit();
+            case MAP:
+                if (requestingMapPermission) {
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.container, new MapFragment())
+                            .commit();
+                    requestingMapPermission = false;
+                } else
+                    requestingMapPermission = true;
                 break;
 
-            case 2:
+            case PEOPLE:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, new PeopleMetFragment(), "people_fragment")
                         .commit();
                 break;
 
-            case 3:
+            case MUSEUM:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, new MuseumFragment())
                         .commit();
                 break;
 
+            case SETTINGS:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, new SettingsFragment())
+                        .commit();
+                break;
 
             default:
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                    .replace(R.id.container, PlaceholderFragment.newInstance(position))
                     .commit();
                 break;
         }
@@ -121,7 +122,12 @@ public class MainActivity extends BaseActivity
 
     public void onSectionAttached(int number) {
 
-        mTitle = getResources().getStringArray(R.array.navigation_drawer_items)[number - 1];
+        mTitle = getResources().getStringArray(R.array.navigation_drawer_items)[number];
+    }
+
+    public void addMap() {
+        if (requestingMapPermission)
+            onNavigationDrawerItemSelected(MAP);
     }
 
     public void restoreActionBar() {

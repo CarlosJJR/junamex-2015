@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fab="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,8 +13,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="nombre"
-            style="?android:attr/listSeparatorTextViewStyle" />
+            android:text="@string/name"
+            android:textAllCaps="true"
+            android:textStyle="bold"/>
 
         <EditText
             android:id="@+id/add_name"
@@ -26,23 +26,13 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Iglesia"
-            style="?android:attr/listSeparatorTextViewStyle" />
-
-        <EditText
-            android:id="@+id/add_church"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Distrito"
-            style="?android:attr/listSeparatorTextViewStyle" />
+            android:text="@string/district"
+            android:textAllCaps="true"
+            android:textStyle="bold" />
 
         <AutoCompleteTextView
             android:id="@+id/add_district"
+            android:textColor="@color/primary_text_color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -50,7 +40,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/zxinglegacy_contents_phone"
-            style="?android:attr/listSeparatorTextViewStyle" />
+            android:textAllCaps="true"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/add_phone"
@@ -62,7 +53,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/zxinglegacy_contents_email"
-            style="?android:attr/listSeparatorTextViewStyle"/>
+            android:textAllCaps="true"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/add_email"
@@ -73,8 +65,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="notas"
-            style="?android:attr/listSeparatorTextViewStyle"/>
+            android:text="@string/notes"
+            android:textAllCaps="true"
+            android:textStyle="bold"/>
 
         <EditText
             android:id="@+id/add_notes"

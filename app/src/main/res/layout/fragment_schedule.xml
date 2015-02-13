@@ -1,21 +1,18 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/frame_container"
-    android:animateLayoutChanges="true">
+    android:id="@+id/frame_container">
 
     <include layout="@layout/empty_view"/>
 
-    <ListView
-        android:id="@android:id/list"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@null"
         android:paddingRight="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_vertical_margin"
         android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:listSelector="@android:color/transparent"/>
+        android:paddingBottom="8dp"/>
 
     <ProgressBar
         android:id="@android:id/progress"

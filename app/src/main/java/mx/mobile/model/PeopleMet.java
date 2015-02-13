@@ -16,7 +16,6 @@ public class PeopleMet {
     public static final String TABLE = "peopleMet";
     public static final String ID = "id";
     public static final String NAME = "name";
-    public static final String CHURCH = "church";
     public static final String DISTRICT = "district";
     public static final String NOTES = "notes";
     public static final String PHONE = "phone";
@@ -27,7 +26,6 @@ public class PeopleMet {
     public static final String CREATE_TABLE = "CREATE TABLE peopleMet ("
             +"id integer NOT NULL PRIMARY KEY AUTOINCREMENT,"
             +"name varchar(250) NOT NULL,"
-            +"church varchar(250),"
             +"district varchar(250),"
             +"notes text,"
             +"phone varchar(250),"
@@ -42,7 +40,6 @@ public class PeopleMet {
     private String email;
     private String facebook;
     private String twitter;
-    private String church;
     private String district;
     private int tempAvatar;
 
@@ -109,15 +106,6 @@ public class PeopleMet {
         return this;
     }
 
-    public String getChurch() {
-        return church;
-    }
-
-    public PeopleMet setChurch(String church) {
-        this.church = church;
-        return this;
-    }
-
     public String getDistrict() {
         return district;
     }
@@ -141,16 +129,27 @@ public class PeopleMet {
         ContentValues cv = new ContentValues();
 
         cv.put(NAME, this.name);
-        cv.put(CHURCH, this.church);
         cv.put(DISTRICT, this.district);
         cv.put(NOTES, this.notes);
         cv.put(PHONE, this.phone);
         cv.put(EMAIL, this.email);
         cv.put(FACEBOOK, this.facebook);
 
-        int id = (int) database.insert(TABLE, null, cv);
-//        database.close();
-        return id;
+        return (int) database.insert(TABLE, null, cv);
+    }
+
+    public int update(SQLiteDatabase database, int id) {
+
+        ContentValues cv = new ContentValues();
+
+        cv.put(NAME, this.name);
+        cv.put(DISTRICT, this.district);
+        cv.put(NOTES, this.notes);
+        cv.put(PHONE, this.phone);
+        cv.put(EMAIL, this.email);
+        cv.put(FACEBOOK, this.facebook);
+
+        return database.update(TABLE, cv, ID + "=?", new String[]{String.valueOf(id)});
     }
 
     public static ArrayList<PeopleMet> getAll(SQLiteDatabase database) {
@@ -163,24 +162,17 @@ public class PeopleMet {
             int id = cursor.getInt(cursor.getColumnIndex(ID));
             String name = cursor.getString(cursor.getColumnIndex(NAME));
             String notes = cursor.getString(cursor.getColumnIndex(NOTES));
-            String phone = cursor.getString(cursor.getColumnIndex(PHONE));
-            String email = cursor.getString(cursor.getColumnIndex(EMAIL));
             String facebook = cursor.getString(cursor.getColumnIndex(FACEBOOK));
-            String twitter = cursor.getString(cursor.getColumnIndex(TWITTER));
 
             PeopleMet people = new PeopleMet();
             people.setId(id)
                     .setName(name)
                     .setNotes(notes)
-                    .setPhone(phone)
-                    .setEmail(email)
-                    .setFacebook(facebook)
-                    .setTwitter(twitter);
+                    .setFacebook(facebook);
 
             peopleMets.add(people);
         }
         cursor.close();
-//        database.close();
 
         return peopleMets;
     }
@@ -199,7 +191,6 @@ public class PeopleMet {
             String phone = cursor.getString(cursor.getColumnIndex(PHONE));
             String email = cursor.getString(cursor.getColumnIndex(EMAIL));
             String facebook = cursor.getString(cursor.getColumnIndex(FACEBOOK));
-            String church = cursor.getString(cursor.getColumnIndex(CHURCH));
             String district = cursor.getString(cursor.getColumnIndex(DISTRICT));
 
             peopleMet.setId(id)
@@ -208,11 +199,9 @@ public class PeopleMet {
                     .setPhone(phone)
                     .setEmail(email)
                     .setFacebook(facebook)
-                    .setChurch(church)
                     .setDistrict(district);
         }
         cursor.close();
-//        database.close();
 
         return peopleMet;
     }

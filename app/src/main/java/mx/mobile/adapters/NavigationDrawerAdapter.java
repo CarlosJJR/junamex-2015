@@ -1,6 +1,7 @@
 package mx.mobile.adapters;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,16 +17,24 @@ import mx.mobile.junamex.R;
  */
 public class NavigationDrawerAdapter extends BaseAdapter {
 
+    public static final int SCHEDULE = 0;
+    public static final int MAP = 1;
+    public static final int SOCIAL_FEED = 2;
+    public static final int PEOPLE = 3;
+    public static final int MUSEUM = 4;
+    public static final int DIVIDER_POSITION = 5;
+    public static final int SETTINGS = 6;
+
     private String[] items;
-    private TypedArray icons;
     private LayoutInflater inflater;
+    private Resources resources;
 
     public NavigationDrawerAdapter(Context context) {
 
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         items = context.getResources().getStringArray(R.array.navigation_drawer_items);
-        icons = context.getResources().obtainTypedArray(R.array.navigation_drawer_icons);
+        resources = context.getResources();
     }
 
     @Override
@@ -35,12 +44,12 @@ public class NavigationDrawerAdapter extends BaseAdapter {
 
     @Override
     public int getItemViewType(int position) {
-        return position == 4 ? 1 : 0;
+        return position == DIVIDER_POSITION ? 1 : 0;
     }
 
     @Override
     public boolean isEnabled(int position) {
-        return position != 4;
+        return position != DIVIDER_POSITION;
     }
 
     @Override
@@ -61,7 +70,7 @@ public class NavigationDrawerAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        if (position != 4) {
+        if (position != DIVIDER_POSITION) {
 
             ViewHolder holder;
             if (convertView == null) {
@@ -73,6 +82,7 @@ public class NavigationDrawerAdapter extends BaseAdapter {
             } else
                 holder = (ViewHolder) convertView.getTag();
 
+            TypedArray icons = resources.obtainTypedArray(R.array.navigation_drawer_icons);
             holder.title.setText(items[position]);
             holder.icon.setImageResource(icons.getResourceId(position, -1));
 

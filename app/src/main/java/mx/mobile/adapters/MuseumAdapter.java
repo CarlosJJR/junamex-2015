@@ -126,7 +126,7 @@ public class MuseumAdapter extends RecyclerView.Adapter<MuseumAdapter.Holder> {
         {
             Animation animation = AnimationUtils.loadAnimation(activity, android.R.anim.fade_in);
             viewToAnimate.startAnimation(animation);
-            lastPosition = position;
         }
+        lastPosition = position;
     }
 }

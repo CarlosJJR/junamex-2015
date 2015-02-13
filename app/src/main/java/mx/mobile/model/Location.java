@@ -1,5 +1,6 @@
 package mx.mobile.model;
 
+import com.google.android.gms.maps.model.Marker;
 import com.parse.ParseClassName;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
@@ -10,8 +11,12 @@ import com.parse.ParseObject;
 @ParseClassName("Location")
 public class Location extends ParseObject {
 
+    public static final String ID = "_id";
     public static final String NAME = "name";
     public static final String COORDINATES = "coordinates";
+    public static final String OBJECT_ID = "object_id";
+
+    private Marker marker;
 
     public Location() {
         super();
@@ -31,5 +36,13 @@ public class Location extends ParseObject {
 
     public void setCoordinates(ParseGeoPoint coordinates) {
         put(COORDINATES, coordinates);
+    }
+
+    public Marker getMarker() {
+        return marker;
+    }
+
+    public void setMarker(Marker marker) {
+        this.marker = marker;
     }
 }

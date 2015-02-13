@@ -1,5 +1,6 @@
 package mx.mobile.junamex;
 
+import android.accounts.Account;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -26,6 +27,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import mx.mobile.adapters.NavigationDrawerAdapter;
 import mx.mobile.adapters.PeopleAdapter;
 import mx.mobile.model.PeopleMet;
 import mx.mobile.utils.Utilities;
@@ -89,7 +91,7 @@ public class PeopleMetFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        ((MainActivity) activity).onSectionAttached(3);
+        ((MainActivity) activity).onSectionAttached(NavigationDrawerAdapter.PEOPLE);
     }
 
     @Override
@@ -117,7 +119,7 @@ public class PeopleMetFragment extends Fragment {
         String rawString = data.getContents();
 
         Intent intent = new Intent(getActivity(), PeopleAddEditActivity.class);
-        intent.putExtra("new_contact", rawString.replace("\\", ""));
+        intent.putExtra(PeopleAddEditActivity.CONTACT_KEY, rawString.replace("\\", ""));
         startActivityForResult(intent, REQUEST_CODE);
     }
 

@@ -28,6 +28,8 @@ public class Event extends ParseObject {
     public static final String SPEAKER = "speaker";
     public static final String LOCATION = "location";
 
+    public static final String UPDATED_AT = "updatedAt";
+
     public Event() {
         super();
     }
@@ -126,5 +128,10 @@ public class Event extends ParseObject {
 
         long convertedTime = dt.getTime() - (fromOffset - toOffset);
         return new Date(convertedTime);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o.getClass().isInstance(this) && ((Event) o).getUpdatedAt() == this.getUpdatedAt();
     }
 }

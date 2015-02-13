@@ -13,5 +13,4 @@
     <style name="MyProgressBar" parent="@android:style/Widget.ProgressBar.Large">
         <item name="android:indeterminateDrawable">@drawable/indeterminate_progress</item>
     </style>
-
 </resources>

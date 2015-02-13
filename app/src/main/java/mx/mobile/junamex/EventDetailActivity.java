@@ -1,11 +1,14 @@
 package mx.mobile.junamex;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.graphics.Palette;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -26,6 +29,8 @@ import com.parse.ParseQuery;
 import de.hdodenhof.circleimageview.CircleImageView;
 import mx.mobile.model.Event;
 import mx.mobile.utils.ObservableScrollView;
+import mx.mobile.utils.RecyclerViewDividers;
+import mx.mobile.utils.Utilities;
 
 /**
  * Created by desarrollo16 on 13/01/15.
@@ -102,6 +107,9 @@ public class EventDetailActivity extends BaseActivity implements ObservableScrol
         getData(eventId);
 
         mHeaderBox.setBackgroundColor(paletteColor);
+
+        if (Utilities.isLollipop())
+            getWindow().setStatusBarColor(paletteColor);
 
         ViewCompat.setTransitionName(mPhotoView, TRANSITION_NAME_PHOTO);
     }
@@ -207,6 +215,18 @@ public class EventDetailActivity extends BaseActivity implements ObservableScrol
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.session_detail, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == R.id.show_map) {
+            Intent intent = new Intent(this, FragmentActivity.class);
+            intent.putExtra(MapFragment.MARKER_KEY, cachedEvent.getLocation().getObjectId());
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void showMainLayout() {

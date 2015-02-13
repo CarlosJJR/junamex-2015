@@ -51,6 +51,8 @@ import mx.mobile.utils.Utilities;
  */
 public class NavigationDrawerFragment extends Fragment {
 
+
+    private static final int REQUEST_CODE = 4321;
     /**
      * Remember the position of the selected item.
      */
@@ -127,7 +129,7 @@ public class NavigationDrawerFragment extends Fragment {
 
                 Intent intent = new Intent(getActivity(), PeopleMetDetailActivity.class);
                 intent.putExtra(PeopleMet.TABLE, 1);
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_CODE);
             }
         });
 
@@ -141,7 +143,7 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerListView.setAdapter(new NavigationDrawerAdapter(getActivity()));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 
-        new LoadAvatar().execute(true);
+        new LoadAvatar().execute();
         return view;
     }
 
@@ -182,6 +184,7 @@ public class NavigationDrawerFragment extends Fragment {
                     return;
                 }
 
+                ((MainActivity) getActivity()).addMap();
                 getActivity().supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
             }
 
@@ -308,12 +311,21 @@ public class NavigationDrawerFragment extends Fragment {
         void onNavigationDrawerItemSelected(int position);
     }
 
-    private class LoadAvatar extends AsyncTask<Boolean, Void, PeopleMet> {
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            new LoadAvatar().execute();
+        }
+    }
+
+    private class LoadAvatar extends AsyncTask<Void, Void, PeopleMet> {
 
         PeopleMet user;
 
         @Override
-        protected PeopleMet doInBackground(Boolean... params) {
+        protected PeopleMet doInBackground(Void... params) {
 
             user = PeopleMet.getPeople(((MainActivity) getActivity()).getDB(), 1);
 
@@ -336,23 +348,23 @@ public class NavigationDrawerFragment extends Fragment {
 
             userName.setText(user.getName());
 
-            Request.newMeRequest(ParseFacebookUtils.getSession(), new Request.GraphUserCallback() {
-                @Override
-                public void onCompleted(GraphUser graphUser, Response response) {
-
-                    if (graphUser != null) {
-
-                        user.setName(graphUser.getName());
-                        user.setFacebook(graphUser.getId());
-                        user.setEmail(graphUser.getProperty("email").toString());
-
-                        Picasso.with(getActivity())
-                                .load("https://graph.facebook.com/"+user.getFacebook()+"/picture?type=large&height=60")
-                                .into(avatar);
-                        userName.setText(user.getName());
-                    }
-                }
-            }).executeAsync();
+//            Request.newMeRequest(ParseFacebookUtils.getSession(), new Request.GraphUserCallback() {
+//                @Override
+//                public void onCompleted(GraphUser graphUser, Response response) {
+//
+//                    if (graphUser != null) {
+//
+//                        user.setName(graphUser.getName());
+//                        user.setFacebook(graphUser.getId());
+//                        user.setEmail(graphUser.getProperty("email").toString());
+//
+//                        Picasso.with(getActivity())
+//                                .load("https://graph.facebook.com/"+user.getFacebook()+"/picture?type=large&height=60")
+//                                .into(avatar);
+//                        userName.setText(user.getName());
+//                    }
+//                }
+//            }).executeAsync();
 
             if (user.getTempAvatar() != 0)
                 avatar.setImageResource(user.getTempAvatar());

@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rotate xmlns:android="http://schemas.android.com/apk/res/android"
-    android:pivotX="50%"
-    android:pivotY="50%"
-    android:fromDegrees="0"
-    android:toDegrees="360"
-    android:drawable="@drawable/ic_launcher"/>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:top="2dp"
+        android:bottom="2dp"
+        android:right="2dp"
+        android:left="2dp">
+
+        <rotate android:drawable="@drawable/disc"
+            android:fromDegrees="0"
+            android:toDegrees="180"
+            android:pivotX="50%"
+            android:pivotY="50%"/>
+    </item>
+
+    <item android:drawable="@drawable/disc_glow"
+        android:top="15dp"
+        android:bottom="50dp"
+        android:left="50dp"
+        android:right="15dp"/>
+
+</layer-list>

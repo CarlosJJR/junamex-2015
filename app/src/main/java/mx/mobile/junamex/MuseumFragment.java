@@ -28,7 +28,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mx.mobile.adapters.MuseumAdapter;
+import mx.mobile.adapters.NavigationDrawerAdapter;
 import mx.mobile.model.MuseumItem;
+import mx.mobile.utils.RecyclerViewDividers;
 import mx.mobile.utils.Utilities;
 
 /**
@@ -69,10 +71,18 @@ public class MuseumFragment extends Fragment {
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
-        if (Utilities.isPortrait(getActivity()) && Utilities.isHandset(getActivity()))
+        if (Utilities.isPortrait(getActivity()) && Utilities.isHandset(getActivity())) {
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        else
+
+            if (Utilities.isLollipop())
+                recyclerView.addItemDecoration(new RecyclerViewDividers(8, 8, 0, 0));
+        }
+        else {
             recyclerView.setLayoutManager(new StaggeredGridLayoutManager(getResources().getInteger(R.integer.museum_grid_columns), StaggeredGridLayoutManager.VERTICAL));
+
+            if (Utilities.isLollipop())
+                recyclerView.addItemDecoration(new RecyclerViewDividers(8, 8, 8, 8));
+        }
 
         recyclerView.setAdapter(adapter);
 
@@ -89,7 +99,7 @@ public class MuseumFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        ((MainActivity) activity).onSectionAttached(4);
+        ((MainActivity) activity).onSectionAttached(NavigationDrawerAdapter.MUSEUM);
     }
 
     public void getData() {

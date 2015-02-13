@@ -8,12 +8,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/people_photo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop"/>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -46,71 +40,115 @@
         android:orientation="vertical"
         android:padding="@dimen/activity_vertical_margin">
 
-        <TextView
-            android:id="@+id/people_church"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/listPreferredItemHeight"
-            android:gravity="center_vertical"
-            android:drawableLeft="@drawable/temp_icon"
-            android:drawableStart="@drawable/temp_icon"
-            android:drawablePadding="40dp"
-            android:textColor="@color/secondary_text_color"
-            android:visibility="visible"/>
-
-        <TextView
+        <RelativeLayout
             android:id="@+id/people_district"
             android:layout_width="match_parent"
             android:layout_height="?attr/listPreferredItemHeight"
             android:gravity="center_vertical"
-            android:drawableLeft="@drawable/temp_icon"
-            android:drawableStart="@drawable/temp_icon"
-            android:drawablePadding="40dp"
-            android:textColor="@color/secondary_text_color"
-            android:visibility="visible"/>
+            android:visibility="gone">
 
-        <TextView
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/district"/>
+
+            <TextView
+                android:id="@+id/people_district_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="56dp"
+                android:layout_marginStart="56dp"
+                android:textColor="@color/secondary_text_color"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:id="@+id/people_phone"
             android:layout_width="match_parent"
             android:layout_height="?attr/listPreferredItemHeight"
             android:gravity="center_vertical"
-            android:drawableLeft="@drawable/temp_icon"
-            android:drawableStart="@drawable/temp_icon"
-            android:drawablePadding="40dp"
-            android:textColor="@color/secondary_text_color"
-            android:visibility="gone"/>
+            android:visibility="gone">
 
-        <TextView
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/phone"/>
+
+            <TextView
+                android:id="@+id/people_phone_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="56dp"
+                android:layout_marginStart="56dp"
+                android:textColor="@color/secondary_text_color"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:id="@+id/people_email"
             android:layout_width="match_parent"
             android:layout_height="?attr/listPreferredItemHeight"
             android:gravity="center_vertical"
-            android:drawableLeft="@drawable/temp_icon"
-            android:drawableStart="@drawable/temp_icon"
-            android:drawablePadding="40dp"
-            android:textColor="@color/secondary_text_color"
-            android:visibility="gone"/>
+            android:visibility="gone">
 
-        <TextView
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/email"/>
+
+            <TextView
+                android:id="@+id/people_email_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="56dp"
+                android:layout_marginStart="56dp"
+                android:textColor="@color/secondary_text_color"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:id="@+id/people_facebook"
             android:layout_width="match_parent"
             android:layout_height="?attr/listPreferredItemHeight"
             android:gravity="center_vertical"
-            android:drawableLeft="@drawable/temp_icon"
-            android:drawableStart="@drawable/temp_icon"
-            android:drawablePadding="40dp"
-            android:textColor="@color/secondary_text_color"
-            android:visibility="gone"/>
+            android:visibility="gone">
 
-        <TextView
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/facebook"/>
+
+            <TextView
+                android:id="@+id/people_facebook_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="56dp"
+                android:layout_marginStart="56dp"
+                android:textColor="@color/secondary_text_color"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:id="@+id/people_notes"
             android:layout_width="match_parent"
             android:layout_height="?attr/listPreferredItemHeight"
             android:gravity="center_vertical"
-            android:drawableLeft="@drawable/notes"
-            android:drawableStart="@drawable/notes"
-            android:drawablePadding="40dp"
-            android:textColor="@color/secondary_text_color"
-            android:visibility="gone"/>
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/notes"/>
+
+            <TextView
+                android:id="@+id/people_notes_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="56dp"
+                android:layout_marginStart="56dp"
+                android:textColor="@color/secondary_text_color"/>
+
+        </RelativeLayout>
 
     </LinearLayout>
 

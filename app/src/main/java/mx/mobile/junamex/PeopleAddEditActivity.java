@@ -3,6 +3,7 @@ package mx.mobile.junamex;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import com.melnykov.fab.FloatingActionButton;
@@ -17,19 +18,26 @@ import mx.mobile.model.PeopleMet;
  */
 public class PeopleAddEditActivity extends BaseActivity implements View.OnClickListener{
 
-    private EditText nameField, churchField, phoneField, emailField, notesField;
+    public static final String CONTACT_KEY = "contact";
+    public static final String EDIT_KEY = "edit";
+
+    private EditText nameField, phoneField, emailField, notesField;
     private AutoCompleteTextView districtField;
+    boolean isEditing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         nameField = (EditText) findViewById(R.id.add_name);
-        churchField = (EditText) findViewById(R.id.add_church);
         districtField = (AutoCompleteTextView) findViewById(R.id.add_district);
         phoneField = (EditText) findViewById(R.id.add_phone);
         emailField = (EditText) findViewById(R.id.add_email);
         notesField = (EditText) findViewById(R.id.add_notes);
+
+        String[] districts = getResources().getStringArray(R.array.districts);
+        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.item_dropdown, districts);
+        districtField.setAdapter(adapter);
 
         FloatingActionButton actionButton = (FloatingActionButton) findViewById(R.id.save_button);
         actionButton.setOnClickListener(this);
@@ -37,27 +45,32 @@ public class PeopleAddEditActivity extends BaseActivity implements View.OnClickL
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
-            String json = extras.getString("new_contact");
+            String json = extras.getString(CONTACT_KEY);
+            isEditing = extras.getBoolean(EDIT_KEY, false);
 
             try {
                 JSONObject object = new JSONObject(json);
 
+                int peopleId = object.getInt(PeopleMet.ID);
                 String name = object.getString(PeopleMet.NAME);
-                String church = object.getString(PeopleMet.CHURCH);
                 String district = object.getString(PeopleMet.DISTRICT);
                 String phone = object.getString(PeopleMet.PHONE);
                 String email = object.getString(PeopleMet.EMAIL);
+                String notes = object.getString(PeopleMet.NOTES);
 
                 nameField.setText(name);
-                churchField.setText(church);
                 districtField.setText(district);
                 phoneField.setText(phone);
                 emailField.setText(email);
 
+                if (isEditing) {
+                    notesField.setText(notes);
+                    nameField.setTag(peopleId);
+                }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
         }
     }
 
@@ -70,14 +83,14 @@ public class PeopleAddEditActivity extends BaseActivity implements View.OnClickL
     public void onClick(View v) {
 
         saveChanges();
-        setResult(Activity.RESULT_OK);
         this.finish();
     }
 
     private void saveChanges() {
 
+        boolean changesSaved;
+
         String name = nameField.getText().toString();
-        String church = churchField.getText().toString();
         String district = districtField.getText().toString();
         String email = emailField.getText().toString();
         String phone = phoneField.getText().toString();
@@ -87,10 +100,17 @@ public class PeopleAddEditActivity extends BaseActivity implements View.OnClickL
         peopleMet.setName(name)
                 .setEmail(email)
                 .setPhone(phone)
-                .setChurch(church)
                 .setDistrict(district)
                 .setNotes(notes);
 
-        peopleMet.save(getDB());
+        if (isEditing)
+            changesSaved = peopleMet.update(getDB(), (int) nameField.getTag()) != -1;
+        else
+            changesSaved = peopleMet.save(getDB()) == 1;
+
+        if (changesSaved)
+            setResult(Activity.RESULT_OK);
+        else
+            setResult(Activity.RESULT_CANCELED);
     }
 }

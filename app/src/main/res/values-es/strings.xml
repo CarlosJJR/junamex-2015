@@ -9,13 +9,23 @@
     <string-array name="navigation_drawer_items">
         <item>Horario</item>
         <item>Mapa</item>
+        <item>En la red</item>
         <item>Gente que conocí</item>
         <item>Museo Wesley</item>
         <item>list_divider</item>
         <item>Ajustes</item>
     </string-array>
+
+
     <string name="show_map">Ver mapa</string>
     <string name="rate_session">Calificar</string>
-    <string name="nothing_to_see">Por ahora no hay nada aqui. Regresa depués</string>
+    <string name="nothing_to_see">Por ahora no hay nada aquí. Regresa depués</string>
+    <string name="default_name">Mi perfil</string>
+    <string name="district">Distrito</string>
+    <string name="edit">Editar</string>
+    <string name="error_loading">Oh oh, algo salió mal.\nToca para reintentar</string>
+    <string name="name">Nombre</string>
+    <string name="no_people">Aún no tienes contactos. ¿Porque no agregas a alguien?</string>
+    <string name="notes">Notas</string>
 
 </resources>
