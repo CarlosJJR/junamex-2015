@@ -128,7 +128,6 @@ public class ScheduleFragment extends Fragment {
         query.setCachePolicy(ParseQuery.CachePolicy.CACHE_THEN_NETWORK);
         query.whereGreaterThan(Event.START_TIME, dayStart);
         query.whereLessThan(Event.START_TIME, dayEnd);
-        query.whereGreaterThan(Event.UPDATED_AT, getLastUpdated());
         query.orderByAscending(Event.START_TIME);
 
         loadingView.setVisibility(View.VISIBLE);
@@ -155,21 +154,6 @@ public class ScheduleFragment extends Fragment {
         });
     }
 
-    private Date getLastUpdated() {
-
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.YEAR, 2014);
-        Date lastUpdate = c.getTime();
-
-        for (Event event : eventList) {
-
-            if (event.getUpdatedAt().after(lastUpdate))
-                lastUpdate = event.getUpdatedAt();
-        }
-        return lastUpdate;
-    }
-
-
     private class ParseData extends AsyncTask<List<Event>, Void, Boolean> {
 
         @Override
@@ -183,15 +167,13 @@ public class ScheduleFragment extends Fragment {
                 listUpdated = true;
             } else {
 
-                for (int i = 0; i < eventList.size(); i++) {
-                    for (Event event : incoming) {
+                Date currentDate = getLastUpdated(eventList);
+                Date newestDate = getLastUpdated(incoming);
 
-                        Event currentEvent = eventList.get(i);
-                        if (event.getObjectId().equals(currentEvent.getObjectId())) {
-                            eventList.set(i, event);
-                            listUpdated = true;
-                        }
-                    }
+                if (newestDate.after(currentDate)) {
+                    eventList.clear();
+                    eventList.addAll(incoming);
+                    listUpdated = true;
                 }
             }
             return listUpdated;
@@ -210,6 +192,20 @@ public class ScheduleFragment extends Fragment {
             if (eventList.isEmpty())
                 emptyView.setVisibility(View.VISIBLE);
 
+        }
+
+        private Date getLastUpdated(List<Event> list) {
+
+            Calendar c = Calendar.getInstance();
+            c.set(Calendar.YEAR, 2014);
+            Date lastUpdate = c.getTime();
+
+            for (Event event : list) {
+
+                if (event.getUpdatedAt().after(lastUpdate))
+                    lastUpdate = event.getUpdatedAt();
+            }
+            return lastUpdate;
         }
     }
 }
