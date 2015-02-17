@@ -1,11 +1,14 @@
 package mx.mobile.junamex;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -122,10 +125,12 @@ public class ScheduleFragment extends Fragment {
         c.add(Calendar.DATE, 1);
         Date dayEnd = c.getTime();
 
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        ParseQuery.CachePolicy cachePolicy = prefs.getBoolean("auto_refresh_data", true) ? ParseQuery.CachePolicy.CACHE_THEN_NETWORK : ParseQuery.CachePolicy.CACHE_ELSE_NETWORK;
 
         ParseQuery<Event> query = ParseQuery.getQuery(Event.class);
         query.include(Event.LOCATION);
-        query.setCachePolicy(ParseQuery.CachePolicy.CACHE_THEN_NETWORK);
+        query.setCachePolicy(cachePolicy);
         query.whereGreaterThan(Event.START_TIME, dayStart);
         query.whereLessThan(Event.START_TIME, dayEnd);
         query.orderByAscending(Event.START_TIME);
@@ -136,14 +141,10 @@ public class ScheduleFragment extends Fragment {
             public void done(List<Event> queriedEventList, ParseException e) {
 
                 if (e == null) {
-
                     new ParseData().execute(queriedEventList);
-
-
                 } else {
-                    //Error
-                    if (isAdded())
-                        Toast.makeText(getActivity(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+
+                    Log.e("ParseQuery<Event>", e.getLocalizedMessage());
 
                     if (e.getCode() != ParseException.CACHE_MISS) {
                         loadingView.setVisibility(View.GONE);
