@@ -1,6 +1,5 @@
 package mx.mobile.adapters;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,6 +8,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -25,8 +26,10 @@ import com.parse.ParseFile;
 import java.util.List;
 
 import mx.mobile.junamex.EventDetailActivity;
+import mx.mobile.junamex.EventDetailFragment;
 import mx.mobile.junamex.R;
 import mx.mobile.model.Event;
+import mx.mobile.utils.Utilities;
 
 /**
  * Created by desarrollo16 on 20/01/15.
@@ -34,10 +37,10 @@ import mx.mobile.model.Event;
 public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHolder> {
 
     private List<Event> eventList;
-    private Activity activity;
+    private FragmentActivity activity;
     private int lastPosition = -1;
 
-    public ScheduleAdapter(Activity activity, List<Event> eventList) {
+    public ScheduleAdapter(FragmentActivity activity, List<Event> eventList) {
         this.eventList = eventList;
         this.activity = activity;
     }
@@ -106,15 +109,23 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         holder.setOnEventClickListener(new ViewHolder.OnEventClickListener() {
             @Override
             public void onEventClicked(int position) {
-                Intent intent = new Intent(activity, EventDetailActivity.class);
 
                 Event event = eventList.get(position);
-                intent.putExtra(EventDetailActivity.EVENT_KEY, event.getObjectId());
+                Bundle extras = new Bundle();
+                extras.putString(EventDetailFragment.EVENT_KEY, event.getObjectId());
 
                 if (event.getPaletteColor() != 0)
-                    intent.putExtra(EventDetailActivity.PALETTE_KEY, event.getPaletteColor());
+                    extras.putInt(EventDetailFragment.PALETTE_KEY, event.getPaletteColor());
 
-                activity.startActivity(intent);
+                if (Utilities.isHandset(activity)) {
+                    Intent intent = new Intent(activity, EventDetailActivity.class);
+                    intent.putExtras(extras);
+                    activity.startActivity(intent);
+                } else {
+
+                    EventDetailFragment detailFragment = EventDetailFragment.newInstance(extras);
+                    detailFragment.show(activity.getSupportFragmentManager(), "dialog");
+                }
             }
         });
     }

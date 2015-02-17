@@ -27,5 +27,11 @@
     <string name="name">Nombre</string>
     <string name="no_people">Aún no tienes contactos. ¿Porque no agregas a alguien?</string>
     <string name="notes">Notas</string>
+    <string name="friday">Viernes</string>
+    <string name="saturday">Sábado</string>
+    <string name="save_event">Guardar evento</string>
+    <string name="thursday">Jueves</string>
+    <string name="tuesday">Martes</string>
+    <string name="wednesday">Miércoles</string>
 
 </resources>

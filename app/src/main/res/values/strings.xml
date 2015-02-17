@@ -65,6 +65,11 @@
     <string name="district">District</string>
     <string name="name">Name</string>
     <string name="save_event">Save event</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
 
     <string-array name="districts">
         <item>Norte</item>

@@ -136,4 +136,8 @@ public class Utilities {
     public static boolean isLollipop() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
     }
+
+    public static boolean isVersionOrOlder(int version) {
+        return Build.VERSION.SDK_INT >= version;
+    }
 }

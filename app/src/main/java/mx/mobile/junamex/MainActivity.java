@@ -14,6 +14,8 @@ import android.support.v4.widget.DrawerLayout;
 
 import com.parse.ParseFacebookUtils;
 
+import mx.mobile.utils.Utilities;
+
 import static mx.mobile.adapters.NavigationDrawerAdapter.*;
 
 
@@ -73,9 +75,14 @@ public class MainActivity extends BaseActivity
         switch (position) {
 
             case SCHEDULE:
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, new ScheduleViewPagerFragment())
-                        .commit();
+                if (Utilities.isHandset(this))
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.container, new ScheduleViewPagerFragment())
+                            .commit();
+                else
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.container, new HorizontalScrollFragment())
+                            .commit();
                 break;
 
             case MAP:
