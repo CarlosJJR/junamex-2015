@@ -35,7 +35,7 @@ import mx.mobile.utils.Utilities;
 /**
  * Created by desarrollo16 on 30/01/15.
  */
-public class PeopleMetFragment extends Fragment {
+public class PeopleMetFragment extends BaseFragment {
 
     public static final int REQUEST_CODE = 1234;
 
@@ -89,9 +89,8 @@ public class PeopleMetFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        ((MainActivity) activity).onSectionAttached(NavigationDrawerAdapter.PEOPLE);
+    public int getDrawerPosition() {
+        return NavigationDrawerAdapter.PEOPLE;
     }
 
     @Override

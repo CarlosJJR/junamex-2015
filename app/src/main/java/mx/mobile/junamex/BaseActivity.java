@@ -1,10 +1,14 @@
 package mx.mobile.junamex;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+
+import com.parse.ParseQuery;
 
 import mx.mobile.db.DatabaseHelper;
 
@@ -48,5 +52,12 @@ public abstract class BaseActivity extends ActionBarActivity {
         }
 
         return true;
+    }
+
+    public ParseQuery.CachePolicy getCachePolicy() {
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        return prefs.getBoolean("auto_refresh_data", true) ?
+                ParseQuery.CachePolicy.CACHE_THEN_NETWORK : ParseQuery.CachePolicy.CACHE_ELSE_NETWORK;
     }
 }

@@ -33,7 +33,7 @@ import mx.mobile.utils.Utilities;
 /**
  * Created by desarrollo16 on 20/01/15.
  */
-public class ScheduleFragment extends Fragment {
+public class ScheduleFragment extends BaseFragment {
 
     public static final int DAYS_OF_JUNAMEX = 5;
 
@@ -105,9 +105,8 @@ public class ScheduleFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        ((MainActivity) activity).onSectionAttached(NavigationDrawerAdapter.SCHEDULE);
+    public int getDrawerPosition() {
+        return NavigationDrawerAdapter.SCHEDULE;
     }
 
     private void loadDataForDay(String day) {
@@ -125,12 +124,10 @@ public class ScheduleFragment extends Fragment {
         c.add(Calendar.DATE, 1);
         Date dayEnd = c.getTime();
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        ParseQuery.CachePolicy cachePolicy = prefs.getBoolean("auto_refresh_data", true) ? ParseQuery.CachePolicy.CACHE_THEN_NETWORK : ParseQuery.CachePolicy.CACHE_ELSE_NETWORK;
 
         ParseQuery<Event> query = ParseQuery.getQuery(Event.class);
         query.include(Event.LOCATION);
-        query.setCachePolicy(cachePolicy);
+        query.setCachePolicy(((MainActivity) getActivity()).getCachePolicy());
         query.whereGreaterThan(Event.START_TIME, dayStart);
         query.whereLessThan(Event.START_TIME, dayEnd);
         query.orderByAscending(Event.START_TIME);

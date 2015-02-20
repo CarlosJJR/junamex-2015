@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -34,6 +36,7 @@ import com.parse.ParseQuery;
 import de.hdodenhof.circleimageview.CircleImageView;
 import mx.mobile.model.Event;
 import mx.mobile.utils.ObservableScrollView;
+import mx.mobile.utils.Utilities;
 
 /**
  * Created by desarrollo16 on 17/02/15.
@@ -226,7 +229,7 @@ public class EventDetailFragment extends DialogFragment implements ObservableScr
             this.toolbar = toolbar;
 
         toolbar.setNavigationIcon(isDialog
-                ? R.drawable.abc_ic_clear_mtrl_alpha : R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+                ? R.drawable.ic_clear : R.drawable.ic_back);
             toolbar.inflateMenu(R.menu.session_detail);
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override

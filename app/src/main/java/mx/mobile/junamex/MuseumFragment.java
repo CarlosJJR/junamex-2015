@@ -16,6 +16,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.LayoutAnimationController;
+import android.view.animation.TranslateAnimation;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -36,7 +41,7 @@ import mx.mobile.utils.Utilities;
 /**
  * Created by desarrollo16 on 29/01/15.
  */
-public class MuseumFragment extends Fragment {
+public class MuseumFragment extends BaseFragment {
 
     private ArrayList<MuseumItem> museumItems;
     private MuseumAdapter adapter;
@@ -97,9 +102,8 @@ public class MuseumFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        ((MainActivity) activity).onSectionAttached(NavigationDrawerAdapter.MUSEUM);
+    public int getDrawerPosition() {
+        return NavigationDrawerAdapter.MUSEUM;
     }
 
     public void getData() {

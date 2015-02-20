@@ -32,7 +32,7 @@ public class MuseumDetailActivity extends BaseActivity {
 
 //        toolbar.setNavigationIcon(shouldBeFloatingWindow
 //                ? R.drawable.ic_ab_close : R.drawable.ic_up);
-        toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        toolbar.setNavigationIcon(R.drawable.ic_back);
         toolbar.setBackgroundResource(R.drawable.dark_gradient_top_to_bottom);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

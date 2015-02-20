@@ -34,122 +34,128 @@
 
     </FrameLayout>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="@dimen/activity_vertical_margin">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:id="@+id/people_district"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/listPreferredItemHeight"
-            android:gravity="center_vertical"
-            android:visibility="gone">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_vertical_margin">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/district"/>
-
-            <TextView
-                android:id="@+id/people_district_text"
+            <RelativeLayout
+                android:id="@+id/people_district"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="56dp"
-                android:layout_marginStart="56dp"
-                android:textColor="@color/secondary_text_color"/>
+                android:layout_height="?attr/listPreferredItemHeight"
+                android:gravity="center_vertical"
+                android:visibility="gone">
 
-        </RelativeLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/district"/>
 
-        <RelativeLayout
-            android:id="@+id/people_phone"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/listPreferredItemHeight"
-            android:gravity="center_vertical"
-            android:visibility="gone">
+                <TextView
+                    android:id="@+id/people_district_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="56dp"
+                    android:layout_marginStart="56dp"
+                    android:textColor="@color/secondary_text_color"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/phone"/>
+            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/people_phone_text"
+            <RelativeLayout
+                android:id="@+id/people_phone"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="56dp"
-                android:layout_marginStart="56dp"
-                android:textColor="@color/secondary_text_color"/>
+                android:layout_height="?attr/listPreferredItemHeight"
+                android:gravity="center_vertical"
+                android:visibility="gone">
 
-        </RelativeLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/phone"/>
 
-        <RelativeLayout
-            android:id="@+id/people_email"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/listPreferredItemHeight"
-            android:gravity="center_vertical"
-            android:visibility="gone">
+                <TextView
+                    android:id="@+id/people_phone_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="56dp"
+                    android:layout_marginStart="56dp"
+                    android:textColor="@color/secondary_text_color"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/email"/>
+            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/people_email_text"
+            <RelativeLayout
+                android:id="@+id/people_email"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="56dp"
-                android:layout_marginStart="56dp"
-                android:textColor="@color/secondary_text_color"/>
+                android:layout_height="?attr/listPreferredItemHeight"
+                android:gravity="center_vertical"
+                android:visibility="gone">
 
-        </RelativeLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/email"/>
 
-        <RelativeLayout
-            android:id="@+id/people_facebook"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/listPreferredItemHeight"
-            android:gravity="center_vertical"
-            android:visibility="gone">
+                <TextView
+                    android:id="@+id/people_email_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="56dp"
+                    android:layout_marginStart="56dp"
+                    android:textColor="@color/secondary_text_color"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/facebook"/>
+            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/people_facebook_text"
+            <RelativeLayout
+                android:id="@+id/people_facebook"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="56dp"
-                android:layout_marginStart="56dp"
-                android:textColor="@color/secondary_text_color"/>
+                android:layout_height="?attr/listPreferredItemHeight"
+                android:gravity="center_vertical"
+                android:visibility="gone">
 
-        </RelativeLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/facebook"/>
 
-        <RelativeLayout
-            android:id="@+id/people_notes"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/listPreferredItemHeight"
-            android:gravity="center_vertical"
-            android:visibility="gone">
+                <TextView
+                    android:id="@+id/people_facebook_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="56dp"
+                    android:layout_marginStart="56dp"
+                    android:textColor="@color/secondary_text_color"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/notes"/>
+            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/people_notes_text"
+            <RelativeLayout
+                android:id="@+id/people_notes"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="56dp"
-                android:layout_marginStart="56dp"
-                android:textColor="@color/secondary_text_color"/>
+                android:layout_height="?attr/listPreferredItemHeight"
+                android:gravity="center_vertical"
+                android:visibility="gone">
 
-        </RelativeLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/notes"/>
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/people_notes_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="56dp"
+                    android:layout_marginStart="56dp"
+                    android:textColor="@color/secondary_text_color"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>
