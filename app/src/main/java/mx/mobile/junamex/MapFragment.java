@@ -103,7 +103,7 @@ public class MapFragment extends SupportMapFragment implements OnMapReadyCallbac
         map.getUiSettings().setCompassEnabled(true);
         map.getUiSettings().setMyLocationButtonEnabled(false);
         map.setMyLocationEnabled(true);
-        map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(18.902072, -98.980203), 17));
 
         map.setOnMapClickListener(this);

@@ -14,6 +14,7 @@
         <item>Museo Wesley</item>
         <item>list_divider</item>
         <item>Ajustes</item>
+        <item>Acerca de</item>
     </string-array>
 
 
@@ -33,5 +34,15 @@
     <string name="thursday">Jueves</string>
     <string name="tuesday">Martes</string>
     <string name="wednesday">Miércoles</string>
+    <string name="tutorial_fifth_page">Haz nuevos amigos</string>
+    <string name="tutorial_fifth_page_subtitle">Comparte tu información y no pierdas a tus nuevos contactos. ¡Sólo escanea y listo!</string>
+    <string name="tutorial_first_page">Bienvenido a Junamex 2015</string>
+    <string name="tutorial_first_page_subtitle">¡Encuentra el mejor contenido de nuestro campamento nacional!\n\nToma un tour de la app</string>
+    <string name="tutorial_fourth_page">Mantente conectado</string>
+    <string name="tutorial_fourth_page_subtitle">Mira lo que sucede en Junamex a través de las redes sociales </string>
+    <string name="tutorial_second_page">¡No te pierdas nada!</string>
+    <string name="tutorial_second_page_subtitle">Consulta el horario de toda la semana y marca tus eventos favoritos para recibir recordatorios</string>
+    <string name="tutorial_third_page">Siempre en el lugar preciso</string>
+    <string name="tutorial_third_page_subtitle">¿Primera vez en el Club Dorados?\nNo hay problema. Con el mapa interactivo siempre estarás en el lugar correcto.</string>
 
 </resources>

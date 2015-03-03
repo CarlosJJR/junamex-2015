@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/page_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="48dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/page_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/primary_text_color"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:text="@string/tutorial_first_page"/>
+
+        <TextView
+            android:id="@+id/page_subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/activity_vertical_margin"
+            android:gravity="center"
+            android:textColor="@color/secondary_text_color"
+            android:textSize="18sp"
+            android:text="@string/tutorial_first_page_subtitle"/>
+
+        <ImageView
+            android:id="@+id/page_illustration"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="@dimen/activity_vertical_margin"
+            android:src="@drawable/camp_logo"
+            android:scaleType="fitCenter"/>
+
+        </LinearLayout>
+
+</FrameLayout>

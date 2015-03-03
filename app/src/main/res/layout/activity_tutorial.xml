@@ -9,13 +9,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
+    <me.relex.circleindicator.CircleIndicator
+        android:id="@+id/page_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_gravity="bottom"/>
+
     <Button
-        android:id="@+id/skip_button"
+        android:id="@+id/done_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        style="?attr/buttonBarButtonStyle"
-        android:background="@android:color/transparent"
-        android:text="skip"/>
+        android:text="@string/zxinglegacy_button_done"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        style="?attr/buttonBarButtonStyle"/>
 
 </FrameLayout>

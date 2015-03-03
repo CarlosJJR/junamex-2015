@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -98,11 +97,13 @@ public class EventDetailFragment extends DialogFragment implements ObservableScr
 
         setUpToolbar((Toolbar) view.findViewById(R.id.toolbar));
 
-        mScrollView = (ObservableScrollView) view.findViewById(R.id.scroll_view);
-        mScrollView.addCallbacks(this);
-        ViewTreeObserver vto = mScrollView.getViewTreeObserver();
-        if (vto.isAlive()) {
-            vto.addOnGlobalLayoutListener(mGlobalLayoutListener);
+        if (Utilities.isVersionOrOlder(Build.VERSION_CODES.HONEYCOMB)) {
+            mScrollView = (ObservableScrollView) view.findViewById(R.id.scroll_view);
+            mScrollView.addCallbacks(this);
+            ViewTreeObserver vto = mScrollView.getViewTreeObserver();
+            if (vto.isAlive()) {
+                vto.addOnGlobalLayoutListener(mGlobalLayoutListener);
+            }
         }
 
         mDetailsContainer = view.findViewById(R.id.details_container);
@@ -120,8 +121,6 @@ public class EventDetailFragment extends DialogFragment implements ObservableScr
         String eventId = getArguments().getString(EVENT_KEY);
         paletteColor = getArguments().getInt(PALETTE_KEY, getResources().getColor(R.color.color_primary));
         getData(eventId);
-
-        mHeaderBox.setBackgroundColor(paletteColor);
 
 //        if (Utilities.isVersionOrOlder(Build.VERSION_CODES.KITKAT))
 //            getWindow().setStatusBarColor(Color.DKGRAY);
@@ -301,10 +300,14 @@ public class EventDetailFragment extends DialogFragment implements ObservableScr
 
         String subtitle = getString(R.string.event_detail_subtitle, mEvent.getFormattedTime(getActivity()), mEvent.getLocation().getName());
 
+        mHeaderBox.setBackgroundColor(paletteColor);
         mTitle.setText(mEvent.getEventName());
         mSubtitle.setText(subtitle);
         mAbstract.setText(mEvent.getEventAbstract());
         ParseFile image = mEvent.getEventPhoto();
+
+        if (!Utilities.isVersionOrOlder(Build.VERSION_CODES.HONEYCOMB))
+            toolbar.setBackgroundColor(paletteColor);
 
         mHasPhoto = mEvent.hasPhoto();
 
@@ -314,7 +317,7 @@ public class EventDetailFragment extends DialogFragment implements ObservableScr
                 @Override
                 public void done(byte[] bytes, ParseException e) {
 
-                    if (bytes != null) {
+                    if (bytes != null && paletteColor == getResources().getColor(R.color.color_primary)) {
                         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 
                         Palette.generateAsync(bitmap,

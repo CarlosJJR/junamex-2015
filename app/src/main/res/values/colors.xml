@@ -23,4 +23,17 @@
 
     <color name="background_tab_pressed">#1AFFFFFF</color>
 
+    <color name="tutorial_red">#E75B1F</color>
+    <color name="tutorial_green">#2baf2b</color>
+    <color name="tutorial_yellow">#FBC53E</color>
+    <color name="tutorial_blue">#24B3DD</color>
+
+    <integer-array name="tutorial_colors">
+        <item>@color/white</item>
+        <item>@color/tutorial_red</item>
+        <item>@color/tutorial_yellow</item>
+        <item>@color/tutorial_green</item>
+        <item>@color/tutorial_blue</item>
+    </integer-array>
+
 </resources>

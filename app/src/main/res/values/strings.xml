@@ -23,6 +23,7 @@
         <item>Wesley museum</item>
         <item>list_divider</item>
         <item>Settings</item>
+        <item>About</item>
     </string-array>
 
     <string-array name="navigation_drawer_icons">
@@ -32,6 +33,7 @@
         <item>@drawable/contacts</item>
         <item>@drawable/museum</item>
         <item>list_divider</item>
+        <item>@drawable/settings</item>
         <item>@drawable/settings</item>
     </string-array>
 
@@ -49,11 +51,6 @@
     </string-array>
 
     <string name="rate_session">Rate</string>
-
-    <string name="title_activity_test" translatable="false">TestActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="title_activity_turorial" translatable="false">Tutorial</string>
 
     <string name="hello_world" translatable="false">Hello world!</string>
     <string name="nothing_to_see">Nothing here yet. Come back later!</string>
@@ -87,6 +84,41 @@
         <item>Sur pacífico</item>
         <item>Oaxaca</item>
         <item>Oaxaca norponiente</item>
+    </string-array>
+
+    <string name="tutorial_first_page">Welcome to Junamex 2015</string>
+    <string name="tutorial_first_page_subtitle">Find the best content of our national camp.\n\nTake a tour of the app</string>
+    <string name="tutorial_second_page">Don\'t miss your event!</string>
+    <string name="tutorial_second_page_subtitle">Find the schedule for the week and mark your favorite events to get reminders</string>
+    <string name="tutorial_third_page">Be in the right place</string>
+    <string name="tutorial_third_page_subtitle">First time in Club Dorados?\nNo problem! With our map you\'ll always find your way</string>
+    <string name="tutorial_fourth_page">Stay connected</string>
+    <string name="tutorial_fourth_page_subtitle">See what Junamex is doing in the social networks</string>
+    <string name="tutorial_fifth_page">Make new friends</string>
+    <string name="tutorial_fifth_page_subtitle">Share your info and save new friends. Just scan and save!</string>
+
+    <string-array name="tutorial_titles">
+        <item>@string/tutorial_first_page</item>
+        <item>@string/tutorial_second_page</item>
+        <item>@string/tutorial_third_page</item>
+        <item>@string/tutorial_fourth_page</item>
+        <item>@string/tutorial_fifth_page</item>
+    </string-array>
+
+    <string-array name="tutorial_subtitles">
+        <item>@string/tutorial_first_page_subtitle</item>
+        <item>@string/tutorial_second_page_subtitle</item>
+        <item>@string/tutorial_third_page_subtitle</item>
+        <item>@string/tutorial_fourth_page_subtitle</item>
+        <item>@string/tutorial_fifth_page_subtitle</item>
+    </string-array>
+
+    <string-array name="tutorial_images">
+        <item>@drawable/camp_logo</item>
+        <item>@drawable/tutorial_page_one</item>
+        <item>@drawable/tutorial_page_two</item>
+        <item>@drawable/tutorial_page_three</item>
+        <item>@drawable/tutorial_page_four</item>
     </string-array>
 
 </resources>
