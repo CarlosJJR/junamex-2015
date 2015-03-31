@@ -12,6 +12,7 @@
         android:id="@+id/scroll_view_child"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:minWidth="@dimen/fragment_dialog_min_width"
         android:clipChildren="false">
 
         <ProgressBar
@@ -42,6 +43,7 @@
             android:background="#fff"
             android:visibility="invisible"
             android:paddingTop="16dp"
+            android:paddingBottom="16dp"
             android:clipToPadding="false">
 
             <TextView android:id="@+id/session_abstract"

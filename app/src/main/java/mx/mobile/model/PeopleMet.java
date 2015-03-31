@@ -155,7 +155,7 @@ public class PeopleMet {
     public static ArrayList<PeopleMet> getAll(SQLiteDatabase database) {
 
         ArrayList<PeopleMet> peopleMets = new ArrayList<>();
-        Cursor cursor = database.query(TABLE, null, ID +"!=?", new String[]{"1"}, null, null, null);
+        Cursor cursor = database.query(TABLE, null, ID +"!=?", new String[]{"1"}, null, null, PeopleMet.NAME);
 
         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
 

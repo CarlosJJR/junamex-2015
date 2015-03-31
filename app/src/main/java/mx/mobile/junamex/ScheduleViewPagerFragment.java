@@ -17,6 +17,8 @@ import mx.mobile.ui.PagerSlidingTabStrip;
  */
 public class ScheduleViewPagerFragment extends Fragment {
 
+    public static final String TAG = ScheduleViewPagerFragment.class.getSimpleName();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

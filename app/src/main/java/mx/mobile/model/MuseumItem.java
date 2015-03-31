@@ -11,7 +11,7 @@ import com.parse.ParseObject;
 public class MuseumItem extends ParseObject {
 
     public static final String NAME = "name";
-    public static final String DESCRIPTION = "description";
+    public static final String DESCRIPTION = "information";
     public static final String IMAGE = "image";
 
     public MuseumItem() {

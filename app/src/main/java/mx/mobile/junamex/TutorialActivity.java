@@ -12,12 +12,14 @@ import android.widget.Button;
 
 import me.relex.circleindicator.CircleIndicator;
 import mx.mobile.adapters.TutorialAdapter;
+import mx.mobile.utils.Utilities;
 
 
 public class TutorialActivity extends ActionBarActivity implements ViewPager.PageTransformer, ViewPager.OnPageChangeListener, View.OnClickListener{
 
-    CircleIndicator pageIndicator;
-    Button doneButton;
+    private CircleIndicator pageIndicator;
+    private Button doneButton;
+    private boolean fromInfoPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +29,10 @@ public class TutorialActivity extends ActionBarActivity implements ViewPager.Pag
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         boolean tutorialSeen = sp.getBoolean("tutorial_seen", false);
 
-        if (tutorialSeen) {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+        fromInfoPage = getIntent().getBooleanExtra(TELEPHONY_SERVICE, false);
 
-            this.finish();
+        if (tutorialSeen && !fromInfoPage) {
+            launchMainActivity();
         }
 
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
@@ -77,7 +78,35 @@ public class TutorialActivity extends ActionBarActivity implements ViewPager.Pag
 
     @Override
     public void onPageSelected(int position) {
-        if (position == 4) {
+
+        if (Utilities.isLollipop()) {
+            int paletteColor;
+
+            switch (position) {
+
+                case 1:
+                    paletteColor = getResources().getColor(R.color.tutorial_red);
+                    break;
+
+                case 2:
+                    paletteColor = getResources().getColor(R.color.tutorial_yellow);
+                    break;
+
+                case 3:
+                    paletteColor = getResources().getColor(R.color.tutorial_green);
+                    break;
+
+                case 4:
+                    paletteColor = getResources().getColor(R.color.tutorial_blue);
+                    break;
+
+                default:
+                    paletteColor = getResources().getColor(R.color.color_primary);
+            }
+            getWindow().setStatusBarColor(Utilities.getSecondaryColor(paletteColor));
+        }
+
+        if (position == 4 && !fromInfoPage) {
             pageIndicator.setVisibility(View.INVISIBLE);
             doneButton.setVisibility(View.VISIBLE);
         } else {
@@ -90,14 +119,20 @@ public class TutorialActivity extends ActionBarActivity implements ViewPager.Pag
     public void onPageScrollStateChanged(int state) {
     }
 
+    private void launchMainActivity() {
+
+        if (!fromInfoPage) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+            sp.edit().putBoolean("tutorial_seen", true).apply();
+        }
+        finish();
+    }
+
     @Override
     public void onClick(View v) {
-
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        sp.edit().putBoolean("tutorial_seen", true).apply();
-        finish();
+        launchMainActivity();
     }
 }

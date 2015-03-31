@@ -127,7 +127,7 @@ public class NavigationDrawerFragment extends Fragment {
                     mDrawerLayout.closeDrawer(mFragmentContainerView);
                 }
 
-                Intent intent = new Intent(getActivity(), PeopleMetDetailActivity.class);
+                Intent intent = new Intent(getActivity(), PeopleDetailActivity.class);
                 intent.putExtra(PeopleMet.TABLE, 1);
                 startActivityForResult(intent, REQUEST_CODE);
             }
@@ -141,6 +141,7 @@ public class NavigationDrawerFragment extends Fragment {
             }
         });
         mDrawerListView.setAdapter(new NavigationDrawerAdapter(getActivity()));
+        mDrawerListView.addFooterView(Utilities.getEmptyHeaderFooter(getActivity()));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 
         new LoadAvatar().execute();
@@ -226,9 +227,12 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     private void selectItem(int position) {
-        mCurrentSelectedPosition = position;
-        if (mDrawerListView != null) {
-            mDrawerListView.setItemChecked(position, true);
+
+        if (position != NavigationDrawerAdapter.SETTINGS && position != NavigationDrawerAdapter.ABOUT) {
+            mCurrentSelectedPosition = position;
+            if (mDrawerListView != null) {
+                mDrawerListView.setItemChecked(position, true);
+            }
         }
         if (mDrawerLayout != null) {
             mDrawerLayout.closeDrawer(mFragmentContainerView);

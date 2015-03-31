@@ -43,6 +43,8 @@ import mx.mobile.utils.Utilities;
  */
 public class MuseumFragment extends BaseFragment {
 
+    public static final String TAG = MuseumFragment.class.getSimpleName();
+
     private ArrayList<MuseumItem> museumItems;
     private MuseumAdapter adapter;
     private View errorView, emptyView, loadingView;

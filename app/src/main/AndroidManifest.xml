@@ -45,10 +45,12 @@
         </activity>
         <activity android:name=".EventDetailActivity" />
         <activity android:name=".MuseumDetailActivity" />
-        <activity android:name=".PeopleMetDetailActivity" />
+        <activity android:name=".PeopleDetailActivity" />
         <activity android:name=".PeopleAddEditActivity" />
-        <activity android:name=".FragmentActivity" />
+        <activity android:name=".MapActivity" />
         <activity android:name="com.facebook.LoginActivity"/>
+        <activity android:name=".SettingsActivity" android:label="@string/settings" android:theme="@style/AppTheme.NormalActionbar"/>
+        <activity android:name=".AboutActivity" android:label="@string/about"/>
 
         <service android:name="com.parse.PushService" />
 

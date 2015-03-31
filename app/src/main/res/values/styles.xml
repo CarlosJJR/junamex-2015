@@ -10,7 +10,20 @@
         <item name="android:typeface">serif</item>
     </style>
 
+    <style name="AppTheme.NormalActionbar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorAccent">@color/color_accent</item>
+
+        <item name="android:typeface">serif</item>
+    </style>
+
     <style name="MyProgressBar" parent="@android:style/Widget.ProgressBar.Large">
         <item name="android:indeterminateDrawable">@drawable/indeterminate_progress</item>
+    </style>
+
+    <style name="TutorialSize">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
     </style>
 </resources>

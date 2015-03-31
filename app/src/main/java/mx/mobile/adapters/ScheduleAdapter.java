@@ -34,7 +34,10 @@ import mx.mobile.utils.Utilities;
 /**
  * Created by desarrollo16 on 20/01/15.
  */
-public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHolder> {
+public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private final static int LIST_HEADER = 0;
+    private final static int LIST_ITEM = 1;
 
     private List<Event> eventList;
     private FragmentActivity activity;
@@ -46,93 +49,112 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_schedule, parent, false);
-        return new ViewHolder(view);
+        if (viewType == LIST_HEADER) {
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.list_header_8dp, parent, false);
+            return new HeaderHolder(view);
+        } else {
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_schedule, parent, false);
+            return new ViewHolder(view);
+        }
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
 
-        Event event = eventList.get(position);
+        if (viewHolder instanceof ViewHolder) {
+            int adjustedPosition = position - 1;
 
-        holder.time.setText(event.getStartTimeString());
-        holder.name.setText(event.getEventName());
-        holder.location.setText(event.getLocation().getName());
+            final ViewHolder holder = (ViewHolder)viewHolder;
+            Event event = eventList.get(adjustedPosition);
 
-        if (position > 0) {
+            holder.time.setText(event.getStartTimeString());
+            holder.name.setText(event.getEventName());
+            holder.location.setText(event.getLocation().getName());
 
-            Event previousEvent = eventList.get(position - 1);
+            if (adjustedPosition > 0) {
 
-            if (event.getStartTime().after(previousEvent.getStartTime()))
-                holder.time.setVisibility(View.VISIBLE);
+                Event previousEvent = eventList.get(adjustedPosition - 1);
 
-            else holder.time.setVisibility(View.INVISIBLE);
+                if (event.getStartTime().after(previousEvent.getStartTime()))
+                    holder.time.setVisibility(View.VISIBLE);
+
+                else holder.time.setVisibility(View.INVISIBLE);
+            }
+
+            setAnimation(holder.cardView, adjustedPosition);
+
+            GetEventColor task = new GetEventColor();
+            task.setOnEventColorObtainedListener(new GetEventColor.OnEventColorObtainedListener() {
+                @Override
+                public void onEventColorObtained(int eventColor) {
+
+                    StateListDrawable background;
+                    int titleColor, subtitleColor, cardBackgroundColor;
+
+                    if (eventColor != 0) {
+                        background = setCustomBackground(eventColor);
+                        titleColor = Color.WHITE;
+                        subtitleColor = Color.parseColor("#B2FFFFFF");
+                        cardBackgroundColor = eventColor;
+                    } else {
+                        background = (StateListDrawable) activity.getResources().getDrawable(R.drawable.schedule_item_selector);
+                        titleColor = activity.getResources().getColor(R.color.primary_text_color);
+                        subtitleColor = activity.getResources().getColor(R.color.secondary_text_color);
+                        cardBackgroundColor = activity.getResources().getColor(R.color.cardview_light_background);
+                    }
+
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
+                        holder.cardContent.setBackgroundDrawable(background);
+                    else
+                        holder.cardContent.setBackground(background);
+
+                    holder.cardView.setCardBackgroundColor(cardBackgroundColor);
+                    holder.name.setTextColor(titleColor);
+                    holder.location.setTextColor(subtitleColor);
+                }
+            });
+            task.execute(event);
+
+            holder.setOnEventClickListener(new ViewHolder.OnEventClickListener() {
+                @Override
+                public void onEventClicked(int position) {
+
+                    Event event = eventList.get(position - 1);
+                    Bundle extras = new Bundle();
+                    extras.putString(EventDetailFragment.EVENT_KEY, event.getObjectId());
+
+                    if (event.getPaletteColor() != 0)
+                        extras.putInt(EventDetailFragment.PALETTE_KEY, event.getPaletteColor());
+
+                    if (Utilities.isHandset(activity)) {
+                        Intent intent = new Intent(activity, EventDetailActivity.class);
+                        intent.putExtras(extras);
+                        activity.startActivity(intent);
+                    } else {
+
+                        EventDetailFragment detailFragment = EventDetailFragment.newInstance(extras);
+                        detailFragment.show(activity.getSupportFragmentManager(), "dialog");
+                    }
+                }
+            });
         }
-
-        setAnimation(holder.cardView, position);
-
-        GetEventColor task = new GetEventColor();
-        task.setOnEventColorObtainedListener(new GetEventColor.OnEventColorObtainedListener() {
-            @Override
-            public void onEventColorObtained(int eventColor) {
-
-                StateListDrawable background;
-                int titleColor, subtitleColor, cardBackgroundColor;
-
-                if (eventColor != 0) {
-                    background = setCustomBackground(eventColor);
-                    titleColor = Color.WHITE;
-                    subtitleColor =  Color.parseColor("#B2FFFFFF");
-                    cardBackgroundColor = eventColor;
-                } else {
-                    background = (StateListDrawable) activity.getResources().getDrawable(R.drawable.schedule_item_selector);
-                    titleColor = activity.getResources().getColor(R.color.primary_text_color);
-                    subtitleColor = activity.getResources().getColor(R.color.secondary_text_color);
-                    cardBackgroundColor = activity.getResources().getColor(R.color.cardview_light_background);
-                }
-
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
-                    holder.cardContent.setBackgroundDrawable(background);
-                else
-                    holder.cardContent.setBackground(background);
-
-                holder.cardView.setCardBackgroundColor(cardBackgroundColor);
-                holder.name.setTextColor(titleColor);
-                holder.location.setTextColor(subtitleColor);
-            }
-        });
-        task.execute(event);
-
-        holder.setOnEventClickListener(new ViewHolder.OnEventClickListener() {
-            @Override
-            public void onEventClicked(int position) {
-
-                Event event = eventList.get(position);
-                Bundle extras = new Bundle();
-                extras.putString(EventDetailFragment.EVENT_KEY, event.getObjectId());
-
-                if (event.getPaletteColor() != 0)
-                    extras.putInt(EventDetailFragment.PALETTE_KEY, event.getPaletteColor());
-
-                if (Utilities.isHandset(activity)) {
-                    Intent intent = new Intent(activity, EventDetailActivity.class);
-                    intent.putExtras(extras);
-                    activity.startActivity(intent);
-                } else {
-
-                    EventDetailFragment detailFragment = EventDetailFragment.newInstance(extras);
-                    detailFragment.show(activity.getSupportFragmentManager(), "dialog");
-                }
-            }
-        });
     }
 
     @Override
     public int getItemCount() {
-        return eventList.size();
+        return eventList.size() + 1;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (position == 0)
+            return LIST_HEADER;
+
+        return LIST_ITEM;
     }
 
     private StateListDrawable setCustomBackground(int color) {
@@ -177,7 +199,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         }
 
         public interface OnEventClickListener {
-            public void onEventClicked(int position);
+            void onEventClicked(int position);
         }
 
         public void setOnEventClickListener(OnEventClickListener clickListener) {
@@ -187,6 +209,13 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         @Override
         public void onClick(View v) {
             clickListener.onEventClicked(getPosition());
+        }
+    }
+
+    public static class  HeaderHolder extends RecyclerView.ViewHolder {
+
+        public HeaderHolder(View itemView) {
+            super(itemView);
         }
     }
 
@@ -235,7 +264,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         }
 
         public interface OnEventColorObtainedListener {
-            public void onEventColorObtained(int eventColor);
+            void onEventColorObtained(int eventColor);
         }
 
         public void setOnEventColorObtainedListener(OnEventColorObtainedListener colorObtainedListener) {

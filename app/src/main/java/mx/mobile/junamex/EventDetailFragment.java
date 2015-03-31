@@ -122,8 +122,10 @@ public class EventDetailFragment extends DialogFragment implements ObservableScr
         paletteColor = getArguments().getInt(PALETTE_KEY, getResources().getColor(R.color.color_primary));
         getData(eventId);
 
-//        if (Utilities.isVersionOrOlder(Build.VERSION_CODES.KITKAT))
-//            getWindow().setStatusBarColor(Color.DKGRAY);
+        if (Utilities.isLollipop())
+            getActivity()
+                    .getWindow()
+                    .setStatusBarColor(Utilities.getSecondaryColor(paletteColor));
 
         ViewCompat.setTransitionName(mPhotoView, TRANSITION_NAME_PHOTO);
         return view;
@@ -244,7 +246,7 @@ public class EventDetailFragment extends DialogFragment implements ObservableScr
                 public boolean onMenuItemClick(MenuItem menuItem) {
 
                     if (menuItem.getItemId() == R.id.show_map) {
-                        Intent intent = new Intent(getActivity(), FragmentActivity.class);
+                        Intent intent = new Intent(getActivity(), MapActivity.class);
                         intent.putExtra(MapFragment.MARKER_KEY, cachedEvent.getLocation().getObjectId());
                         startActivity(intent);
                         return true;
@@ -293,6 +295,9 @@ public class EventDetailFragment extends DialogFragment implements ObservableScr
 
     private void updateLayout(Event mEvent) {
 
+        if (!isAdded())
+            return;
+
         if (cachedEvent != null) {
             if (!mEvent.getUpdatedAt().after(cachedEvent.getUpdatedAt()))
                 return;
@@ -330,6 +335,12 @@ public class EventDetailFragment extends DialogFragment implements ObservableScr
                                             paletteColor = vibrant.getRgb();
                                             mHeaderBox.setBackgroundColor(paletteColor);
                                             mSpeakersHeader.setTextColor(paletteColor);
+
+                                            if (Utilities.isLollipop())
+                                                getActivity()
+                                                        .getWindow()
+                                                        .setStatusBarColor(Utilities.getSecondaryColor(paletteColor));
+
                                         }
                                     }
                                 });

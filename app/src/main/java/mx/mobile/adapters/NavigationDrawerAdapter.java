@@ -24,6 +24,7 @@ public class NavigationDrawerAdapter extends BaseAdapter {
     public static final int MUSEUM = 4;
     public static final int DIVIDER_POSITION = 5;
     public static final int SETTINGS = 6;
+    public static final int ABOUT = 7;
 
     private String[] items;
     private LayoutInflater inflater;

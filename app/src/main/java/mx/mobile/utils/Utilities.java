@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -139,5 +141,44 @@ public class Utilities {
 
     public static boolean isVersionOrOlder(int version) {
         return Build.VERSION.SDK_INT >= version;
+    }
+
+    public static View getEmptyHeaderFooter(Context context) {
+        return LayoutInflater.from(context).inflate(R.layout.list_header_8dp, null);
+    }
+
+    public static int getSecondaryColor(int color) {
+
+        double factor = 0.8;
+        int a = Color.alpha(color);
+        int r = Color.red(color);
+        int g = Color.green(color);
+        int b = Color.blue(color);
+
+        return Color.argb( a,
+                Math.max((int)(r * factor), 0),
+                Math.max((int)(g * factor), 0),
+                Math.max((int)(b * factor), 0));
+    }
+
+    public static String getCodename() {
+
+        String codeName = "Unknown API";
+        Field[] fields = Build.VERSION_CODES.class.getFields();
+        for (Field field : fields) {
+            String fieldName = field.getName();
+            int fieldValue = -1;
+
+            try {
+                fieldValue = field.getInt(new Object());
+            } catch (IllegalArgumentException | IllegalAccessException | NullPointerException e) {
+                e.printStackTrace();
+            }
+
+            if (fieldValue == Build.VERSION.SDK_INT) {
+                codeName = fieldName;
+            }
+        }
+        return codeName;
     }
 }

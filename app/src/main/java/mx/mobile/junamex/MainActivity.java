@@ -77,18 +77,18 @@ public class MainActivity extends BaseActivity
             case SCHEDULE:
                 if (Utilities.isHandset(this))
                     fragmentManager.beginTransaction()
-                            .replace(R.id.container, new ScheduleViewPagerFragment())
+                            .replace(R.id.container, new ScheduleViewPagerFragment(), ScheduleViewPagerFragment.TAG)
                             .commit();
                 else
                     fragmentManager.beginTransaction()
-                            .replace(R.id.container, new HorizontalScrollFragment())
+                            .replace(R.id.container, new ScheduleHorizontalScrollFragment(), ScheduleHorizontalScrollFragment.TAG)
                             .commit();
                 break;
 
             case MAP:
                 if (requestingMapPermission) {
                     fragmentManager.beginTransaction()
-                            .replace(R.id.container, new MapFragment())
+                            .replace(R.id.container, new MapFragment(), MapFragment.TAG)
                             .commit();
                     requestingMapPermission = false;
                 } else
@@ -97,20 +97,22 @@ public class MainActivity extends BaseActivity
 
             case PEOPLE:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, new PeopleMetFragment(), "people_fragment")
+                        .replace(R.id.container, new PeopleFragment(), PeopleFragment.TAG)
                         .commit();
                 break;
 
             case MUSEUM:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, new MuseumFragment())
+                        .replace(R.id.container, new MuseumFragment(), MuseumFragment.TAG)
                         .commit();
                 break;
 
             case SETTINGS:
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, new SettingsFragment())
-                        .commit();
+                startActivity(new Intent(this, SettingsActivity.class));
+                break;
+
+            case ABOUT:
+                startActivity(new Intent(this, AboutActivity.class));
                 break;
 
             default:

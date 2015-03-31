@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
 
     <LinearLayout
         android:id="@+id/page_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="100dp"
+        style="@style/TutorialSize"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="96dp"
         android:layout_marginBottom="48dp"
         android:orientation="vertical">
 
@@ -19,7 +20,7 @@
             android:textColor="@color/primary_text_color"
             android:textSize="22sp"
             android:textStyle="bold"
-            android:text="@string/tutorial_first_page"/>
+            android:text="@string/tutorial_second_page"/>
 
         <TextView
             android:id="@+id/page_subtitle"
@@ -29,7 +30,7 @@
             android:gravity="center"
             android:textColor="@color/secondary_text_color"
             android:textSize="18sp"
-            android:text="@string/tutorial_first_page_subtitle"/>
+            android:text="@string/tutorial_second_page_subtitle"/>
 
         <ImageView
             android:id="@+id/page_illustration"
@@ -37,7 +38,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:padding="@dimen/activity_vertical_margin"
-            android:src="@drawable/camp_logo"
+            android:src="@drawable/tutorial_page_one"
             android:scaleType="fitCenter"/>
 
         </LinearLayout>

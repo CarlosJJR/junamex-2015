@@ -20,7 +20,7 @@ import java.util.TimeZone;
 public class Event extends ParseObject {
 
     public static final String NAME = "name";
-    public static final String ABSTRACT = "description";
+    public static final String ABSTRACT = "abstract";
     public static final String START_TIME = "startTime";
     public static final String DURATION = "durationMinutes";
     public static final String PHOTO = "eventPhoto";

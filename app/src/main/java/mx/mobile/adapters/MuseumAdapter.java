@@ -58,6 +58,8 @@ public class MuseumAdapter extends RecyclerView.Adapter<MuseumAdapter.Holder> {
             holder.imageHolder.setPlaceholder(activity.getResources().getDrawable(R.drawable.museum_placeholder));
             holder.imageHolder.setParseFile(imageFile);
             holder.imageHolder.loadInBackground();
+        } else {
+            holder.imageHolder.setImageBitmap(null);
         }
 
         holder.title.setText(item.getName());

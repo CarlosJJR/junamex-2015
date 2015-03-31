@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import mx.mobile.junamex.PeopleMetDetailActivity;
+import mx.mobile.junamex.PeopleDetailActivity;
 import mx.mobile.junamex.R;
 import mx.mobile.model.PeopleMet;
 import mx.mobile.utils.Utilities;
@@ -53,7 +53,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.Holder> {
 //                        ActivityOptionsCompat.makeSceneTransitionAnimation(
 //                                activity, v.findViewById(R.id.image_holder), MuseumDetailActivity.TRANSITION);
 
-                Intent intent = new Intent(activity, PeopleMetDetailActivity.class);
+                Intent intent = new Intent(activity, PeopleDetailActivity.class);
                 intent.putExtra(PeopleMet.TABLE, peopleList.get(position).getId());
                 activity.startActivity(intent);
 //                ActivityCompat.startActivity(activity, intent, options.toBundle());

@@ -37,6 +37,7 @@ import mx.mobile.utils.Utilities;
 public class MapFragment extends SupportMapFragment implements OnMapReadyCallback, SearchView.OnQueryTextListener, GoogleMap.OnMapClickListener {
 
     public static final String MARKER_KEY = "marker";
+    public static final String TAG = MapFragment.class.getSimpleName();
 
     private CursorAdapter suggestionsAdapter;
     private List<Location> locationsList;

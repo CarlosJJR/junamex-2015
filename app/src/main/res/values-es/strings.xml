@@ -6,17 +6,14 @@
     <string name="speakers_header">Ponentes</string>
     <string name="event_detail_subtitle">%1$s en %2$s</string>
 
-    <string-array name="navigation_drawer_items">
-        <item>Horario</item>
-        <item>Mapa</item>
-        <item>En la red</item>
-        <item>Gente que conocí</item>
-        <item>Museo Wesley</item>
-        <item>list_divider</item>
-        <item>Ajustes</item>
-        <item>Acerca de</item>
-    </string-array>
-
+    <string name="schedule">Horario</string>
+    <string name="map">Mapa</string>
+    <string name="social_feed">En la red</string>
+    <string name="people_met">Gente que conocí</string>
+    <string name="wesley_museum">Museo Wesley</string>
+    <string name="dummy_string">list_divider</string>
+    <string name="settings">Ajustes</string>
+    <string name="about">Acerca de</string>
 
     <string name="show_map">Ver mapa</string>
     <string name="rate_session">Calificar</string>
@@ -44,5 +41,12 @@
     <string name="tutorial_second_page_subtitle">Consulta el horario de toda la semana y marca tus eventos favoritos para recibir recordatorios</string>
     <string name="tutorial_third_page">Siempre en el lugar preciso</string>
     <string name="tutorial_third_page_subtitle">¿Primera vez en el Club Dorados?\nNo hay problema. Con el mapa interactivo siempre estarás en el lugar correcto.</string>
+    <string name="version">"Versión: "</string>
+    <string name="comeback_facebook">Comeback en facebook</string>
+    <string name="comeback_web">Comeback en la web</string>
+    <string name="rate_app">Califica la app</string>
+    <string name="share_app">Compartir</string>
+    <string name="show_tutorial">Ver tutorial</string>
+    <string name="share_text">¡Checa la app oficial de Junamex! ¡Está increible!</string>
 
 </resources>

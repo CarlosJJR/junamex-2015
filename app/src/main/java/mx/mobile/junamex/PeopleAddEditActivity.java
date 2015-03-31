@@ -51,19 +51,26 @@ public class PeopleAddEditActivity extends BaseActivity implements View.OnClickL
             try {
                 JSONObject object = new JSONObject(json);
 
-                int peopleId = object.getInt(PeopleMet.ID);
                 String name = object.getString(PeopleMet.NAME);
                 String district = object.getString(PeopleMet.DISTRICT);
                 String phone = object.getString(PeopleMet.PHONE);
                 String email = object.getString(PeopleMet.EMAIL);
-                String notes = object.getString(PeopleMet.NOTES);
 
-                nameField.setText(name);
+
+                if (name.equals(getString(R.string.default_name)))
+                    nameField.setHint(name);
+                else
+                    nameField.setText(name);
+
                 districtField.setText(district);
                 phoneField.setText(phone);
                 emailField.setText(email);
 
                 if (isEditing) {
+
+                    int peopleId = object.getInt(PeopleMet.ID);
+                    String notes = object.getString(PeopleMet.NOTES);
+
                     notesField.setText(notes);
                     nameField.setTag(peopleId);
                 }
@@ -104,9 +111,9 @@ public class PeopleAddEditActivity extends BaseActivity implements View.OnClickL
                 .setNotes(notes);
 
         if (isEditing)
-            changesSaved = peopleMet.update(getDB(), (int) nameField.getTag()) != -1;
+            changesSaved = peopleMet.update(getDB(), (int) nameField.getTag()) == 1;
         else
-            changesSaved = peopleMet.save(getDB()) == 1;
+            changesSaved = peopleMet.save(getDB()) != -1;
 
         if (changesSaved)
             setResult(Activity.RESULT_OK);
