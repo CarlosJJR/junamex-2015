@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="mx.mobile.junamex" >
+    package="mx.mobiles.junamex" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -14,7 +14,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <permission
-        android:name="mx.mobile.junamex.permission.C2D_MESSAGE"
+        android:name="mx.mobiles.junamex.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
     <uses-permission android:name="mx.mobile.junamex.permission.C2D_MESSAGE" />
@@ -24,13 +24,13 @@
         android:required="true" />
 
     <application
-        android:name="mx.mobile.utils.ApplicationService"
+        android:name="mx.mobiles.utils.ApplicationService"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".TutorialActivity"
+            android:name="mx.mobiles.junamex.TutorialActivity"
             android:label="@string/app_name" >
 
             <intent-filter>
@@ -40,17 +40,17 @@
         </activity>
 
         <activity
-            android:name=".MainActivity"
+            android:name="mx.mobiles.junamex.MainActivity"
             android:label="@string/app_name" >
         </activity>
-        <activity android:name=".EventDetailActivity" />
-        <activity android:name=".MuseumDetailActivity" />
-        <activity android:name=".PeopleDetailActivity" />
-        <activity android:name=".PeopleAddEditActivity" />
-        <activity android:name=".MapActivity" />
+        <activity android:name="mx.mobiles.junamex.EventDetailActivity" />
+        <activity android:name="mx.mobiles.junamex.MuseumDetailActivity" />
+        <activity android:name="mx.mobiles.junamex.PeopleDetailActivity" />
+        <activity android:name="mx.mobiles.junamex.PeopleAddEditActivity" />
+        <activity android:name="mx.mobiles.junamex.MapActivity" />
         <activity android:name="com.facebook.LoginActivity"/>
-        <activity android:name=".SettingsActivity" android:label="@string/settings" android:theme="@style/AppTheme.NormalActionbar"/>
-        <activity android:name=".AboutActivity" android:label="@string/about"/>
+        <activity android:name="mx.mobiles.junamex.SettingsActivity" android:label="@string/settings" android:theme="@style/AppTheme.NormalActionbar"/>
+        <activity android:name="mx.mobiles.junamex.AboutActivity" android:label="@string/about"/>
 
         <service android:name="com.parse.PushService" />
 
@@ -61,7 +61,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name="mx.mobile.utils.PushReceiver"
+            android:name="mx.mobiles.utils.PushReceiver"
             android:exported="false" >
             <intent-filter>
                 <action android:name="com.parse.push.intent.RECEIVE" />

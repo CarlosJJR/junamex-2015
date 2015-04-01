@@ -5,7 +5,7 @@ android {
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        applicationId "mx.mobile.junamex"
+        applicationId "mx.mobiles.junamex"
         minSdkVersion 10
         targetSdkVersion 21
         versionCode 3
