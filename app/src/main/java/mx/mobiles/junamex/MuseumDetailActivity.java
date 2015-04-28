@@ -2,6 +2,7 @@ package mx.mobiles.junamex;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,7 +66,7 @@ public class MuseumDetailActivity extends BaseActivity {
                 if (e == null)
                     updateUI(museumItem);
                 else
-                    Toast.makeText(MuseumDetailActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    Log.d("Parse", e.getLocalizedMessage());
             }
         });
     }

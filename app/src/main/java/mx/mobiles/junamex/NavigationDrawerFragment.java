@@ -125,7 +125,7 @@ public class NavigationDrawerFragment extends Fragment {
             }
         });
         mDrawerListView.setAdapter(new NavigationDrawerAdapter(getActivity()));
-        mDrawerListView.addFooterView(Utilities.getEmptyHeaderFooter(getActivity()));
+        mDrawerListView.addFooterView(Utilities.getEmptyHeaderFooter(getActivity()), null, false);
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 
         new LoadAvatar().execute();
@@ -212,11 +212,11 @@ public class NavigationDrawerFragment extends Fragment {
 
     private void selectItem(int position) {
 
-        if (position != NavigationDrawerAdapter.SETTINGS && position != NavigationDrawerAdapter.ABOUT) {
+        if (position < NavigationDrawerAdapter.DIVIDER_POSITION) {
             mCurrentSelectedPosition = position;
-            if (mDrawerListView != null) {
-                mDrawerListView.setItemChecked(position, true);
-            }
+        }
+        if (mDrawerListView != null) {
+            mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         }
         if (mDrawerLayout != null) {
             mDrawerLayout.closeDrawer(mFragmentContainerView);

@@ -17,7 +17,7 @@
         android:name="mx.mobiles.junamex.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="mx.mobile.junamex.permission.C2D_MESSAGE" />
+    <uses-permission android:name="mx.mobiles.junamex.permission.C2D_MESSAGE" />
 
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -41,16 +41,17 @@
 
         <activity
             android:name="mx.mobiles.junamex.MainActivity"
-            android:label="@string/app_name" >
-        </activity>
+            android:label="@string/app_name" />
+
         <activity android:name="mx.mobiles.junamex.EventDetailActivity" />
         <activity android:name="mx.mobiles.junamex.MuseumDetailActivity" />
         <activity android:name="mx.mobiles.junamex.PeopleDetailActivity" />
         <activity android:name="mx.mobiles.junamex.PeopleAddEditActivity" />
         <activity android:name="mx.mobiles.junamex.MapActivity" />
         <activity android:name="com.facebook.LoginActivity"/>
-        <activity android:name="mx.mobiles.junamex.SettingsActivity" android:label="@string/settings" android:theme="@style/AppTheme.NormalActionbar"/>
+        <activity android:name="mx.mobiles.junamex.SettingsActivity" android:label="@string/settings" android:theme="@style/AppTheme.NormalActionbar" android:screenOrientation="portrait"/>
         <activity android:name="mx.mobiles.junamex.AboutActivity" android:label="@string/about"/>
+        <activity android:name="mx.mobiles.junamex.CountdownActivity" android:label="@string/countdown"/>
 
         <service android:name="com.parse.PushService" />
 
@@ -76,9 +77,11 @@
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 
-                <category android:name="mx.mobile.junamex" />
+                <category android:name="mx.mobiles.junamex" />
             </intent-filter>
         </receiver>
+
+        <receiver android:name="mx.mobiles.utils.LocalNotificationsReceiver"/>
 
         <meta-data
             android:name="com.google.android.gms.version"

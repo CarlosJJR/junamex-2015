@@ -2,10 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!--<item android:id="@+id/save_event"-->
-        <!--android:title="@string/save_event"-->
-        <!--android:icon="@drawable/ic_calendar"-->
-        <!--app:showAsAction="ifRoom"/>-->
+    <item android:id="@+id/event_notification"
+        android:title="@string/save_event"
+        android:icon="@drawable/ic_notifications_off"
+        app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/show_map"

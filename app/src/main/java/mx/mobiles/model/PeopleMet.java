@@ -159,13 +159,13 @@ public class PeopleMet {
 
             int id = cursor.getInt(cursor.getColumnIndex(ID));
             String name = cursor.getString(cursor.getColumnIndex(NAME));
-            String notes = cursor.getString(cursor.getColumnIndex(NOTES));
+            String district = cursor.getString(cursor.getColumnIndex(DISTRICT));
             String facebook = cursor.getString(cursor.getColumnIndex(FACEBOOK));
 
             PeopleMet people = new PeopleMet();
             people.setId(id)
                     .setName(name)
-                    .setNotes(notes)
+                    .setDistrict(district)
                     .setFacebook(facebook);
 
             peopleMets.add(people);

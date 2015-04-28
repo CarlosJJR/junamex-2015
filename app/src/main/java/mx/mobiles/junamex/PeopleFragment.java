@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import mx.mobiles.adapters.NavigationDrawerAdapter;
 import mx.mobiles.adapters.PeopleAdapter;
 import mx.mobiles.model.PeopleMet;
+import mx.mobiles.utils.RecyclerViewDividers;
+import mx.mobiles.utils.SimpleDividerDecorator;
 
 /**
  * Created by desarrollo16 on 30/01/15.
@@ -51,6 +53,7 @@ public class PeopleFragment extends BaseFragment {
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.addItemDecoration(new SimpleDividerDecorator(getActivity()));
         recyclerView.setAdapter(adapter);
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);

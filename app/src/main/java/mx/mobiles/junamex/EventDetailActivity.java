@@ -6,13 +6,12 @@ import android.support.v4.app.FragmentActivity;
 /**
  * Created by desarrollo16 on 13/01/15.
  */
-public class EventDetailActivity extends FragmentActivity {
+public class EventDetailActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_container_frame);
 
         EventDetailFragment detailFragment = EventDetailFragment.newInstance(getIntent().getExtras());
         getSupportFragmentManager()
@@ -26,5 +25,10 @@ public class EventDetailActivity extends FragmentActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.fragment_container_frame;
     }
 }

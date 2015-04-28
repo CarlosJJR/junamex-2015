@@ -3,39 +3,35 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
-        android:title="Notificaciones">
+        android:title="@string/notifications">
+
+        <ListPreference
+            android:key="notifications_time"
+            android:title="@string/get_event_alert"
+            android:summary="%s"
+            android:entries="@array/notifications_time"
+            android:entryValues="@array/notifications_time_values"
+            android:defaultValue="1"/>
 
         <CheckBoxPreference
-            android:key="notifications_enabled"
-            android:title="Alertas de eventos"
-            android:checked="true"
-            android:persistent="true"
+            android:key="vibration_enabled"
+            android:title="@string/vibration_enabled"
             android:defaultValue="true"
-            android:summaryOn="Activas"
-            android:summaryOff="Desactivadas"/>
-
-        <EditTextPreference
-            android:key="notifications_time"
-            android:title="Recibir alerta"
-            android:summary="10 minutos antes del evento"
-            android:dependency="notifications_enabled"
-            android:defaultValue="10"
-            android:numeric="decimal"/>
+            android:checked="true"/>
 
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="Uso de datos">
+        android:title="@string/data_usage">
 
         <CheckBoxPreference
             android:key="auto_refresh_data"
-            android:title="Actualizar datos"
+            android:title="@string/data_refresh_rate"
             android:checked="true"
             android:defaultValue="true"
-            android:summaryOn="Automáticamente (Consume más datos)"
-            android:summaryOff="Manual"/>
+            android:summaryOn="@string/auto_refresh"
+            android:summaryOff="@string/manual_refresh"/>
 
     </PreferenceCategory>
-
 
 </PreferenceScreen>

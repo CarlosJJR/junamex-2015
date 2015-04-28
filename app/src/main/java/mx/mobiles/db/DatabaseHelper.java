@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import mx.mobiles.model.Event;
 import mx.mobiles.model.PeopleMet;
 
 /**
@@ -25,6 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         db.execSQL(PeopleMet.CREATE_TABLE);
+        db.execSQL(Event.CREATE_TABLE);
     }
 
     @Override

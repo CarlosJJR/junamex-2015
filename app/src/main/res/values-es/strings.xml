@@ -14,10 +14,11 @@
     <string name="dummy_string">list_divider</string>
     <string name="settings">Ajustes</string>
     <string name="about">Acerca de</string>
+    <string name="countdown">Cuenta regresiva</string>
 
     <string name="show_map">Ver mapa</string>
     <string name="rate_session">Calificar</string>
-    <string name="nothing_to_see">Por ahora no hay nada aquí. Regresa depués</string>
+    <string name="nothing_to_see">Por ahora no hay nada aquí. Regresa después</string>
     <string name="default_name">Mi perfil</string>
     <string name="district">Distrito</string>
     <string name="edit">Editar</string>
@@ -34,7 +35,7 @@
     <string name="tutorial_fifth_page">Haz nuevos amigos</string>
     <string name="tutorial_fifth_page_subtitle">Comparte tu información y no pierdas a tus nuevos contactos. ¡Sólo escanea y listo!</string>
     <string name="tutorial_first_page">Bienvenido a Junamex 2015</string>
-    <string name="tutorial_first_page_subtitle">¡Encuentra el mejor contenido de nuestro campamento nacional!\n\nToma un tour de la app</string>
+    <string name="tutorial_first_page_subtitle">¡Encuentra el mejor contenido de nuestro campamento nacional!\n\nToma un tour de la app -></string>
     <string name="tutorial_fourth_page">Mantente conectado</string>
     <string name="tutorial_fourth_page_subtitle">Mira lo que sucede en Junamex a través de las redes sociales </string>
     <string name="tutorial_second_page">¡No te pierdas nada!</string>
@@ -48,5 +49,40 @@
     <string name="share_app">Compartir</string>
     <string name="show_tutorial">Ver tutorial</string>
     <string name="share_text">¡Checa la app oficial de Junamex! ¡Está increible!</string>
+    <string name="zxing_scanner_message">Coloca un código QR en el cuadro para escaneralo</string>
+    <string name="edit_contact">Editar contacto</string>
+    <string name="notification_disabled">Notificación activada</string>
+    <string name="notification_enabled">Notificación desactivada</string>
+
+    <string-array name="notifications_time">
+        <item>5 minutos antes</item>
+        <item>10 minutos antes</item>
+        <item>15 minutos antes</item>
+        <item>30 minutos antes</item>
+    </string-array>
+    <string name="auto_refresh">Automáticamente (Consume más datos)</string>
+    <string name="data_refresh_rate">Actualizar datos</string>
+    <string name="data_usage">Uso de datos</string>
+    <string name="get_event_alert">Alerta de eventos:</string>
+    <string name="notifications">Notificaciones</string>
+    <string name="till_junamex">para Junamex</string>
+
+    <plurals name="days">
+        <item quantity="one">%d día</item>
+        <item quantity="other">%d días</item>
+    </plurals>
+
+    <plurals name="hours">
+        <item quantity="one">%d hora</item>
+        <item quantity="other">%d horas</item>
+    </plurals>
+
+    <plurals name="minutes">
+        <item quantity="one">%d minuto</item>
+        <item quantity="other">%d minutos</item>
+    </plurals>
+    <string name="district_list">"Distrito: "</string>
+    <string name="vibration_enabled">Vibrar</string>
+
 
 </resources>

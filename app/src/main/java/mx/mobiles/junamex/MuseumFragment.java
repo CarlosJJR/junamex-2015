@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -113,7 +114,7 @@ public class MuseumFragment extends BaseFragment {
                     updateUI(newMuseumItems);
                 else {
                     if (isAdded())
-                        Toast.makeText(getActivity(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                        Log.d("Parse", e.getLocalizedMessage());
                     if (e.getCode() != ParseException.CACHE_MISS) {
                         loadingView.setVisibility(View.GONE);
                         errorView.setVisibility(View.VISIBLE);

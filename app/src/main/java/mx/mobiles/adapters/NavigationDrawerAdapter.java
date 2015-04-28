@@ -25,6 +25,7 @@ public class NavigationDrawerAdapter extends BaseAdapter {
     public static final int DIVIDER_POSITION = 5;
     public static final int SETTINGS = 6;
     public static final int ABOUT = 7;
+    public static final int COUNTDOWN = 8;
 
     private String[] items;
     private LayoutInflater inflater;
@@ -86,8 +87,10 @@ public class NavigationDrawerAdapter extends BaseAdapter {
             TypedArray icons = resources.obtainTypedArray(R.array.navigation_drawer_icons);
             holder.title.setText(items[position]);
             holder.icon.setImageResource(icons.getResourceId(position, -1));
-
             icons.recycle();
+
+            if (position < DIVIDER_POSITION)
+                convertView.setBackgroundResource(R.drawable.activated_background_indicator);
 
         } else {
             convertView = inflater.inflate(R.layout.navigation_drawer_divider, parent, false);

@@ -115,6 +115,10 @@ public class MainActivity extends BaseActivity
                 startActivity(new Intent(this, AboutActivity.class));
                 break;
 
+            case COUNTDOWN:
+                startActivity(new Intent(this, CountdownActivity.class));
+                break;
+
             default:
             fragmentManager.beginTransaction()
                     .replace(R.id.container, PlaceholderFragment.newInstance(position))

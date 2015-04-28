@@ -2,6 +2,8 @@ package mx.mobiles.junamex;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -28,6 +30,10 @@ public class PeopleAddEditActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ActionBar toolbar = getSupportActionBar();
+        toolbar.setTitle(R.string.edit_contact);
+        toolbar.setDisplayHomeAsUpEnabled(true);
 
         nameField = (EditText) findViewById(R.id.add_name);
         districtField = (AutoCompleteTextView) findViewById(R.id.add_district);
@@ -119,5 +125,13 @@ public class PeopleAddEditActivity extends BaseActivity implements View.OnClickL
             setResult(Activity.RESULT_OK);
         else
             setResult(Activity.RESULT_CANCELED);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == android.R.id.home)
+            this.finish();
+        return super.onOptionsItemSelected(item);
     }
 }

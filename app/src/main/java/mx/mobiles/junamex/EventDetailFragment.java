@@ -12,6 +12,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,8 +46,6 @@ public class EventDetailFragment extends DialogFragment implements ObservableScr
     private static final float PHOTO_ASPECT_RATIO = 1.3333333f;
 
     public static final String TRANSITION_NAME_PHOTO = "photo";
-    public static final String EVENT_KEY = "event_id";
-    public static final String PALETTE_KEY = "palette";
 
     private TextView mTitle;
     private TextView mSubtitle;
@@ -118,8 +117,8 @@ public class EventDetailFragment extends DialogFragment implements ObservableScr
 
         mAbstract = (TextView) view.findViewById(R.id.session_abstract);
 
-        String eventId = getArguments().getString(EVENT_KEY);
-        paletteColor = getArguments().getInt(PALETTE_KEY, getResources().getColor(R.color.color_primary));
+        String eventId = getArguments().getString(Event.ID);
+        paletteColor = getArguments().getInt(Event.PALETTE_COLOR, getResources().getColor(R.color.color_primary));
         getData(eventId);
 
         if (Utilities.isLollipop())
@@ -143,7 +142,7 @@ public class EventDetailFragment extends DialogFragment implements ObservableScr
                 if (e == null)
                     updateLayout(mEvent);
                 else
-                    Toast.makeText(getActivity(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                    Log.d("Parse", e.getLocalizedMessage());
             }
         });
     }
@@ -241,20 +240,50 @@ public class EventDetailFragment extends DialogFragment implements ObservableScr
                         dismiss();
                 }
             });
+
             toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem) {
 
-                    if (menuItem.getItemId() == R.id.show_map) {
-                        Intent intent = new Intent(getActivity(), MapActivity.class);
-                        intent.putExtra(MapFragment.MARKER_KEY, cachedEvent.getLocation().getObjectId());
-                        startActivity(intent);
-                        return true;
+                    switch (menuItem.getItemId()) {
+                        case R.id.show_map:
+                            showMap();
+                            return true;
+
+                        case R.id.event_notification:
+                            boolean isEnabled = menuItem.isChecked();
+
+                            menuItem.setChecked(!isEnabled);
+                            saveNotificationState(!isEnabled);
+
+                            if (isEnabled) {
+                                menuItem.setIcon(R.drawable.ic_notifications_off);
+                                Toast.makeText(getActivity(), R.string.notification_disabled, Toast.LENGTH_SHORT).show();
+                                cachedEvent.cancelAlarm(getActivity());
+                            } else if (cachedEvent != null) {
+                                menuItem.setIcon(R.drawable.ic_notifications_on);
+                                Toast.makeText(getActivity(), R.string.notification_enabled, Toast.LENGTH_SHORT).show();
+                                cachedEvent.setAlarm(getActivity());
+                            }
+                            return true;
+
+                        default: return false;
                     }
-                    return false;
                 }
             });
         }
+    }
+
+    private void showMap() {
+
+        Intent intent = new Intent(getActivity(), MapActivity.class);
+        intent.putExtra(MapFragment.MARKER_KEY, cachedEvent.getLocation().getObjectId());
+        startActivity(intent);
+    }
+
+    private void saveNotificationState(boolean notificationState) {
+
+        cachedEvent.setNotificationEnabled(((BaseActivity) getActivity()).getDB(), notificationState);
     }
 
     public void showMainLayout() {
@@ -297,6 +326,12 @@ public class EventDetailFragment extends DialogFragment implements ObservableScr
 
         if (!isAdded())
             return;
+
+        boolean isNotificationEnabled = mEvent.isNotificationEnabled(((BaseActivity) getActivity()).getDB());
+        MenuItem notificationsIcon = toolbar.getMenu().findItem(R.id.event_notification);
+
+        notificationsIcon.setChecked(isNotificationEnabled);
+        notificationsIcon.setIcon(isNotificationEnabled ? R.drawable.ic_notifications_on : R.drawable.ic_notifications_off);
 
         if (cachedEvent != null) {
             if (!mEvent.getUpdatedAt().after(cachedEvent.getUpdatedAt()))
@@ -379,7 +414,7 @@ public class EventDetailFragment extends DialogFragment implements ObservableScr
     }
 
     public interface OnFragmentDismissedListener {
-        public void onFragmentDismissed();
+        void onFragmentDismissed();
     }
 
     public void setOnFragmentDismissedListener(OnFragmentDismissedListener dismissedListener) {

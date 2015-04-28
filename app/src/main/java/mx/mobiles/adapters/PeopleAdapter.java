@@ -43,6 +43,9 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.Holder> {
 
         PeopleMet item = peopleList.get(position);
         holder.name.setText(item.getName());
+        holder.district.setText(R.string.district_list);
+        String districtTextComplete = holder.district.getText() + item.getDistrict();
+        holder.district.setText(districtTextComplete);
         holder.photo.setImageResource(Utilities.getRandomAvatar(activity));
 
         holder.setClickListener(new Holder.OnItemClickListener() {
@@ -69,7 +72,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.Holder> {
     public static class Holder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         CircleImageView photo;
-        TextView name;
+        TextView name, district;
         OnItemClickListener clickListener;
 
         private Holder(View itemView) {
@@ -77,6 +80,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.Holder> {
 
             photo = (CircleImageView) itemView.findViewById(R.id.people_photo);
             name = (TextView) itemView.findViewById(R.id.people_name);
+            district = (TextView) itemView.findViewById(R.id.people_district);
 
             itemView.setOnClickListener(this);
         }

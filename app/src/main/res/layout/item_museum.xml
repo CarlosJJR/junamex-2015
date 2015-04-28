@@ -22,15 +22,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
-            android:ellipsize="end"
-            android:textStyle="bold"/>
+            android:ellipsize="end"/>
 
         <TextView
             android:id="@+id/item_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="2"
-            android:ellipsize="end"/>
+            android:ellipsize="end"
+            android:textColor="@color/secondary_text_color"/>
 
     </LinearLayout>
 
