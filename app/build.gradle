@@ -8,8 +8,8 @@ android {
         applicationId "mx.mobiles.junamex"
         minSdkVersion 10
         targetSdkVersion 22
-        versionCode 5
-        versionName "0.9"
+        versionCode 6
+        versionName "0.9.1"
     }
     buildTypes {
         release {
@@ -36,7 +36,7 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:21.0.3'
     compile 'com.android.support:palette-v7:21.0.3'
     compile 'de.hdodenhof:circleimageview:1.2.1'
-    compile 'com.google.android.gms:play-services-maps:7.0.0'
+    compile 'com.google.android.gms:play-services-maps:7.3.0'
     compile 'com.melnykov:floatingactionbutton:1.1.0'
     compile 'com.journeyapps:zxing-android-legacy:2.0.1@aar'
     compile 'com.journeyapps:zxing-android-integration:2.0.1@aar'

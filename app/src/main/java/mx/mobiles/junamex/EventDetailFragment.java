@@ -135,7 +135,7 @@ public class EventDetailFragment extends DialogFragment implements ObservableScr
         ParseQuery<Event> query = new ParseQuery<> (Event.class);
         query.include(Event.SPEAKER);
         query.include(Event.LOCATION);
-        query.setCachePolicy(ParseQuery.CachePolicy.CACHE_THEN_NETWORK);
+        query.setCachePolicy(((BaseActivity) getActivity()).getCachePolicy());
         query.getInBackground(eventID, new GetCallback<Event>() {
             @Override
             public void done(Event mEvent, ParseException e) {
@@ -228,7 +228,7 @@ public class EventDetailFragment extends DialogFragment implements ObservableScr
 
             this.toolbar = toolbar;
 
-        toolbar.setNavigationIcon(isDialog
+            toolbar.setNavigationIcon(isDialog
                 ? R.drawable.ic_clear : R.drawable.ic_back);
             toolbar.inflateMenu(R.menu.session_detail);
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {

@@ -103,7 +103,7 @@
     </string-array>
 
     <string name="tutorial_first_page">Welcome to Junamex 2015</string>
-    <string name="tutorial_first_page_subtitle">Find the best content of our national camp.\n\nTake a tour of the app</string>
+    <string name="tutorial_first_page_subtitle">Find the best content of our national camp.\n\nTake a tour of the app -></string>
     <string name="tutorial_second_page">Don\'t miss your event!</string>
     <string name="tutorial_second_page_subtitle">Find the schedule for the week and mark your favorite events to get reminders</string>
     <string name="tutorial_third_page">Be in the right place</string>
