@@ -26,10 +26,7 @@ import mx.mobiles.model.Event;
 /**
  * Created by desarrollo16 on 06/03/15.
  */
-public class SettingsActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener{
-
-    public SQLiteDatabase database;
-    public DatabaseHelper mDbHelper;
+public class SettingsActivity extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,40 +43,6 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
                 SettingsActivity.this.finish();
             }
         });
-
-        ListPreference listPreference = (ListPreference) findPreference("notifications_time");
-        listPreference.setOnPreferenceChangeListener(this);
-    }
-
-    @Override
-    public boolean onPreferenceChange(Preference preference, Object newValue) {
-
-        if (preference.getKey().equals("notifications_time")) {
-
-            RescheduleNotifications rescheduleBackground = new RescheduleNotifications(this, getDB());
-            rescheduleBackground.execute();
-            return true;
-        }
-        return false;
-    }
-
-    private SQLiteDatabase getDB() {
-        if (database == null || !database.isOpen())
-            openDB(this);
-        return database;
-    }
-
-    private boolean openDB(Context context) {
-        if (mDbHelper != null)
-            mDbHelper.close();
-
-        mDbHelper = new DatabaseHelper(context);
-        try {
-            database = mDbHelper.getWritableDatabase();
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
     }
 
     private static class RescheduleNotifications extends AsyncTask<Void, Void, Void> {

@@ -6,4 +6,7 @@
     <dimen name="schedule_width">400dp</dimen>
     <dimen name="tutorial_width">600dp</dimen>
     <dimen name="fragment_dialog_min_width">550dp</dimen>
+
+    <dimen name="countdown_numbers_font_size">50sp</dimen>
+    <dimen name="countdown_subtitle_font_size">40sp</dimen>
 </resources>

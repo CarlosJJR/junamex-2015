@@ -1,5 +1,6 @@
 package mx.mobiles.junamex;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,9 +31,8 @@ import mx.mobiles.utils.Utilities;
  */
 public class ScheduleFragment extends BaseFragment {
 
-    public static final int DAYS_OF_JUNAMEX = 5;
+    public static final int DAYS_OF_JUNAMEX = 4;
 
-    public static final String TUES = "14/07/2015 00:00:00";
     public static final String WED = "15/07/2015 00:00:00";
     public static final String THUR = "16/07/2015 00:00:00";
     public static final String FRI = "17/07/2015 00:00:00";
@@ -53,7 +53,7 @@ public class ScheduleFragment extends BaseFragment {
         adapter = new ScheduleAdapter(getActivity(), eventList);
 
         Bundle args = getArguments();
-        day = TUES;
+        day = WED;
         if (args != null)
             day = args.getString(DAY_KEY);
     }
@@ -134,6 +134,7 @@ public class ScheduleFragment extends BaseFragment {
 
                 if (e == null) {
                     new ParseData().execute(queriedEventList);
+                    setupAlarms();
                 } else {
 
                     Log.e("ParseQuery<Event>", e.getLocalizedMessage());
@@ -145,6 +146,21 @@ public class ScheduleFragment extends BaseFragment {
                 }
             }
         });
+    }
+
+    private void setupAlarms() {
+
+        SQLiteDatabase database = ((BaseActivity) getActivity()).getDB();
+
+        for (Event event : eventList) {
+
+            if (!event.isNotificationEnabled(database)) {
+
+                event.setNotificationEnabled(database);
+                event.setAlarm(getActivity());
+            }
+        }
+        database.close();
     }
 
     private class ParseData extends AsyncTask<List<Event>, Void, Boolean> {

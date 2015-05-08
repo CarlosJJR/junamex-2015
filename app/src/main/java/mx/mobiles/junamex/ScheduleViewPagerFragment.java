@@ -9,6 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
+import java.text.DateFormatSymbols;
+import java.util.Calendar;
+import java.util.Date;
+
 import mx.mobiles.adapters.ViewPagerAdapter;
 import mx.mobiles.ui.PagerSlidingTabStrip;
 
@@ -30,6 +34,14 @@ public class ScheduleViewPagerFragment extends Fragment {
 
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);
         viewPager.setAdapter(new ViewPagerAdapter(getChildFragmentManager()));
+
+        Calendar today = Calendar.getInstance();
+        int currentDay = today.get(Calendar.DAY_OF_WEEK) - 4;
+
+        if (currentDay < 0)
+            currentDay = 0;
+
+        viewPager.setCurrentItem(currentDay);
 
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
         tabs.setViewPager(viewPager);

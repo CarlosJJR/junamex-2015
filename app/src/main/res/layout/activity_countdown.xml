@@ -7,27 +7,130 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingLeft="@dimen/activity_vertical_margin"
+        android:paddingRight="@dimen/activity_vertical_margin"
         android:gravity="center_vertical"
         android:background="@drawable/countdown_background">
 
-        <TextView
-            android:id="@+id/countdown_label"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/activity_vertical_margin"
-            android:gravity="end"
-            android:textSize="50sp"
-            android:textColor="@color/white"/>
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/days_counter"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/countdown_numbers_font_size"
+                android:textColor="@color/white"
+                android:gravity="end" />
+
+            <TextView
+                android:id="@+id/days_indicator"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/countdown_numbers_font_size"
+                android:textColor="@color/white"
+                android:layout_marginLeft="@dimen/activity_vertical_margin"
+                android:layout_marginStart="@dimen/activity_vertical_margin"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/hours_counter"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/countdown_numbers_font_size"
+                android:textColor="@color/white"
+                android:gravity="end" />
+
+            <TextView
+                android:id="@+id/hours_indicator"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/countdown_numbers_font_size"
+                android:textColor="@color/white"
+                android:layout_marginLeft="@dimen/activity_vertical_margin"
+                android:layout_marginStart="@dimen/activity_vertical_margin"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/minutes_counter"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/countdown_numbers_font_size"
+                android:textColor="@color/white"
+                android:gravity="end" />
+
+            <TextView
+                android:id="@+id/minutes_indicator"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/countdown_numbers_font_size"
+                android:textColor="@color/white"
+                android:layout_marginLeft="@dimen/activity_vertical_margin"
+                android:layout_marginStart="@dimen/activity_vertical_margin"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/seconds_counter"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/countdown_numbers_font_size"
+                android:textColor="@color/white"
+                android:gravity="end" />
+
+            <TextView
+                android:id="@+id/seconds_indicator"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/countdown_numbers_font_size"
+                android:textColor="@color/white"
+                android:layout_marginLeft="@dimen/activity_vertical_margin"
+                android:layout_marginStart="@dimen/activity_vertical_margin"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:gravity="center"
-            android:paddingLeft="@dimen/activity_vertical_margin"
-            android:paddingRight="@dimen/activity_vertical_margin"
             android:text="@string/till_junamex"
-            android:textSize="30sp"
+            android:textSize="@dimen/countdown_subtitle_font_size"
             android:textColor="@color/white"/>
 
     </LinearLayout>

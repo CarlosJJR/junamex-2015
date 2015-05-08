@@ -19,7 +19,6 @@ public class ScheduleHorizontalScrollFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_horizontal_scroll, container, false);
 
-        ScheduleFragment tuesday = ScheduleFragment.newInstance(ScheduleFragment.TUES);
         ScheduleFragment wednesday = ScheduleFragment.newInstance(ScheduleFragment.WED);
         ScheduleFragment thursday = ScheduleFragment.newInstance(ScheduleFragment.THUR);
         ScheduleFragment friday = ScheduleFragment.newInstance(ScheduleFragment.FRI);
@@ -27,8 +26,7 @@ public class ScheduleHorizontalScrollFragment extends Fragment {
 
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
 
-        transaction.add(R.id.schedule_tues, tuesday)
-                .add(R.id.schedule_wed, wednesday)
+        transaction.add(R.id.schedule_wed, wednesday)
                 .add(R.id.schedule_thur, thursday)
                 .add(R.id.schedule_fri, friday)
                 .add(R.id.schedule_sat, saturday);

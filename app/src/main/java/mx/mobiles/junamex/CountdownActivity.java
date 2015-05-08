@@ -1,6 +1,7 @@
 package mx.mobiles.junamex;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.TextView;
 
@@ -8,13 +9,15 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Timer;
 
 /**
  * Created by desarrollo16 on 23/04/15.
  */
 public class CountdownActivity extends BaseActivity {
 
-    TextView counterLabel;
+    TextView daysCounter, hoursCounter, minutesCounter, secondsCounter;
+    TextView daysLabel, hoursLabel, minutesLabel, secondsLabel;
 
     private static final String JUNAMEX_START = "15/07/15 10:00:00";
 
@@ -29,7 +32,15 @@ public class CountdownActivity extends BaseActivity {
             }
         });
 
-        counterLabel = (TextView) findViewById(R.id.countdown_label);
+        daysCounter = (TextView) findViewById(R.id.days_counter);
+        hoursCounter = (TextView) findViewById(R.id.hours_counter);
+        minutesCounter = (TextView) findViewById(R.id.minutes_counter);
+        secondsCounter = (TextView) findViewById(R.id.seconds_counter);
+
+        daysLabel = (TextView) findViewById(R.id.days_indicator);
+        hoursLabel = (TextView) findViewById(R.id.hours_indicator);
+        minutesLabel = (TextView) findViewById(R.id.minutes_indicator);
+        secondsLabel = (TextView) findViewById(R.id.seconds_indicator);
 
         calculateDaysToJunamex();
     }
@@ -41,52 +52,51 @@ public class CountdownActivity extends BaseActivity {
 
     private void calculateDaysToJunamex() {
 
-        String counterMessage = "";
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.US);
-
         try {
             Date startDate = dateFormat.parse(JUNAMEX_START);
-            Date today = new Date();
+            long offset = startDate.getTime() - new Date().getTime();
 
-            //milliseconds
-            long difference = startDate.getTime() - today.getTime();
+            new CountDownTimer(offset, 1000) {
 
-            long secondsInMilli = 1000;
-            long minutesInMilli = secondsInMilli * 60;
-            long hoursInMilli = minutesInMilli * 60;
-            long daysInMilli = hoursInMilli * 24;
+                @Override
+                public void onTick(long difference) {
 
-            long days = difference / daysInMilli;
-            difference = difference % daysInMilli;
+                    long secondsInMilli = 1000;
+                    long minutesInMilli = secondsInMilli * 60;
+                    long hoursInMilli = minutesInMilli * 60;
+                    long daysInMilli = hoursInMilli * 24;
 
-            long hours = difference / hoursInMilli;
-            difference = difference % hoursInMilli;
+                    long days = difference / daysInMilli;
+                    difference = difference % daysInMilli;
 
-            long minutes = difference / minutesInMilli;
+                    long hours = difference / hoursInMilli;
+                    difference = difference % hoursInMilli;
 
-            if (days > 0) {
-                counterMessage += getResources().getQuantityString(R.plurals.days, (int)days, (int)days);
-            }
-            if (days < 5) {
-                if (hours > 0) {
-                    if (!counterMessage.isEmpty())
-                        counterMessage += ",\n";
+                    long minutes = difference / minutesInMilli;
+                    difference = difference % minutesInMilli;
 
-                    counterMessage += getResources().getQuantityString(R.plurals.hours, (int) hours, (int)hours);
+                    long seconds = difference / secondsInMilli;
+
+                    daysCounter.setText(String.valueOf(days));
+                    hoursCounter.setText(String.valueOf(hours));
+                    minutesCounter.setText(String.valueOf(minutes));
+                    secondsCounter.setText(String.valueOf(seconds));
+
+                    daysLabel.setText(getResources().getQuantityString(R.plurals.days, (int)days));
+                    hoursLabel.setText(getResources().getQuantityString(R.plurals.hours, (int)hours));
+                    minutesLabel.setText(getResources().getQuantityString(R.plurals.minutes, (int)minutes));
+                    secondsLabel.setText(getResources().getQuantityString(R.plurals.seconds, (int)seconds));
                 }
-            }
 
-            if (days <= 1) {
-                if (!counterMessage.isEmpty())
-                    counterMessage += ",\n";
+                @Override
+                public void onFinish() {
 
-                counterMessage += getResources().getQuantityString(R.plurals.minutes, (int) minutes, (int)minutes);
-            }
+                }
+            }.start();
 
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-        counterLabel.setText(counterMessage);
     }
 }

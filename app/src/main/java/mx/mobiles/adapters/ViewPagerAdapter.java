@@ -24,22 +24,19 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
         switch (position) {
             case 0:
-                return ScheduleFragment.newInstance(ScheduleFragment.TUES);
-
-            case 1:
                 return ScheduleFragment.newInstance(ScheduleFragment.WED);
 
-            case 2:
+            case 1:
                 return ScheduleFragment.newInstance(ScheduleFragment.THUR);
 
-            case 3:
+            case 2:
                 return ScheduleFragment.newInstance(ScheduleFragment.FRI);
 
-            case 4:
+            case 3:
                 return ScheduleFragment.newInstance(ScheduleFragment.SAT);
 
             default:
-                return ScheduleFragment.newInstance(ScheduleFragment.TUES);
+                return ScheduleFragment.newInstance(ScheduleFragment.WED);
         }
     }
 
@@ -51,6 +48,6 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
 
-        return namesOfDays[position + 3];
+        return namesOfDays[position + 4];
     }
 }

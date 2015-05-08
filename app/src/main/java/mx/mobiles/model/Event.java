@@ -182,11 +182,11 @@ public class Event extends ParseObject {
         return hasNotification;
     }
 
-    public void setNotificationEnabled(SQLiteDatabase database, boolean status) {
+    public void setNotificationEnabled(SQLiteDatabase database) {
         ContentValues cv = new ContentValues();
 
         cv.put(ID, getObjectId());
-        cv.put(NOTIFICATION_STATUS, status);
+        cv.put(NOTIFICATION_STATUS, 1);
 
         Cursor cursor = database.query(TABLE, null, ID + "=?", new String[]{getObjectId()}, null, null, null);
         if (cursor.moveToFirst())
@@ -208,9 +208,8 @@ public class Event extends ParseObject {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(convertFromUTC(getStartTime()));
 
-        //Adjust the time according to the notifications time setting
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        int notificationTime = Integer.valueOf(prefs.getString("notifications_time", "10"));
+        //Adjust the time for 10 minutes before every event
+        int notificationTime = 10;
         calendar.add(Calendar.MINUTE, -notificationTime);
 //        calendar.add(Calendar.DAY_OF_YEAR, -78);
         Log.i("AlarmManager", "Event alarm set for : " + calendar.toString());

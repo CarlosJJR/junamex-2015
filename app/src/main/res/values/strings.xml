@@ -152,37 +152,28 @@
     <string name="auto_refresh">Auto (Uses more data)</string>
     <string name="manual_refresh" translatable="false">Manual </string>
 
-    <string-array name="notifications_time">
-        <item>5 minutes before</item>
-        <item>10 minutes before</item>
-        <item>15 minutes before</item>
-        <item>30 minutes before</item>
-    </string-array>
-
-    <string-array name="notifications_time_values" translatable="false">
-        <item>5</item>
-        <item>10</item>
-        <item>15</item>
-        <item>30</item>
-    </string-array>
-
     <string name="data_refresh_rate">Update data</string>
     <string name="till_junamex">remaining till Junamex</string>
     <string name="vibration_enabled">Vibrate</string>
 
     <plurals name="days">
-        <item quantity="one">%d day</item>
-        <item quantity="other">%d days</item>
+        <item quantity="one">day</item>
+        <item quantity="other">days</item>
     </plurals>
 
     <plurals name="hours">
-        <item quantity="one">%d hour</item>
-        <item quantity="other">%d hours</item>
+        <item quantity="one">hour</item>
+        <item quantity="other">hours</item>
     </plurals>
 
     <plurals name="minutes">
-        <item quantity="one">%d minute</item>
-        <item quantity="other">%d minutes</item>
+        <item quantity="one">minute</item>
+        <item quantity="other">minutes</item>
+    </plurals>
+
+    <plurals name="seconds">
+        <item quantity="one">second</item>
+        <item quantity="other">seconds</item>
     </plurals>
 
 </resources>

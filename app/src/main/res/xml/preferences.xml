@@ -5,14 +5,6 @@
     <PreferenceCategory
         android:title="@string/notifications">
 
-        <ListPreference
-            android:key="notifications_time"
-            android:title="@string/get_event_alert"
-            android:summary="%s"
-            android:entries="@array/notifications_time"
-            android:entryValues="@array/notifications_time_values"
-            android:defaultValue="1"/>
-
         <CheckBoxPreference
             android:key="vibration_enabled"
             android:title="@string/vibration_enabled"

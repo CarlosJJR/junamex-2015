@@ -24,7 +24,6 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.parse.GetCallback;
 import com.parse.GetDataCallback;
@@ -250,23 +249,6 @@ public class EventDetailFragment extends DialogFragment implements ObservableScr
                             showMap();
                             return true;
 
-                        case R.id.event_notification:
-                            boolean isEnabled = menuItem.isChecked();
-
-                            menuItem.setChecked(!isEnabled);
-                            saveNotificationState(!isEnabled);
-
-                            if (isEnabled) {
-                                menuItem.setIcon(R.drawable.ic_notifications_off);
-                                Toast.makeText(getActivity(), R.string.notification_disabled, Toast.LENGTH_SHORT).show();
-                                cachedEvent.cancelAlarm(getActivity());
-                            } else if (cachedEvent != null) {
-                                menuItem.setIcon(R.drawable.ic_notifications_on);
-                                Toast.makeText(getActivity(), R.string.notification_enabled, Toast.LENGTH_SHORT).show();
-                                cachedEvent.setAlarm(getActivity());
-                            }
-                            return true;
-
                         default: return false;
                     }
                 }
@@ -279,11 +261,6 @@ public class EventDetailFragment extends DialogFragment implements ObservableScr
         Intent intent = new Intent(getActivity(), MapActivity.class);
         intent.putExtra(MapFragment.MARKER_KEY, cachedEvent.getLocation().getObjectId());
         startActivity(intent);
-    }
-
-    private void saveNotificationState(boolean notificationState) {
-
-        cachedEvent.setNotificationEnabled(((BaseActivity) getActivity()).getDB(), notificationState);
     }
 
     public void showMainLayout() {
@@ -327,12 +304,6 @@ public class EventDetailFragment extends DialogFragment implements ObservableScr
         if (!isAdded())
             return;
 
-        boolean isNotificationEnabled = mEvent.isNotificationEnabled(((BaseActivity) getActivity()).getDB());
-        MenuItem notificationsIcon = toolbar.getMenu().findItem(R.id.event_notification);
-
-        notificationsIcon.setChecked(isNotificationEnabled);
-        notificationsIcon.setIcon(isNotificationEnabled ? R.drawable.ic_notifications_on : R.drawable.ic_notifications_off);
-
         if (cachedEvent != null) {
             if (!mEvent.getUpdatedAt().after(cachedEvent.getUpdatedAt()))
                 return;
@@ -356,6 +327,9 @@ public class EventDetailFragment extends DialogFragment implements ObservableScr
             mPhotoView.loadInBackground(new GetDataCallback() {
                 @Override
                 public void done(byte[] bytes, ParseException e) {
+
+                    if (!isAdded())
+                        return;
 
                     if (bytes != null && paletteColor == getResources().getColor(R.color.color_primary)) {
                         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
