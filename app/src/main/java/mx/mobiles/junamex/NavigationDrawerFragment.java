@@ -1,6 +1,8 @@
 package mx.mobiles.junamex;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
@@ -23,9 +25,16 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.facebook.Request;
+import com.facebook.Response;
+import com.facebook.model.GraphUser;
+import com.facebook.widget.ProfilePictureView;
+import com.parse.ParseFacebookUtils;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import mx.mobiles.adapters.NavigationDrawerAdapter;
 import mx.mobiles.model.PeopleMet;
+import mx.mobiles.ui.CircleProfilePicture;
 import mx.mobiles.utils.Utilities;
 
 /**
@@ -61,7 +70,7 @@ public class NavigationDrawerFragment extends Fragment {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerListView;
     private View mFragmentContainerView;
-    private CircleImageView avatar;
+    private CircleProfilePicture avatar;
     private TextView userName;
 
     private int mCurrentSelectedPosition = 0;
@@ -102,7 +111,7 @@ public class NavigationDrawerFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
 
         userName = (TextView) view.findViewById(R.id.user_name);
-        avatar = (CircleImageView) view.findViewById(R.id.avatar);
+        avatar = (CircleProfilePicture) view.findViewById(R.id.avatar);
         avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -292,7 +301,7 @@ public class NavigationDrawerFragment extends Fragment {
     /**
      * Callbacks interface that all activities using this fragment must implement.
      */
-    public static interface NavigationDrawerCallbacks {
+    public interface NavigationDrawerCallbacks {
         /**
          * Called when an item in the navigation drawer is selected.
          */
@@ -311,6 +320,7 @@ public class NavigationDrawerFragment extends Fragment {
     private class LoadAvatar extends AsyncTask<Void, Void, PeopleMet> {
 
         PeopleMet user;
+        Bitmap defaultPhoto = null;
 
         @Override
         protected PeopleMet doInBackground(Void... params) {
@@ -326,6 +336,7 @@ public class NavigationDrawerFragment extends Fragment {
 
             int resourceId = Utilities.getRandomAvatar(getActivity());
             user.setTempAvatar(resourceId);
+            defaultPhoto = BitmapFactory.decodeResource(getResources(), user.getTempAvatar());
 
             return user;
         }
@@ -336,26 +347,23 @@ public class NavigationDrawerFragment extends Fragment {
 
             userName.setText(user.getName());
 
-//            Request.newMeRequest(ParseFacebookUtils.getSession(), new Request.GraphUserCallback() {
-//                @Override
-//                public void onCompleted(GraphUser graphUser, Response response) {
-//
-//                    if (graphUser != null) {
-//
-//                        user.setName(graphUser.getName());
-//                        user.setFacebook(graphUser.getId());
-//                        user.setEmail(graphUser.getProperty("email").toString());
-//
-//                        Picasso.with(getActivity())
-//                                .load("https://graph.facebook.com/"+user.getFacebook()+"/picture?type=large&height=60")
-//                                .into(avatar);
-//                        userName.setText(user.getName());
-//                    }
-//                }
-//            }).executeAsync();
+            Request.newMeRequest(ParseFacebookUtils.getSession(), new Request.GraphUserCallback() {
+                @Override
+                public void onCompleted(GraphUser graphUser, Response response) {
 
-            if (user.getTempAvatar() != 0)
-                avatar.setImageResource(user.getTempAvatar());
+                    if (graphUser != null) {
+
+                        user.setName(graphUser.getName());
+                        user.setFacebook(graphUser.getId());
+                        user.setEmail(graphUser.getProperty("email").toString());
+                        avatar.setProfileId("1032281630131939");
+                    }
+                }
+            }).executeAsync();
+
+            if (defaultPhoto != null) {
+                avatar.setDefaultProfilePicture(defaultPhoto);
+            }
         }
     }
 }

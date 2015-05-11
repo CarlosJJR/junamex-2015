@@ -4,6 +4,7 @@ import android.app.Application;
 import android.os.Build;
 
 import com.parse.Parse;
+import com.parse.ParseFacebookUtils;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 
@@ -32,7 +33,7 @@ public class ApplicationService extends Application {
 
         // Initialize Facebook
         String appId = getString(R.string.facebook_app_id);
-//        ParseFacebookUtils.initialize(appId);
+        ParseFacebookUtils.initialize(appId);
 
         Utilities.overrideFont(getApplicationContext(), "SERIF", "fonts/8bitOperatorPlus-Regular.ttf");
     }
