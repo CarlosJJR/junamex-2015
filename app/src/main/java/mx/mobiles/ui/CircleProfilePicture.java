@@ -1,3 +1,8 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by Fernflower decompiler)
+//
+
 package mx.mobiles.ui;
 
 import android.content.Context;
@@ -9,27 +14,23 @@ import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-
 import com.facebook.FacebookException;
 import com.facebook.LoggingBehavior;
+import com.facebook.R.dimen;
+import com.facebook.R.drawable;
+import com.facebook.R.styleable;
 import com.facebook.internal.ImageDownloader;
 import com.facebook.internal.ImageRequest;
 import com.facebook.internal.ImageResponse;
 import com.facebook.internal.Logger;
 import com.facebook.internal.Utility;
-import com.facebook.widget.ProfilePictureView;
-
-import java.net.URISyntaxException;
+import com.facebook.internal.ImageRequest.Builder;
+import com.facebook.internal.ImageRequest.Callback;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import mx.mobiles.junamex.R;
 
-/**
- * Created by desarrollo16 on 11/05/15.
- */
 public class CircleProfilePicture extends FrameLayout {
-
     public static final String TAG = CircleProfilePicture.class.getSimpleName();
     public static final int CUSTOM = -1;
     public static final int SMALL = -2;
@@ -53,7 +54,7 @@ public class CircleProfilePicture extends FrameLayout {
     private CircleImageView image;
     private int presetSizeType = -1;
     private ImageRequest lastRequest;
-    private ProfilePictureView.OnErrorListener onErrorListener;
+    private CircleProfilePicture.OnErrorListener onErrorListener;
     private Bitmap customizedDefaultProfilePicture = null;
 
     public CircleProfilePicture(Context context) {
@@ -115,11 +116,11 @@ public class CircleProfilePicture extends FrameLayout {
         this.refreshImage(force);
     }
 
-    public final ProfilePictureView.OnErrorListener getOnErrorListener() {
+    public final CircleProfilePicture.OnErrorListener getOnErrorListener() {
         return this.onErrorListener;
     }
 
-    public final void setOnErrorListener(ProfilePictureView.OnErrorListener onErrorListener) {
+    public final void setOnErrorListener(CircleProfilePicture.OnErrorListener onErrorListener) {
         this.onErrorListener = onErrorListener;
     }
 
@@ -207,9 +208,9 @@ public class CircleProfilePicture extends FrameLayout {
     }
 
     private void parseAttributes(AttributeSet attrs) {
-        TypedArray a = this.getContext().obtainStyledAttributes(attrs, com.facebook.android.R.styleable.com_facebook_profile_picture_view);
-        this.setPresetSize(a.getInt(0, -1));
-        this.isCropped = a.getBoolean(1, true);
+        TypedArray a = this.getContext().obtainStyledAttributes(attrs, styleable.com_facebook_profile_picture_view);
+        this.setPresetSize(a.getInt(styleable.com_facebook_profile_picture_view_preset_size, -1));
+        this.isCropped = a.getBoolean(styleable.com_facebook_profile_picture_view_is_cropped, true);
         a.recycle();
     }
 
@@ -224,8 +225,12 @@ public class CircleProfilePicture extends FrameLayout {
     }
 
     private void setBlankProfilePicture() {
+        if(this.lastRequest != null) {
+            ImageDownloader.cancelRequest(this.lastRequest);
+        }
+
         if(this.customizedDefaultProfilePicture == null) {
-            int scaledBitmap = this.isCropped()? com.facebook.android.R.drawable.com_facebook_profile_picture_blank_square: com.facebook.android.R.drawable.com_facebook_profile_picture_blank_portrait;
+            int scaledBitmap = this.isCropped()?drawable.com_facebook_profile_picture_blank_square:drawable.com_facebook_profile_picture_blank_portrait;
             this.setImageBitmap(BitmapFactory.decodeResource(this.getResources(), scaledBitmap));
         } else {
             this.updateImageQueryParameters();
@@ -244,23 +249,18 @@ public class CircleProfilePicture extends FrameLayout {
     }
 
     private void sendImageRequest(boolean allowCachedResponse) {
-        try {
-            ImageRequest.Builder e = new ImageRequest.Builder(this.getContext(), ImageRequest.getProfilePictureUrl(this.profileId, this.queryWidth, this.queryHeight));
-            ImageRequest request = e.setAllowCachedRedirects(allowCachedResponse).setCallerTag(this).setCallback(new ImageRequest.Callback() {
-                public void onCompleted(ImageResponse response) {
-                    CircleProfilePicture.this.processResponse(response);
-                }
-            }).build();
-            if(this.lastRequest != null) {
-                ImageDownloader.cancelRequest(this.lastRequest);
+        Builder requestBuilder = new Builder(this.getContext(), ImageRequest.getProfilePictureUri(this.profileId, this.queryWidth, this.queryHeight));
+        ImageRequest request = requestBuilder.setAllowCachedRedirects(allowCachedResponse).setCallerTag(this).setCallback(new Callback() {
+            public void onCompleted(ImageResponse response) {
+                CircleProfilePicture.this.processResponse(response);
             }
-
-            this.lastRequest = request;
-            ImageDownloader.downloadAsync(request);
-        } catch (URISyntaxException var4) {
-            Logger.log(LoggingBehavior.REQUESTS, 6, TAG, var4.toString());
+        }).build();
+        if(this.lastRequest != null) {
+            ImageDownloader.cancelRequest(this.lastRequest);
         }
 
+        this.lastRequest = request;
+        ImageDownloader.downloadAsync(request);
     }
 
     private void processResponse(ImageResponse response) {
@@ -269,7 +269,7 @@ public class CircleProfilePicture extends FrameLayout {
             Bitmap responseImage = response.getBitmap();
             Exception error = response.getError();
             if(error != null) {
-                ProfilePictureView.OnErrorListener listener = this.onErrorListener;
+                CircleProfilePicture.OnErrorListener listener = this.onErrorListener;
                 if(listener != null) {
                     listener.onError(new FacebookException("Error in downloading profile picture for profileId: " + this.getProfileId(), error));
                 } else {
@@ -314,20 +314,20 @@ public class CircleProfilePicture extends FrameLayout {
         int dimensionId;
         switch(this.presetSizeType) {
             case -4:
-                dimensionId = com.facebook.android.R.dimen.com_facebook_profilepictureview_preset_size_large;
+                dimensionId = dimen.com_facebook_profilepictureview_preset_size_large;
                 break;
             case -3:
-                dimensionId = com.facebook.android.R.dimen.com_facebook_profilepictureview_preset_size_normal;
+                dimensionId = dimen.com_facebook_profilepictureview_preset_size_normal;
                 break;
             case -2:
-                dimensionId = com.facebook.android.R.dimen.com_facebook_profilepictureview_preset_size_small;
+                dimensionId = dimen.com_facebook_profilepictureview_preset_size_small;
                 break;
             case -1:
                 if(!forcePreset) {
                     return 0;
                 }
 
-                dimensionId = com.facebook.android.R.dimen.com_facebook_profilepictureview_preset_size_normal;
+                dimensionId = dimen.com_facebook_profilepictureview_preset_size_normal;
                 break;
             default:
                 return 0;

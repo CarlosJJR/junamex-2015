@@ -48,10 +48,15 @@
         <activity android:name="mx.mobiles.junamex.PeopleDetailActivity" />
         <activity android:name="mx.mobiles.junamex.PeopleAddEditActivity" />
         <activity android:name="mx.mobiles.junamex.MapActivity" />
-        <activity android:name="com.facebook.LoginActivity"/>
         <activity android:name="mx.mobiles.junamex.SettingsActivity" android:label="@string/settings" android:theme="@style/AppTheme.NormalActionbar" android:screenOrientation="portrait"/>
         <activity android:name="mx.mobiles.junamex.AboutActivity" android:label="@string/about"/>
         <activity android:name="mx.mobiles.junamex.CountdownActivity" android:label="@string/countdown"/>
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges= "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:label="@string/app_name" />
 
         <service android:name="com.parse.PushService" />
 

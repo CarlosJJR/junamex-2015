@@ -50,21 +50,26 @@ public class MainActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ArrayList<String> permissions = new ArrayList<>();
-        permissions.add("email");
-        ParseFacebookUtils.logIn(permissions, this, new LogInCallback() {
-            @Override
-            public void done(ParseUser user, ParseException err) {
-                if (user == null) {
-                    Log.d("MyApp", "Uh oh. The user cancelled the Facebook login.");
-                } else if (user.isNew()) {
-                    //user.saveInBackground();
-                    Log.d("MyApp", "User signed up and logged in through Facebook!");
-                } else {
-                    Log.d("MyApp", "User logged in through Facebook!");
+        if (ParseUser.getCurrentUser() == null) {
+
+            ArrayList<String> permissions = new ArrayList<>();
+            permissions.add("email");
+
+            ParseFacebookUtils.logInWithReadPermissionsInBackground(this, permissions, new LogInCallback() {
+                @Override
+                public void done(ParseUser user, ParseException err) {
+                    if (user == null) {
+                        Log.d("MyApp", "Uh oh. The user cancelled the Facebook login.");
+                    } else if (user.isNew()) {
+                        //user.saveInBackground();
+                        Log.d("MyApp", "User signed up and logged in through Facebook!");
+                        Log.i("Facebook login", user.toString());
+                    } else {
+                        Log.d("MyApp", "User logged in through Facebook!");
+                    }
                 }
-            }
-        });
+            });
+        }
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -143,7 +148,7 @@ public class MainActivity extends BaseActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        ParseFacebookUtils.finishAuthentication(requestCode, resultCode, data);
+        ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
     }
 
     public void onSectionAttached(int number) {

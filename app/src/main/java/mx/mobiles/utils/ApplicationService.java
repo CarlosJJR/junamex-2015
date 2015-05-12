@@ -3,6 +3,7 @@ package mx.mobiles.utils;
 import android.app.Application;
 import android.os.Build;
 
+import com.facebook.FacebookSdk;
 import com.parse.Parse;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseInstallation;
@@ -32,8 +33,9 @@ public class ApplicationService extends Application {
         installation.saveInBackground();
 
         // Initialize Facebook
-        String appId = getString(R.string.facebook_app_id);
-        ParseFacebookUtils.initialize(appId);
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        ParseFacebookUtils.initialize(getApplicationContext());
+
 
         Utilities.overrideFont(getApplicationContext(), "SERIF", "fonts/8bitOperatorPlus-Regular.ttf");
     }

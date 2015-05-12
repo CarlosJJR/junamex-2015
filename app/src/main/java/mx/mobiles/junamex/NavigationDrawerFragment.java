@@ -1,6 +1,7 @@
 package mx.mobiles.junamex;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -15,6 +16,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,13 +27,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.facebook.Request;
-import com.facebook.Response;
-import com.facebook.model.GraphUser;
-import com.facebook.widget.ProfilePictureView;
-import com.parse.ParseFacebookUtils;
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 
-import de.hdodenhof.circleimageview.CircleImageView;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import mx.mobiles.adapters.NavigationDrawerAdapter;
 import mx.mobiles.model.PeopleMet;
 import mx.mobiles.ui.CircleProfilePicture;
@@ -137,7 +139,7 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerListView.addFooterView(Utilities.getEmptyHeaderFooter(getActivity()), null, false);
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 
-        new LoadAvatar().execute();
+        new LoadAvatar().execute(((BaseActivity) getActivity()).getDB());
         return view;
     }
 
@@ -317,15 +319,16 @@ public class NavigationDrawerFragment extends Fragment {
         }
     }
 
-    private class LoadAvatar extends AsyncTask<Void, Void, PeopleMet> {
+    private class LoadAvatar extends AsyncTask<SQLiteDatabase, Void, PeopleMet> {
 
         PeopleMet user;
         Bitmap defaultPhoto = null;
 
         @Override
-        protected PeopleMet doInBackground(Void... params) {
+        protected PeopleMet doInBackground(SQLiteDatabase... params) {
 
-            user = PeopleMet.getPeople(((MainActivity) getActivity()).getDB(), 1);
+            final SQLiteDatabase database = params[0];
+            user = PeopleMet.getPeople(database, 1);
 
             if (user == null) {
 
@@ -338,6 +341,37 @@ public class NavigationDrawerFragment extends Fragment {
             user.setTempAvatar(resourceId);
             defaultPhoto = BitmapFactory.decodeResource(getResources(), user.getTempAvatar());
 
+
+            GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(),
+                    new GraphRequest.GraphJSONObjectCallback() {
+                        @Override
+                        public void onCompleted(JSONObject object, GraphResponse response) {
+                            if (response.getError() == null) {
+                                try {
+                                    String name = object.getString("name");
+                                    String facebookId = object.getString("id");
+                                    String email = object.getString("email");
+
+                                    user.setName(name);
+                                    user.setFacebook(facebookId);
+                                    user.setEmail(email);
+
+                                    user.update(database, 1);
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            } else {
+
+                                Log.e("Facebook response", "Error fetching user data");
+                            }
+                        }
+                    });
+            Bundle parameters = new Bundle();
+            parameters.putString("fields", "id,name,link,email");
+            request.setParameters(parameters);
+            request.executeAndWait();
+
             return user;
         }
 
@@ -347,23 +381,11 @@ public class NavigationDrawerFragment extends Fragment {
 
             userName.setText(user.getName());
 
-            Request.newMeRequest(ParseFacebookUtils.getSession(), new Request.GraphUserCallback() {
-                @Override
-                public void onCompleted(GraphUser graphUser, Response response) {
-
-                    if (graphUser != null) {
-
-                        user.setName(graphUser.getName());
-                        user.setFacebook(graphUser.getId());
-                        user.setEmail(graphUser.getProperty("email").toString());
-                        avatar.setProfileId("1032281630131939");
-                    }
-                }
-            }).executeAsync();
-
-            if (defaultPhoto != null) {
+            if (user.getFacebook() != null)
+                avatar.setProfileId(user.getFacebook());
+            else if (defaultPhoto != null)
                 avatar.setDefaultProfilePicture(defaultPhoto);
-            }
+
         }
     }
 }
