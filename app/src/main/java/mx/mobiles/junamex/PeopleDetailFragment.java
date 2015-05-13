@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,24 +25,27 @@ import com.google.zxing.WriterException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import mx.mobiles.model.PeopleMet;
+import mx.mobiles.model.People;
+import mx.mobiles.ui.CircleProfilePicture;
 import mx.mobiles.utils.Utilities;
 
 /**
  * Created by desarrollo16 on 05/03/15.
  */
-public class PeopleDetailFragment extends Fragment implements Toolbar.OnMenuItemClickListener{
+public class PeopleDetailFragment extends Fragment implements Toolbar.OnMenuItemClickListener, View.OnClickListener{
 
     private static final int REQUEST_CODE = 1111;
     private TextView name, emailText, facebookText, phoneText, districtText, notesText;
     private View email, phone, facebook, district, notes;
+    private CircleProfilePicture profilePicture;
     private int id;
+    private People contact;
     private Toolbar toolbar;
 
     public static PeopleDetailFragment newInstance(int peopleId) {
 
         Bundle args = new Bundle();
-        args.putInt(PeopleMet.TABLE, peopleId);
+        args.putInt(People.TABLE, peopleId);
 
         PeopleDetailFragment fragment = new PeopleDetailFragment();
         fragment.setArguments(args);
@@ -51,7 +56,7 @@ public class PeopleDetailFragment extends Fragment implements Toolbar.OnMenuItem
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        id = getArguments().getInt(PeopleMet.TABLE, 1);
+        id = getArguments().getInt(People.TABLE, 1);
     }
 
     @Override
@@ -65,11 +70,14 @@ public class PeopleDetailFragment extends Fragment implements Toolbar.OnMenuItem
         district = view.findViewById(R.id.people_district);
         notes = view.findViewById(R.id.people_notes);
 
+        profilePicture = (CircleProfilePicture) view.findViewById(R.id.profile_picture);
         emailText = (TextView) view.findViewById(R.id.people_email_text);
         phoneText = (TextView) view.findViewById(R.id.people_phone_text);
         facebookText = (TextView) view.findViewById(R.id.people_facebook_text);
         districtText = (TextView) view.findViewById(R.id.people_district_text);
         notesText = (TextView) view.findViewById(R.id.people_notes_text);
+
+        facebookText.setOnClickListener(this);
 
         setUpToolbar((Toolbar) view.findViewById(R.id.toolbar));
         new LoadDetail().execute(id);
@@ -103,6 +111,7 @@ public class PeopleDetailFragment extends Fragment implements Toolbar.OnMenuItem
             case R.id.share_qr:
                 String json = peopleToJSON(false);
                 Bitmap qrCode = null;
+                Log.d("Share contact", json);
                 try {
                     qrCode = Utilities.encodeAsBitmap(json, BarcodeFormat.QR_CODE, 512, 512);
                 } catch (WriterException e) {
@@ -135,52 +144,74 @@ public class PeopleDetailFragment extends Fragment implements Toolbar.OnMenuItem
         }
     }
 
-    private class LoadDetail extends AsyncTask<Integer, Void, PeopleMet> {
+    @Override
+    public void onClick(View view) {
+
+        switch (view.getId()) {
+
+            case R.id.people_facebook_text:
+                Intent intent;
+                try {
+                    getActivity().getPackageManager().getPackageInfo("com.facebook.katana", 0);
+                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse("fb://profile/" + contact.getFacebookId()));
+                } catch (Exception e) {
+                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse(contact.getFacebook()));
+                }
+                getActivity().startActivity(intent);
+                break;
+        }
+    }
+
+    private class LoadDetail extends AsyncTask<Integer, Void, People> {
         @Override
-        protected PeopleMet doInBackground(Integer... params) {
-            return PeopleMet.getPeople(((BaseActivity) getActivity()).getDB(), params[0]);
+        protected People doInBackground(Integer... params) {
+            contact = People.getPeople(((BaseActivity) getActivity()).getDB(), params[0]);
+            return contact;
         }
 
         @Override
-        protected void onPostExecute(PeopleMet peopleMet) {
-            super.onPostExecute(peopleMet);
+        protected void onPostExecute(People people) {
+            super.onPostExecute(people);
 
-            if (peopleMet != null) {
+            if (people != null) {
 
-                if (peopleMet.getName() != null)
-                    name.setText(peopleMet.getName());
+                if (people.getFacebookId() != null)
+                    profilePicture.setProfileId(people.getFacebookId());
 
-                if (peopleMet.getPhone() != null) {
-                    if (!peopleMet.getPhone().isEmpty()) {
-                        phoneText.setText(peopleMet.getPhone());
+                if (people.getName() != null)
+                    name.setText(people.getName());
+
+                if (people.getPhone() != null) {
+                    if (!people.getPhone().isEmpty()) {
+                        phoneText.setText(people.getPhone());
                         phone.setVisibility(View.VISIBLE);
                     }
                 }
 
-                if (peopleMet.getEmail() != null) {
-                    if (!peopleMet.getEmail().isEmpty()) {
-                        emailText.setText(peopleMet.getEmail());
+                if (people.getEmail() != null) {
+                    if (!people.getEmail().isEmpty()) {
+                        emailText.setText(people.getEmail());
                         email.setVisibility(View.VISIBLE);
                     }
                 }
 
-                if (peopleMet.getFacebook() != null) {
-                    if (!peopleMet.getFacebook().isEmpty()) {
-                        facebookText.setText(peopleMet.getFacebook());
+                if (people.getFacebook() != null) {
+                    if (!people.getFacebook().isEmpty()) {
+                        facebookText.setText(R.string.see_facebook_timeline);
                         facebook.setVisibility(View.VISIBLE);
                     }
                 }
 
-                if (peopleMet.getDistrict() != null) {
-                    if (!peopleMet.getDistrict().isEmpty()) {
-                        districtText.setText(peopleMet.getDistrict());
+                if (people.getDistrict() != null) {
+                    if (!people.getDistrict().isEmpty()) {
+                        districtText.setText(people.getDistrict());
                         district.setVisibility(View.VISIBLE);
                     }
                 }
 
-                if (peopleMet.getNotes() != null) {
-                    if (!peopleMet.getNotes().isEmpty()) {
-                        notesText.setText(peopleMet.getNotes());
+                if (people.getNotes() != null) {
+                    if (!people.getNotes().isEmpty()) {
+                        notesText.setText(people.getNotes());
                         notes.setVisibility(View.VISIBLE);
                     }
                 }
@@ -192,15 +223,15 @@ public class PeopleDetailFragment extends Fragment implements Toolbar.OnMenuItem
 
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put(PeopleMet.NAME, name.getText());
-            jsonObject.put(PeopleMet.DISTRICT, districtText.getText());
-            jsonObject.put(PeopleMet.EMAIL, emailText.getText());
-            jsonObject.put(PeopleMet.PHONE, phoneText.getText());
-            jsonObject.put(PeopleMet.FACEBOOK, "");
+            jsonObject.put(People.NAME, name.getText());
+            jsonObject.put(People.DISTRICT, districtText.getText());
+            jsonObject.put(People.EMAIL, emailText.getText());
+            jsonObject.put(People.PHONE, phoneText.getText());
+            jsonObject.put(People.FACEBOOK, contact.getFacebookId());
 
             if (includeNotes) {
-                jsonObject.put(PeopleMet.ID, id);
-                jsonObject.put(PeopleMet.NOTES, notesText.getText());
+                jsonObject.put(People.ID, id);
+                jsonObject.put(People.NOTES, notesText.getText());
             }
 
         } catch (JSONException e) {

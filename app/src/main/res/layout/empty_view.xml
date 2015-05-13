@@ -9,4 +9,5 @@
     android:gravity="center"
     android:layout_gravity="center"
     android:text="@string/nothing_to_see"
+    android:textColor="@color/secondary_text_color"
     android:textSize="22sp" />

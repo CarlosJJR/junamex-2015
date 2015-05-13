@@ -19,6 +19,7 @@ import mx.mobiles.junamex.EventDetailActivity;
 import mx.mobiles.junamex.MapActivity;
 import mx.mobiles.junamex.MapFragment;
 import mx.mobiles.junamex.R;
+import mx.mobiles.junamex.SettingsActivity;
 import mx.mobiles.model.Event;
 
 /**
@@ -65,7 +66,7 @@ public class LocalNotificationsReceiver extends BroadcastReceiver {
 
         //Check user settings to see if notification should vibrate or not
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        boolean vibrateEnabled = prefs.getBoolean("vibration_enabled", true);
+        boolean vibrateEnabled = prefs.getBoolean(SettingsActivity.VIBRATION_ENABLED, true);
         if (vibrateEnabled)
             notBuilder.setVibrate(new long[]{150});
 

@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.parse.ParseQuery;
@@ -15,7 +16,7 @@ import mx.mobiles.db.DatabaseHelper;
 /**
  * Created by desarrollo16 on 29/01/15.
  */
-public abstract class BaseActivity extends ActionBarActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     public Toolbar toolbar;
     public SQLiteDatabase database;
@@ -57,7 +58,7 @@ public abstract class BaseActivity extends ActionBarActivity {
     public ParseQuery.CachePolicy getCachePolicy() {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        return prefs.getBoolean("auto_refresh_data", true) ?
+        return prefs.getBoolean(SettingsActivity.REFRESH_DATA, true) ?
                 ParseQuery.CachePolicy.CACHE_THEN_NETWORK : ParseQuery.CachePolicy.CACHE_ELSE_NETWORK;
     }
 }

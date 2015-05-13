@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 import mx.mobiles.junamex.PeopleDetailActivity;
 import mx.mobiles.junamex.R;
-import mx.mobiles.model.PeopleMet;
+import mx.mobiles.model.People;
 import mx.mobiles.utils.Utilities;
 
 /**
@@ -21,10 +21,10 @@ import mx.mobiles.utils.Utilities;
  */
 public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.Holder> {
 
-    private ArrayList<PeopleMet> peopleList;
+    private ArrayList<People> peopleList;
     private Activity activity;
 
-    public PeopleAdapter(Activity activity, ArrayList<PeopleMet> peopleList) {
+    public PeopleAdapter(Activity activity, ArrayList<People> peopleList) {
         this.peopleList = peopleList;
         this.activity = activity;
     }
@@ -41,7 +41,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.Holder> {
     @Override
     public void onBindViewHolder(Holder holder, int position) {
 
-        PeopleMet item = peopleList.get(position);
+        People item = peopleList.get(position);
         holder.name.setText(item.getName());
         holder.district.setText(R.string.district_list);
         String districtTextComplete = holder.district.getText() + item.getDistrict();
@@ -57,7 +57,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.Holder> {
 //                                activity, v.findViewById(R.id.image_holder), MuseumDetailActivity.TRANSITION);
 
                 Intent intent = new Intent(activity, PeopleDetailActivity.class);
-                intent.putExtra(PeopleMet.TABLE, peopleList.get(position).getId());
+                intent.putExtra(People.TABLE, peopleList.get(position).getId());
                 activity.startActivity(intent);
 //                ActivityCompat.startActivity(activity, intent, options.toBundle());
             }

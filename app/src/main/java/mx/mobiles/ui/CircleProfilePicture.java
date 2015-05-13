@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
@@ -29,6 +30,7 @@ import com.facebook.internal.ImageRequest.Callback;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import mx.mobiles.junamex.R;
+import mx.mobiles.utils.Utilities;
 
 public class CircleProfilePicture extends FrameLayout {
     public static final String TAG = CircleProfilePicture.class.getSimpleName();
@@ -230,8 +232,8 @@ public class CircleProfilePicture extends FrameLayout {
         }
 
         if(this.customizedDefaultProfilePicture == null) {
-            int scaledBitmap = this.isCropped()?drawable.com_facebook_profile_picture_blank_square:drawable.com_facebook_profile_picture_blank_portrait;
-            this.setImageBitmap(BitmapFactory.decodeResource(this.getResources(), scaledBitmap));
+            int resourceId = Utilities.getRandomAvatar(getContext());
+            this.setImageBitmap(BitmapFactory.decodeResource(getResources(), resourceId));
         } else {
             this.updateImageQueryParameters();
             Bitmap scaledBitmap1 = Bitmap.createScaledBitmap(this.customizedDefaultProfilePicture, this.queryWidth, this.queryHeight, false);

@@ -2,14 +2,10 @@ package mx.mobiles.junamex;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,13 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 
+import com.facebook.AccessToken;
+import com.github.mrengineer13.snackbar.SnackBar;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import mx.mobiles.utils.Utilities;
@@ -50,27 +46,6 @@ public class MainActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (ParseUser.getCurrentUser() == null) {
-
-            ArrayList<String> permissions = new ArrayList<>();
-            permissions.add("email");
-
-            ParseFacebookUtils.logInWithReadPermissionsInBackground(this, permissions, new LogInCallback() {
-                @Override
-                public void done(ParseUser user, ParseException err) {
-                    if (user == null) {
-                        Log.d("MyApp", "Uh oh. The user cancelled the Facebook login.");
-                    } else if (user.isNew()) {
-                        //user.saveInBackground();
-                        Log.d("MyApp", "User signed up and logged in through Facebook!");
-                        Log.i("Facebook login", user.toString());
-                    } else {
-                        Log.d("MyApp", "User logged in through Facebook!");
-                    }
-                }
-            });
-        }
-
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -79,6 +54,34 @@ public class MainActivity extends BaseActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        if (AccessToken.getCurrentAccessToken() == null) {
+
+            ArrayList<String> permissions = new ArrayList<>();
+            permissions.add("email");
+
+            ParseFacebookUtils.logInWithReadPermissionsInBackground(this, permissions, new LogInCallback() {
+                @Override
+                public void done(ParseUser user, ParseException err) {
+
+                    if (err != null) {
+                        Log.e("ParseException", err.getLocalizedMessage());
+                        return;
+                    }
+
+                    if (user == null) {
+                        Log.d("MyApp", "Uh oh. The user cancelled the Facebook login.");
+                        new SnackBar.Builder(MainActivity.this)
+                                .withMessageId(R.string.not_logged_in_warning)
+                                .withDuration(SnackBar.LONG_SNACK)
+                                .show();
+                    } else {
+                        Log.d("MyApp", "User logged in through Facebook!");
+                        mNavigationDrawerFragment.updateUserInfo();
+                    }
+                }
+            });
+        }
     }
 
     @Override

@@ -334,7 +334,7 @@ public class EventDetailFragment extends DialogFragment implements ObservableScr
                     if (bytes != null && paletteColor == getResources().getColor(R.color.color_primary)) {
                         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 
-                        Palette.generateAsync(bitmap,
+                        Palette.from(bitmap).generate(
                                 new Palette.PaletteAsyncListener() {
                                     @Override
                                     public void onGenerated(Palette palette) {

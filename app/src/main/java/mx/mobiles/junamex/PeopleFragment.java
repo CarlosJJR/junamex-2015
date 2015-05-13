@@ -20,8 +20,7 @@ import java.util.ArrayList;
 
 import mx.mobiles.adapters.NavigationDrawerAdapter;
 import mx.mobiles.adapters.PeopleAdapter;
-import mx.mobiles.model.PeopleMet;
-import mx.mobiles.utils.RecyclerViewDividers;
+import mx.mobiles.model.People;
 import mx.mobiles.utils.SimpleDividerDecorator;
 
 /**
@@ -33,7 +32,7 @@ public class PeopleFragment extends BaseFragment {
 
     public static final String TAG = PeopleFragment.class.getSimpleName();
 
-    private ArrayList<PeopleMet> peopleList;
+    private ArrayList<People> peopleList;
     private PeopleAdapter adapter;
     private View emptyView;
 
@@ -115,9 +114,9 @@ public class PeopleFragment extends BaseFragment {
         @Override
         protected Void doInBackground(SQLiteDatabase... params) {
 
-            ArrayList<PeopleMet> list = PeopleMet.getAll(params[0]);
+            ArrayList<People> list = People.getAll(params[0]);
 
-            for (PeopleMet met : list) {
+            for (People met : list) {
                 peopleList.add(met);
             }
             return null;

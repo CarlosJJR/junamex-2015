@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * Created by desarrollo16 on 30/01/15.
  */
-public class PeopleMet {
+public class People {
 
     public static final String TABLE = "peopleMet";
     public static final String ID = "id";
@@ -19,7 +19,7 @@ public class PeopleMet {
     public static final String PHONE = "phone";
     public static final String EMAIL = "email";
     public static final String FACEBOOK = "facebook";
-    public static final String TWITTER = "twitter";
+    public static final String FACEBOOK_ID = "facebook_id";
 
     public static final String CREATE_TABLE = "CREATE TABLE peopleMet ("
             +"id integer NOT NULL PRIMARY KEY AUTOINCREMENT,"
@@ -29,6 +29,7 @@ public class PeopleMet {
             +"phone varchar(250),"
             +"email varchar(250),"
             +"facebook varchar(250),"
+            +"facebook_id varchar(250),"
             +"twitter varchar(250))";
 
     private int id;
@@ -37,7 +38,7 @@ public class PeopleMet {
     private String phone;
     private String email;
     private String facebook;
-    private String twitter;
+    private String facebookId;
     private String district;
     private int tempAvatar;
 
@@ -45,7 +46,7 @@ public class PeopleMet {
         return id;
     }
 
-    public PeopleMet setId(int id) {
+    public People setId(int id) {
         this.id = id;
         return this;
     }
@@ -54,7 +55,7 @@ public class PeopleMet {
         return name;
     }
 
-    public PeopleMet setName(String name) {
+    public People setName(String name) {
         this.name = name;
         return this;
     }
@@ -63,7 +64,7 @@ public class PeopleMet {
         return notes;
     }
 
-    public PeopleMet setNotes(String notes) {
+    public People setNotes(String notes) {
         this.notes = notes;
         return this;
     }
@@ -72,7 +73,7 @@ public class PeopleMet {
         return phone;
     }
 
-    public PeopleMet setPhone(String phone) {
+    public People setPhone(String phone) {
         this.phone = phone;
         return this;
     }
@@ -81,7 +82,7 @@ public class PeopleMet {
         return email;
     }
 
-    public PeopleMet setEmail(String email) {
+    public People setEmail(String email) {
         this.email = email;
         return this;
     }
@@ -90,17 +91,17 @@ public class PeopleMet {
         return facebook;
     }
 
-    public PeopleMet setFacebook(String facebook) {
+    public People setFacebook(String facebook) {
         this.facebook = facebook;
         return this;
     }
 
-    public String getTwitter() {
-        return twitter;
+    public String getFacebookId() {
+        return facebookId;
     }
 
-    public PeopleMet setTwitter(String twitter) {
-        this.twitter = twitter;
+    public People setFacebookId(String facebookId) {
+        this.facebookId = facebookId;
         return this;
     }
 
@@ -108,7 +109,7 @@ public class PeopleMet {
         return district;
     }
 
-    public PeopleMet setDistrict(String district) {
+    public People setDistrict(String district) {
         this.district = district;
         return this;
     }
@@ -117,7 +118,7 @@ public class PeopleMet {
         return tempAvatar;
     }
 
-    public PeopleMet setTempAvatar(int tempAvatar) {
+    public People setTempAvatar(int tempAvatar) {
         this.tempAvatar = tempAvatar;
         return this;
     }
@@ -132,6 +133,7 @@ public class PeopleMet {
         cv.put(PHONE, this.phone);
         cv.put(EMAIL, this.email);
         cv.put(FACEBOOK, this.facebook);
+        cv.put(FACEBOOK_ID, this.facebookId);
 
         return (int) database.insert(TABLE, null, cv);
     }
@@ -146,61 +148,64 @@ public class PeopleMet {
         cv.put(PHONE, this.phone);
         cv.put(EMAIL, this.email);
         cv.put(FACEBOOK, this.facebook);
+        cv.put(FACEBOOK_ID, this.facebookId);
 
         return database.update(TABLE, cv, ID + "=?", new String[]{String.valueOf(id)});
     }
 
-    public static ArrayList<PeopleMet> getAll(SQLiteDatabase database) {
+    public static ArrayList<People> getAll(SQLiteDatabase database) {
 
-        ArrayList<PeopleMet> peopleMets = new ArrayList<>();
-        Cursor cursor = database.query(TABLE, null, ID +"!=?", new String[]{"1"}, null, null, PeopleMet.NAME);
+        ArrayList<People> peoples = new ArrayList<>();
+        Cursor cursor = database.query(TABLE, null, ID +"!=?", new String[]{"1"}, null, null, People.NAME);
 
         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
 
             int id = cursor.getInt(cursor.getColumnIndex(ID));
             String name = cursor.getString(cursor.getColumnIndex(NAME));
             String district = cursor.getString(cursor.getColumnIndex(DISTRICT));
-            String facebook = cursor.getString(cursor.getColumnIndex(FACEBOOK));
+            String facebookId = cursor.getString(cursor.getColumnIndex(FACEBOOK_ID));
 
-            PeopleMet people = new PeopleMet();
+            People people = new People();
             people.setId(id)
                     .setName(name)
                     .setDistrict(district)
-                    .setFacebook(facebook);
+                    .setFacebookId(facebookId);
 
-            peopleMets.add(people);
+            peoples.add(people);
         }
         cursor.close();
 
-        return peopleMets;
+        return peoples;
     }
 
-    public static PeopleMet getPeople(SQLiteDatabase database, int id) {
+    public static People getPeople(SQLiteDatabase database, int id) {
 
-        PeopleMet peopleMet = null;
+        People people = null;
         Cursor cursor = database.query(TABLE, null, ID + "=?", new String[]{String.valueOf(id)}, null, null, null);
 
         if (cursor.moveToFirst()) {
 
-            peopleMet = new PeopleMet();
+            people = new People();
 
             String name = cursor.getString(cursor.getColumnIndex(NAME));
             String notes = cursor.getString(cursor.getColumnIndex(NOTES));
             String phone = cursor.getString(cursor.getColumnIndex(PHONE));
             String email = cursor.getString(cursor.getColumnIndex(EMAIL));
             String facebook = cursor.getString(cursor.getColumnIndex(FACEBOOK));
+            String facebookId = cursor.getString(cursor.getColumnIndex(FACEBOOK_ID));
             String district = cursor.getString(cursor.getColumnIndex(DISTRICT));
 
-            peopleMet.setId(id)
+            people.setId(id)
                     .setName(name)
                     .setNotes(notes)
                     .setPhone(phone)
                     .setEmail(email)
                     .setFacebook(facebook)
+                    .setFacebookId(facebookId)
                     .setDistrict(district);
         }
         cursor.close();
 
-        return peopleMet;
+        return people;
     }
 }

@@ -16,6 +16,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -30,12 +31,13 @@ import android.widget.TextView;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.parse.ParseUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import mx.mobiles.adapters.NavigationDrawerAdapter;
-import mx.mobiles.model.PeopleMet;
+import mx.mobiles.model.People;
 import mx.mobiles.ui.CircleProfilePicture;
 import mx.mobiles.utils.Utilities;
 
@@ -123,7 +125,7 @@ public class NavigationDrawerFragment extends Fragment {
                 }
 
                 Intent intent = new Intent(getActivity(), PeopleDetailActivity.class);
-                intent.putExtra(PeopleMet.TABLE, 1);
+                intent.putExtra(People.TABLE, 1);
                 startActivityForResult(intent, REQUEST_CODE);
             }
         });
@@ -139,7 +141,7 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerListView.addFooterView(Utilities.getEmptyHeaderFooter(getActivity()), null, false);
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 
-        new LoadAvatar().execute(((BaseActivity) getActivity()).getDB());
+        updateUserInfo();
         return view;
     }
 
@@ -292,12 +294,11 @@ public class NavigationDrawerFragment extends Fragment {
     private void showGlobalContextActionBar() {
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setTitle(R.string.app_name);
     }
 
     private ActionBar getActionBar() {
-        return ((ActionBarActivity) getActivity()).getSupportActionBar();
+        return ((AppCompatActivity) getActivity()).getSupportActionBar();
     }
 
     /**
@@ -315,32 +316,31 @@ public class NavigationDrawerFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            new LoadAvatar().execute();
+            updateUserInfo();
         }
     }
 
-    private class LoadAvatar extends AsyncTask<SQLiteDatabase, Void, PeopleMet> {
+    public void updateUserInfo() {
+        if (isAdded())
+            new LoadAvatar().execute(((BaseActivity) getActivity()).getDB());
+    }
 
-        PeopleMet user;
-        Bitmap defaultPhoto = null;
+    private class LoadAvatar extends AsyncTask<SQLiteDatabase, Void, People> {
+
+        People user;
 
         @Override
-        protected PeopleMet doInBackground(SQLiteDatabase... params) {
+        protected People doInBackground(SQLiteDatabase... params) {
 
             final SQLiteDatabase database = params[0];
-            user = PeopleMet.getPeople(database, 1);
+            user = People.getPeople(database, 1);
 
             if (user == null) {
 
-                user = new PeopleMet();
+                user = new People();
                 user.setName(getString(R.string.default_name));
                 user.save(((MainActivity) getActivity()).getDB());
             }
-
-            int resourceId = Utilities.getRandomAvatar(getActivity());
-            user.setTempAvatar(resourceId);
-            defaultPhoto = BitmapFactory.decodeResource(getResources(), user.getTempAvatar());
-
 
             GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(),
                     new GraphRequest.GraphJSONObjectCallback() {
@@ -350,11 +350,20 @@ public class NavigationDrawerFragment extends Fragment {
                                 try {
                                     String name = object.getString("name");
                                     String facebookId = object.getString("id");
+                                    String facebookLink = object.getString("link");
                                     String email = object.getString("email");
 
                                     user.setName(name);
-                                    user.setFacebook(facebookId);
+                                    user.setFacebookId(facebookId);
+                                    user.setFacebook(facebookLink);
                                     user.setEmail(email);
+
+                                    ParseUser parseUser = ParseUser.getCurrentUser();
+                                    if (parseUser.isNew()) {
+                                        parseUser.setUsername(name);
+                                        parseUser.setEmail(email);
+                                        parseUser.saveInBackground();
+                                    }
 
                                     user.update(database, 1);
 
@@ -376,16 +385,13 @@ public class NavigationDrawerFragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(final PeopleMet user) {
+        protected void onPostExecute(People user) {
             super.onPostExecute(user);
 
             userName.setText(user.getName());
 
-            if (user.getFacebook() != null)
-                avatar.setProfileId(user.getFacebook());
-            else if (defaultPhoto != null)
-                avatar.setDefaultProfilePicture(defaultPhoto);
-
+            if (user.getFacebookId() != null)
+                avatar.setProfileId(user.getFacebookId());
         }
     }
 }

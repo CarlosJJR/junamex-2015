@@ -1,101 +1,125 @@
 package mx.mobiles.junamex;
 
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.AsyncTask;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.ListPreference;
-import android.preference.Preference;
-import android.preference.PreferenceActivity;
-import android.support.v7.widget.Toolbar;
+import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.TextView;
 
-import com.parse.GetCallback;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-
-import mx.mobiles.db.DatabaseHelper;
-import mx.mobiles.model.Event;
+import com.facebook.AccessToken;
+import com.facebook.login.LoginManager;
 
 /**
  * Created by desarrollo16 on 06/03/15.
  */
-public class SettingsActivity extends PreferenceActivity {
+public class SettingsActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener, View.OnClickListener{
+
+    public static final String VIBRATION_ENABLED = "vibration_enabled";
+    public static final String REFRESH_DATA = "auto_refresh_data";
+
+    TextView facebookControl, dataUsageSubtitle;
+    private SwitchCompat notificationsVibrate, dataUsage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
-        addPreferencesFromResource(R.xml.preferences);
 
-        Toolbar actionbar = (Toolbar) findViewById(R.id.toolbar);
-        actionbar.setTitle(getString(R.string.settings));
-        actionbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back));
-        actionbar.setNavigationOnClickListener(new View.OnClickListener() {
+        toolbar.setNavigationIcon(R.drawable.ic_back);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                SettingsActivity.this.finish();
+            public void onClick(View view) {
+                finish();
             }
         });
+
+        notificationsVibrate = (SwitchCompat) findViewById(R.id.notifications_vibrate);
+        dataUsage = (SwitchCompat) findViewById(R.id.data_usage);
+        facebookControl = (TextView) findViewById(R.id.facebook_login);
+        dataUsageSubtitle = (TextView) findViewById(R.id.data_usage_subtitle);
+
+        updateControls();
+
+        notificationsVibrate.setOnCheckedChangeListener(this);
+        dataUsage.setOnCheckedChangeListener(this);
+        facebookControl.setOnClickListener(this);
     }
 
-    private static class RescheduleNotifications extends AsyncTask<Void, Void, Void> {
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.activity_settings;
+    }
 
-        private SQLiteDatabase database;
-        private Context context;
+    private void updateControls() {
 
-        public RescheduleNotifications(Context context, SQLiteDatabase database) {
-            this.context = context;
-            this.database = database;
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean vibration = sharedPreferences.getBoolean(VIBRATION_ENABLED, true);
+        boolean autoRefresh = sharedPreferences.getBoolean(REFRESH_DATA, true);
+
+        notificationsVibrate.setChecked(vibration);
+
+        dataUsage.setChecked(autoRefresh);
+        int dataUsageValue = autoRefresh ? R.string.auto_refresh : R.string.manual_refresh;
+        dataUsageSubtitle.setText(dataUsageValue);
+
+        if (AccessToken.getCurrentAccessToken() == null)
+            facebookControl.setText(com.facebook.R.string.com_facebook_loginview_log_in_button);
+        else
+            facebookControl.setText(com.facebook.R.string.com_facebook_loginview_logged_in_using_facebook);
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        switch (compoundButton.getId()) {
+
+            case R.id.notifications_vibrate:
+                sharedPreferences
+                        .edit()
+                        .putBoolean(VIBRATION_ENABLED, checked)
+                        .apply();
+                break;
+
+            case R.id.data_usage:
+                sharedPreferences
+                        .edit()
+                        .putBoolean(REFRESH_DATA, checked)
+                        .apply();
+
+                int dataUsageValue = checked ? R.string.auto_refresh : R.string.manual_refresh;
+                dataUsageSubtitle.setText(dataUsageValue);
+                break;
+
+            default:
         }
+    }
 
-        @Override
-        protected Void doInBackground(Void... params) {
-            ArrayList<HashMap<String, String>> eventIDs = Event.getAllNotificationsEnabled(database);
+    @Override
+    public void onClick(View view) {
+        facebookLogout();
+    }
 
-            Log.i("AlarmManager", "Found " + eventIDs.size() + " events to reschedule");
-            for (HashMap<String, String> map : eventIDs) {
-
-                Event event = getEvent(map.get(Event.ID));
-                if (event != null) {
-
-                    Calendar cal = Calendar.getInstance();
-                    cal.setTime(event.convertFromUTC(event.getStartTime()));
-//                    cal.add(Calendar.DAY_OF_YEAR, -78);
-
-                    if (cal.getTime().after(new Date())) {
-                        Log.i("AlarmManager", "Rescheduling " + event.getEventName());
-                        event.setDatabaseId(Integer.parseInt(map.get(Event.DB_ID)));
-                        event.rescheduleAlarm(context);
-                    }
-                }
-            }
-            return null;
-        }
-
-        private Event getEvent(String eventID) {
-
-            ParseQuery<Event> query = new ParseQuery<> (Event.class);
-            query.include(Event.LOCATION);
-            try {
-                return query.get(eventID);
-            } catch (ParseException e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            context = null;
-            database.close();
+    public void facebookLogout() {
+        final LoginManager session = LoginManager.getInstance();
+        if (session != null) {
+            new AlertDialog.Builder(this)
+                    .setMessage(getString(R.string.com_facebook_loginview_logged_in_as, "user"))
+                    .setNegativeButton(R.string.com_facebook_loginview_cancel_action, null)
+                    .setPositiveButton(R.string.com_facebook_loginview_log_out_button, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Log.i("Facebook", "Log out from Facebook");
+                            session.logOut();
+                            facebookControl.setText(R.string.com_facebook_loginview_log_in_button);
+                        }
+                    })
+                    .show();
+        } else {
+            Log.i("Facebook", "Log in on Facebook");
         }
     }
 }

@@ -241,7 +241,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 try {
                     byte[] photoData = photo.getData();
                     Bitmap bitmap = BitmapFactory.decodeByteArray(photoData, 0, photoData.length);
-                    Palette palette = Palette.generate(bitmap);
+                    Palette palette = Palette.from(bitmap).generate();
                     Palette.Swatch vibrant = palette.getVibrantSwatch();
 
                     if (vibrant != null) {

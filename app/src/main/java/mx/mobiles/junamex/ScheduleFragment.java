@@ -150,6 +150,9 @@ public class ScheduleFragment extends BaseFragment {
 
     private void setupAlarms() {
 
+        if (!isAdded())
+            return;
+
         SQLiteDatabase database = ((BaseActivity) getActivity()).getDB();
 
         for (Event event : eventList) {
@@ -160,7 +163,6 @@ public class ScheduleFragment extends BaseFragment {
                 event.setAlarm(getActivity());
             }
         }
-        database.close();
     }
 
     private class ParseData extends AsyncTask<List<Event>, Void, Boolean> {

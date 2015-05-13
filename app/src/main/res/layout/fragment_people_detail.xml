@@ -8,26 +8,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="188dp"
+            android:background="@color/color_primary"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@color/color_primary"
             android:gravity="center_vertical">
 
             <include layout="@layout/toolbar"/>
 
+            <mx.mobiles.ui.CircleProfilePicture
+                android:id="@+id/profile_picture"
+                android:layout_width="@dimen/com_facebook_profilepictureview_preset_size_normal"
+                android:layout_height="@dimen/com_facebook_profilepictureview_preset_size_normal"
+                android:layout_marginLeft="72dp"
+                android:layout_marginStart="72dp"
+                android:layout_marginTop="?attr/listPreferredItemHeightLarge"/>
+
             <TextView
                 android:id="@+id/people_name"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/listPreferredItemHeightLarge"
-                android:textColor="@color/white"
+                android:layout_height="wrap_content"
+                android:textColor="@color/secondary_text_color"
                 android:layout_marginLeft="56dp"
                 android:layout_marginStart="56dp"
                 android:padding="@dimen/activity_vertical_margin"
                 android:singleLine="true"
                 android:ellipsize="end"
-                android:layout_gravity="bottom"
                 android:textSize="24sp"/>
 
         </LinearLayout>

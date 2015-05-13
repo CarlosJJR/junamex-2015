@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import mx.mobiles.model.Event;
-import mx.mobiles.model.PeopleMet;
+import mx.mobiles.model.People;
 
 /**
  * Created by desarrollo16 on 30/01/15.
@@ -25,7 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        db.execSQL(PeopleMet.CREATE_TABLE);
+        db.execSQL(People.CREATE_TABLE);
         db.execSQL(Event.CREATE_TABLE);
     }
 

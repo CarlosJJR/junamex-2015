@@ -155,6 +155,9 @@
     <string name="data_refresh_rate">Update data</string>
     <string name="till_junamex">remaining till Junamex</string>
     <string name="vibration_enabled">Vibrate</string>
+    <string name="see_facebook_timeline">View profile</string>
+    <string name="not_logged_in_warning">Couldn\'t connect with Facebook. Some features will be disabled.</string>
+    <string name="facebook" translatable="false">Facebook</string>
 
     <plurals name="days">
         <item quantity="one">day</item>

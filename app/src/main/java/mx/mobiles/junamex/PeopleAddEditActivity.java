@@ -13,7 +13,7 @@ import com.melnykov.fab.FloatingActionButton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import mx.mobiles.model.PeopleMet;
+import mx.mobiles.model.People;
 
 /**
  * Created by desarrollo16 on 04/02/15.
@@ -57,10 +57,11 @@ public class PeopleAddEditActivity extends BaseActivity implements View.OnClickL
             try {
                 JSONObject object = new JSONObject(json);
 
-                String name = object.getString(PeopleMet.NAME);
-                String district = object.getString(PeopleMet.DISTRICT);
-                String phone = object.getString(PeopleMet.PHONE);
-                String email = object.getString(PeopleMet.EMAIL);
+                String name = object.getString(People.NAME);
+                String district = object.getString(People.DISTRICT);
+                String phone = object.getString(People.PHONE);
+                String email = object.getString(People.EMAIL);
+                String facebook = object.getString(People.FACEBOOK);
 
 
                 if (name.equals(getString(R.string.default_name)))
@@ -71,11 +72,12 @@ public class PeopleAddEditActivity extends BaseActivity implements View.OnClickL
                 districtField.setText(district);
                 phoneField.setText(phone);
                 emailField.setText(email);
+                emailField.setTag(facebook);
 
                 if (isEditing) {
 
-                    int peopleId = object.getInt(PeopleMet.ID);
-                    String notes = object.getString(PeopleMet.NOTES);
+                    int peopleId = object.getInt(People.ID);
+                    String notes = object.getString(People.NOTES);
 
                     notesField.setText(notes);
                     nameField.setTag(peopleId);
@@ -108,18 +110,20 @@ public class PeopleAddEditActivity extends BaseActivity implements View.OnClickL
         String email = emailField.getText().toString();
         String phone = phoneField.getText().toString();
         String notes = notesField.getText().toString();
+        String facebookId = emailField.getTag().toString();
 
-        PeopleMet peopleMet = new PeopleMet();
-        peopleMet.setName(name)
+        People people = new People();
+        people.setName(name)
                 .setEmail(email)
                 .setPhone(phone)
                 .setDistrict(district)
+                .setFacebookId(facebookId)
                 .setNotes(notes);
 
         if (isEditing)
-            changesSaved = peopleMet.update(getDB(), (int) nameField.getTag()) == 1;
+            changesSaved = people.update(getDB(), (int) nameField.getTag()) == 1;
         else
-            changesSaved = peopleMet.save(getDB()) != -1;
+            changesSaved = people.save(getDB()) != -1;
 
         if (changesSaved)
             setResult(Activity.RESULT_OK);

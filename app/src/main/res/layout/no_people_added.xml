@@ -10,4 +10,5 @@
     android:layout_gravity="center"
     android:text="@string/no_people"
     android:textSize="22sp"
+    android:textColor="@color/secondary_text_color"
     android:visibility="gone"/>
