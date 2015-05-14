@@ -31,6 +31,7 @@ import android.widget.TextView;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
 
 import org.json.JSONException;
@@ -358,13 +359,6 @@ public class NavigationDrawerFragment extends Fragment {
                                     user.setFacebook(facebookLink);
                                     user.setEmail(email);
 
-                                    ParseUser parseUser = ParseUser.getCurrentUser();
-                                    if (parseUser.isNew()) {
-                                        parseUser.setUsername(name);
-                                        parseUser.setEmail(email);
-                                        parseUser.saveInBackground();
-                                    }
-
                                     user.update(database, 1);
 
                                 } catch (JSONException e) {
@@ -372,7 +366,7 @@ public class NavigationDrawerFragment extends Fragment {
                                 }
                             } else {
 
-                                Log.e("Facebook response", "Error fetching user data");
+                                Log.e("Facebook response", "Error fetching user data: " + response.getError().getErrorMessage());
                             }
                         }
                     });

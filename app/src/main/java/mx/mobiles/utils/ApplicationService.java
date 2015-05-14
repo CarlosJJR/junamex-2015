@@ -1,13 +1,21 @@
 package mx.mobiles.utils;
 
 import android.app.Application;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Build;
+import android.util.Base64;
+import android.util.Log;
 
 import com.facebook.FacebookSdk;
 import com.parse.Parse;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import mx.mobiles.junamex.R;
 import mx.mobiles.model.Event;
@@ -38,5 +46,21 @@ public class ApplicationService extends Application {
 
 
         Utilities.overrideFont(getApplicationContext(), "SERIF", "fonts/8bitOperatorPlus-Regular.ttf");
+    }
+
+    private void printHash() {
+
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "mx.mobiles.junamex",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException | NoSuchAlgorithmException e) {
+            Log.e("Error", e.getLocalizedMessage());
+        }
     }
 }

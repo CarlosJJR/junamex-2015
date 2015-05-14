@@ -165,8 +165,11 @@ public class PeopleDetailFragment extends Fragment implements Toolbar.OnMenuItem
     private class LoadDetail extends AsyncTask<Integer, Void, People> {
         @Override
         protected People doInBackground(Integer... params) {
-            contact = People.getPeople(((BaseActivity) getActivity()).getDB(), params[0]);
-            return contact;
+            if (isAdded()) {
+                contact = People.getPeople(((BaseActivity) getActivity()).getDB(), params[0]);
+                return contact;
+            } else
+                return null;
         }
 
         @Override

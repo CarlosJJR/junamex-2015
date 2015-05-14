@@ -1,18 +1,20 @@
 package mx.mobiles.junamex;
 
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import com.facebook.AccessToken;
-import com.facebook.login.LoginManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.Profile;
+import com.facebook.login.LoginResult;
+
+import mx.mobiles.utils.FacebookLogin;
 
 /**
  * Created by desarrollo16 on 06/03/15.
@@ -21,6 +23,7 @@ public class SettingsActivity extends BaseActivity implements CompoundButton.OnC
 
     public static final String VIBRATION_ENABLED = "vibration_enabled";
     public static final String REFRESH_DATA = "auto_refresh_data";
+    public static final String NO_ACTIVE_USER = "no_active_user";
 
     TextView facebookControl, dataUsageSubtitle;
     private SwitchCompat notificationsVibrate, dataUsage;
@@ -66,10 +69,12 @@ public class SettingsActivity extends BaseActivity implements CompoundButton.OnC
         int dataUsageValue = autoRefresh ? R.string.auto_refresh : R.string.manual_refresh;
         dataUsageSubtitle.setText(dataUsageValue);
 
-        if (AccessToken.getCurrentAccessToken() == null)
-            facebookControl.setText(com.facebook.R.string.com_facebook_loginview_log_in_button);
-        else
-            facebookControl.setText(com.facebook.R.string.com_facebook_loginview_logged_in_using_facebook);
+        if (FacebookLogin.isUserLoggedIn())
+            facebookControl.setText(R.string.com_facebook_loginview_logged_in_using_facebook);
+        else {
+            facebookControl.setText(R.string.com_facebook_loginview_log_in_button);
+            facebookControl.setTag(NO_ACTIVE_USER);
+        }
     }
 
     @Override
@@ -100,26 +105,26 @@ public class SettingsActivity extends BaseActivity implements CompoundButton.OnC
 
     @Override
     public void onClick(View view) {
-        facebookLogout();
-    }
+        String tag = (String) view.getTag();
+        if (tag.equals(NO_ACTIVE_USER)) {
 
-    public void facebookLogout() {
-        final LoginManager session = LoginManager.getInstance();
-        if (session != null) {
-            new AlertDialog.Builder(this)
-                    .setMessage(getString(R.string.com_facebook_loginview_logged_in_as, "user"))
-                    .setNegativeButton(R.string.com_facebook_loginview_cancel_action, null)
-                    .setPositiveButton(R.string.com_facebook_loginview_log_out_button, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Log.i("Facebook", "Log out from Facebook");
-                            session.logOut();
-                            facebookControl.setText(R.string.com_facebook_loginview_log_in_button);
-                        }
-                    })
-                    .show();
-        } else {
-            Log.i("Facebook", "Log in on Facebook");
+            FacebookLogin.logIn(SettingsActivity.this, new FacebookCallback<LoginResult>() {
+                @Override
+                public void onSuccess(LoginResult result) {
+                    Profile profile = Profile.getCurrentProfile();
+                    Log.i("Facebook login", profile.toString());
+                }
+
+                @Override
+                public void onCancel() {
+                    Log.d("Facebook login", "Uh oh. The user cancelled the Facebook login.");
+                }
+
+                @Override
+                public void onError(FacebookException e) {
+                    Log.e("Facebook login", e.getLocalizedMessage());
+                }
+            });
         }
     }
 }

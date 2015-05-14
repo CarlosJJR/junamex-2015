@@ -8,6 +8,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -155,7 +156,7 @@ public class MapFragment extends SupportMapFragment implements OnMapReadyCallbac
             e.printStackTrace();
         }
 
-        ((ActionBarActivity)activity).supportInvalidateOptionsMenu();
+        ((AppCompatActivity)activity).supportInvalidateOptionsMenu();
     }
 
     @Override
