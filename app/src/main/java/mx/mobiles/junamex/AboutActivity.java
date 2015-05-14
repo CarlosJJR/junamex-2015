@@ -94,7 +94,7 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener{
 
         try {
             getPackageManager().getPackageInfo("com.facebook.katana", 0);
-            return new Intent(Intent.ACTION_VIEW, Uri.parse("fb://pages/Comeback/322672031260012?fref=tsComeback"));
+            return new Intent(Intent.ACTION_VIEW, Uri.parse("fb://facewebmodal/f?href=https://www.facebook.com/pages/Comeback/322672031260012?fref=tsComeback" ));
         } catch (Exception e) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/pages/Comeback/322672031260012?fref=tsComeback"));
         }

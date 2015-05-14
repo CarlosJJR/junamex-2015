@@ -153,7 +153,7 @@ public class PeopleDetailFragment extends Fragment implements Toolbar.OnMenuItem
                 Intent intent;
                 try {
                     getActivity().getPackageManager().getPackageInfo("com.facebook.katana", 0);
-                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse("fb://profile/" + contact.getFacebookId()));
+                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse("fb://facewebmodal/f?href=" + contact.getFacebook()));
                 } catch (Exception e) {
                     intent = new Intent(Intent.ACTION_VIEW, Uri.parse(contact.getFacebook()));
                 }
