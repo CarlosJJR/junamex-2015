@@ -1,5 +1,7 @@
 package mx.mobiles.junamex;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -9,9 +11,11 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.Profile;
+import com.facebook.ProfileTracker;
 import com.facebook.login.LoginResult;
 
 import mx.mobiles.utils.FacebookLogin;
@@ -27,6 +31,7 @@ public class SettingsActivity extends BaseActivity implements CompoundButton.OnC
 
     TextView facebookControl, dataUsageSubtitle;
     private SwitchCompat notificationsVibrate, dataUsage;
+    private CallbackManager callbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +75,7 @@ public class SettingsActivity extends BaseActivity implements CompoundButton.OnC
         dataUsageSubtitle.setText(dataUsageValue);
 
         if (FacebookLogin.isUserLoggedIn())
-            facebookControl.setText(R.string.com_facebook_loginview_logged_in_using_facebook);
+            facebookControl.setText(getString(R.string.com_facebook_loginview_logged_in_as, Profile.getCurrentProfile().getName()));
         else {
             facebookControl.setText(R.string.com_facebook_loginview_log_in_button);
             facebookControl.setTag(NO_ACTIVE_USER);
@@ -108,23 +113,46 @@ public class SettingsActivity extends BaseActivity implements CompoundButton.OnC
         String tag = (String) view.getTag();
         if (tag.equals(NO_ACTIVE_USER)) {
 
-            FacebookLogin.logIn(SettingsActivity.this, new FacebookCallback<LoginResult>() {
+            callbackManager = FacebookLogin.logIn(SettingsActivity.this, new FacebookCallback<LoginResult>() {
+
+                private ProfileTracker mProfileTracker;
+
                 @Override
                 public void onSuccess(LoginResult result) {
-                    Profile profile = Profile.getCurrentProfile();
-                    Log.i("Facebook login", profile.toString());
+
+                    mProfileTracker = new ProfileTracker() {
+                        @Override
+                        protected void onCurrentProfileChanged(Profile oldProfile, Profile newProfile) {
+
+                            facebookControl.setText(getString(R.string.com_facebook_loginview_logged_in_as, newProfile.getName()));
+                            mProfileTracker.stopTracking();
+                        }
+                    };
+                    mProfileTracker.startTracking();
+                    setResult(RESULT_OK);
                 }
 
                 @Override
                 public void onCancel() {
                     Log.d("Facebook login", "Uh oh. The user cancelled the Facebook login.");
+                    FacebookLogin.showErrorSnackBar(SettingsActivity.this);
+                    setResult(RESULT_CANCELED);
                 }
 
                 @Override
                 public void onError(FacebookException e) {
                     Log.e("Facebook login", e.getLocalizedMessage());
+                    FacebookLogin.showErrorSnackBar(SettingsActivity.this);
+                    setResult(RESULT_CANCELED);
                 }
             });
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (callbackManager != null)
+            callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 }

@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.provider.ContactsContract;
 import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
 import android.support.v7.app.ActionBar;
@@ -31,6 +32,7 @@ import android.widget.TextView;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.Profile;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
 
@@ -50,7 +52,7 @@ import mx.mobiles.utils.Utilities;
 public class NavigationDrawerFragment extends Fragment {
 
 
-    private static final int REQUEST_CODE = 4321;
+    public static final int REQUEST_CODE = 4321;
     /**
      * Remember the position of the selected item.
      */

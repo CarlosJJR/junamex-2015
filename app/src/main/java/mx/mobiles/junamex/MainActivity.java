@@ -16,15 +16,8 @@ import android.support.v4.widget.DrawerLayout;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.Profile;
-import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.parse.LogInCallback;
-import com.parse.ParseException;
-import com.parse.ParseFacebookUtils;
-import com.parse.ParseUser;
-
-import java.util.ArrayList;
+import com.github.mrengineer13.snackbar.SnackBar;
 
 import mx.mobiles.utils.FacebookLogin;
 import mx.mobiles.utils.Utilities;
@@ -62,40 +55,6 @@ public class MainActivity extends BaseActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
         callbackManager = FacebookLogin.logIn(MainActivity.this, this);
-
-//        if (Profile.getCurrentProfile() == null) {
-//
-//            callbackManager = CallbackManager.Factory.create();
-//
-//            ArrayList<String> permissions = new ArrayList<>();
-//            permissions.add("email");
-//
-//            LoginManager loginManager = LoginManager.getInstance();
-//            loginManager.registerCallback(callbackManager, this);
-//            loginManager.logInWithReadPermissions(this, permissions);
-//
-//            ParseFacebookUtils.logInWithReadPermissionsInBackground(this, permissions, new LogInCallback() {
-//                @Override
-//                public void done(ParseUser user, ParseException err) {
-//
-//                    if (err != null) {
-//                        Log.e("ParseException", err.getLocalizedMessage());
-//                        return;
-//                    }
-//
-//                    if (user == null) {
-//                        Log.d("MyApp", "Uh oh. The user cancelled the Facebook login.");
-//                        new SnackBar.Builder(MainActivity.this)
-//                                .withMessageId(R.string.not_logged_in_warning)
-//                                .withDuration(SnackBar.LONG_SNACK)
-//                                .show();
-//                    } else {
-//                        Log.d("MyApp", "User logged in through Facebook!");
-//                        mNavigationDrawerFragment.updateUserInfo();
-//                    }
-//                }
-//            });
-//        }
     }
 
     @Override
@@ -105,19 +64,19 @@ public class MainActivity extends BaseActivity
 
     @Override
     public void onSuccess(LoginResult result) {
-        Profile profile = Profile.getCurrentProfile();
-        Log.i("Facebook login", profile.getName());
         mNavigationDrawerFragment.updateUserInfo();
     }
 
     @Override
     public void onCancel() {
         Log.d("Facebook login", "Uh oh. The user cancelled the Facebook login.");
+        FacebookLogin.showErrorSnackBar(this);
     }
 
     @Override
     public void onError(FacebookException e) {
         Log.e("Facebook login", e.getLocalizedMessage());
+        FacebookLogin.showErrorSnackBar(this);
     }
 
     @Override
@@ -147,6 +106,12 @@ public class MainActivity extends BaseActivity
                     requestingMapPermission = true;
                 break;
 
+            case SOCIAL_FEED:
+                fragmentManager.beginTransaction()
+                    .replace(R.id.container, new SocialFragment(), SocialFragment.TAG)
+                    .commit();
+                break;
+
             case PEOPLE:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, new PeopleFragment(), PeopleFragment.TAG)
@@ -160,7 +125,7 @@ public class MainActivity extends BaseActivity
                 break;
 
             case SETTINGS:
-                startActivity(new Intent(this, SettingsActivity.class));
+                startActivityForResult(new Intent(this, SettingsActivity.class), NavigationDrawerFragment.REQUEST_CODE);
                 break;
 
             case ABOUT:
@@ -182,8 +147,12 @@ public class MainActivity extends BaseActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+
+        if (callbackManager != null)
+            callbackManager.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == NavigationDrawerFragment.REQUEST_CODE && resultCode == RESULT_OK)
+            mNavigationDrawerFragment.updateUserInfo();
     }
 
     public void onSectionAttached(int number) {
