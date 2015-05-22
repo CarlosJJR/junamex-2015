@@ -1,6 +1,5 @@
 package mx.mobiles.junamex;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -54,7 +53,6 @@ public class SettingsActivity extends BaseActivity implements CompoundButton.OnC
 
         notificationsVibrate.setOnCheckedChangeListener(this);
         dataUsage.setOnCheckedChangeListener(this);
-        facebookControl.setOnClickListener(this);
     }
 
     @Override
@@ -79,6 +77,7 @@ public class SettingsActivity extends BaseActivity implements CompoundButton.OnC
         else {
             facebookControl.setText(R.string.com_facebook_loginview_log_in_button);
             facebookControl.setTag(NO_ACTIVE_USER);
+            facebookControl.setOnClickListener(this);
         }
     }
 

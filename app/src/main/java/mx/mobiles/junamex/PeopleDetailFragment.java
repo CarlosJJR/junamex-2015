@@ -230,7 +230,12 @@ public class PeopleDetailFragment extends Fragment implements Toolbar.OnMenuItem
             jsonObject.put(People.DISTRICT, districtText.getText());
             jsonObject.put(People.EMAIL, emailText.getText());
             jsonObject.put(People.PHONE, phoneText.getText());
-            jsonObject.put(People.FACEBOOK, contact.getFacebookId());
+
+            String facebookId = contact.getFacebookId() == null ? "" : contact.getFacebookId();
+            String facebookLink = contact.getFacebook() == null ? "" : contact.getFacebook();
+
+            jsonObject.put(People.FACEBOOK, facebookLink);
+            jsonObject.put(People.FACEBOOK_ID, facebookId);
 
             if (includeNotes) {
                 jsonObject.put(People.ID, id);

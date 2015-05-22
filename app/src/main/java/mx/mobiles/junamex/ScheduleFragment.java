@@ -134,7 +134,6 @@ public class ScheduleFragment extends BaseFragment {
 
                 if (e == null) {
                     new ParseData().execute(queriedEventList);
-                    setupAlarms();
                 } else {
 
                     Log.e("ParseQuery<Event>", e.getLocalizedMessage());
@@ -157,10 +156,13 @@ public class ScheduleFragment extends BaseFragment {
 
         for (Event event : eventList) {
 
-            if (!event.isNotificationEnabled(database)) {
+            if (event.shouldNotify()) {
 
-                event.setNotificationEnabled(database);
-                event.setAlarm(getActivity());
+                if (!event.isNotificationEnabled(database)) {
+
+                    event.setNotificationEnabled(database);
+                    event.setAlarm(getActivity());
+                }
             }
         }
     }
@@ -203,6 +205,7 @@ public class ScheduleFragment extends BaseFragment {
             if (eventList.isEmpty())
                 emptyView.setVisibility(View.VISIBLE);
 
+            setupAlarms();
         }
 
         private Date getLastUpdated(List<Event> list) {

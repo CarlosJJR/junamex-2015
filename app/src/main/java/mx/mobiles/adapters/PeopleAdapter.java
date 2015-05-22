@@ -14,6 +14,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import mx.mobiles.junamex.PeopleDetailActivity;
 import mx.mobiles.junamex.R;
 import mx.mobiles.model.People;
+import mx.mobiles.ui.CircleProfilePicture;
 import mx.mobiles.utils.Utilities;
 
 /**
@@ -46,7 +47,8 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.Holder> {
         holder.district.setText(R.string.district_list);
         String districtTextComplete = holder.district.getText() + item.getDistrict();
         holder.district.setText(districtTextComplete);
-        holder.photo.setImageResource(Utilities.getRandomAvatar(activity));
+        if (item.getFacebookId() != null)
+            holder.photo.setProfileId(item.getFacebookId());
 
         holder.setClickListener(new Holder.OnItemClickListener() {
             @Override
@@ -71,14 +73,14 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.Holder> {
 
     public static class Holder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        CircleImageView photo;
+        CircleProfilePicture photo;
         TextView name, district;
         OnItemClickListener clickListener;
 
         private Holder(View itemView) {
             super(itemView);
 
-            photo = (CircleImageView) itemView.findViewById(R.id.people_photo);
+            photo = (CircleProfilePicture) itemView.findViewById(R.id.people_photo);
             name = (TextView) itemView.findViewById(R.id.people_name);
             district = (TextView) itemView.findViewById(R.id.people_district);
 
@@ -86,7 +88,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.Holder> {
         }
 
         public interface OnItemClickListener {
-            public void onItemClick(int position);
+            void onItemClick(int position);
 
         }
 

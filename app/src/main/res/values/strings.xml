@@ -141,6 +141,13 @@
         <item>@drawable/tutorial_page_four</item>
     </string-array>
 
+    <string-array name="share_options">
+        <item>@string/share_options_text</item>
+        <item>@string/share_options_gallery</item>
+        <item>@string/share_options_photo</item>
+        <item>@string/share_options_video</item>
+    </string-array>
+
     <string name="share_app">Share app</string>
     <string name="rate_app">Rate app</string>
     <string name="show_tutorial">See tutorial</string>
@@ -158,6 +165,14 @@
     <string name="see_facebook_timeline">View profile</string>
     <string name="not_logged_in_warning">Couldn\'t connect with Facebook. Some features will be disabled.</string>
     <string name="facebook" translatable="false">Facebook</string>
+
+    <string name="share_options_dialog_title">What are you gonna share?</string>
+    <string name="share_options_text">Status</string>
+    <string name="share_options_gallery">Gallery</string>
+    <string name="share_options_photo">Photo</string>
+    <string name="share_options_video" translatable="false">Video</string>
+    <string name="hashtag1" translatable="false">#junamex</string>
+    <string name="hashtag2" translatable="false">#comeback</string>
 
     <plurals name="days">
         <item quantity="one">day</item>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="mx.mobiles.junamex" >
+    package="mx.mobiles.junamex">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -43,7 +43,15 @@
             android:name="mx.mobiles.junamex.MainActivity"
             android:label="@string/app_name" />
 
-        <activity android:name="mx.mobiles.junamex.EventDetailActivity" />
+        <activity
+            android:name="mx.mobiles.junamex.EventDetailActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:parentActivityName="mx.mobiles.junamex.MainActivity" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="mx.mobiles.junamex.MainActivity" />
+        </activity>
         <activity android:name="mx.mobiles.junamex.MuseumDetailActivity" />
         <activity android:name="mx.mobiles.junamex.PeopleDetailActivity" />
         <activity android:name="mx.mobiles.junamex.PeopleAddEditActivity" />
@@ -87,6 +95,17 @@
         </receiver>
 
         <receiver android:name="mx.mobiles.utils.LocalNotificationsReceiver"/>
+
+        <receiver android:name="mx.mobiles.widget.WidgetController">
+            <intent-filter >
+                <action
+                    android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_provider" />
+        </receiver>
 
         <provider android:authorities="com.facebook.app.FacebookContentProvider331558627039469"
             android:name="com.facebook.FacebookContentProvider"

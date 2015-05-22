@@ -17,7 +17,7 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
-import com.github.mrengineer13.snackbar.SnackBar;
+import com.parse.ParseAnalytics;
 
 import mx.mobiles.utils.FacebookLogin;
 import mx.mobiles.utils.Utilities;
@@ -53,6 +53,8 @@ public class MainActivity extends BaseActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        ParseAnalytics.trackAppOpenedInBackground(getIntent());
 
         callbackManager = FacebookLogin.logIn(MainActivity.this, this);
     }

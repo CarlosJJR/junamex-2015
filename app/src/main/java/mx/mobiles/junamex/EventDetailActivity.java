@@ -1,7 +1,8 @@
 package mx.mobiles.junamex;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+
+import mx.mobiles.utils.Utilities;
 
 /**
  * Created by desarrollo16 on 13/01/15.
@@ -14,10 +15,16 @@ public class EventDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         EventDetailFragment detailFragment = EventDetailFragment.newInstance(getIntent().getExtras());
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.container, detailFragment)
-                .commit();
+        if (Utilities.isHandset(this)) {
+
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.container, detailFragment)
+                    .commit();
+        } else {
+            detailFragment.show(getSupportFragmentManager(), "dialog");
+        }
+
 
         detailFragment.setOnFragmentDismissedListener(new EventDetailFragment.OnFragmentDismissedListener() {
             @Override

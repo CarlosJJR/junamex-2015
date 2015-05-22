@@ -42,6 +42,7 @@ public class Event extends ParseObject {
     public static final String PALETTE_COLOR = "paletteColor";
     public static final String SPEAKER = "speaker";
     public static final String LOCATION = "location";
+    public static final String SHOULD_NOTIFY = "notification";
 
     public static final String UPDATED_AT = "updatedAt";
     public static final String TAG = "tag";
@@ -118,6 +119,14 @@ public class Event extends ParseObject {
 
     public Location getLocation() {
         return (Location) getParseObject(LOCATION);
+    }
+
+    public boolean shouldNotify() {
+        return getBoolean(SHOULD_NOTIFY);
+    }
+
+    public void setShoudlNotify(boolean shouldNotify) {
+        put(SHOULD_NOTIFY, shouldNotify);
     }
 
     public boolean hasPhoto() {
@@ -211,7 +220,7 @@ public class Event extends ParseObject {
         //Adjust the time for 10 minutes before every event
         int notificationTime = 10;
         calendar.add(Calendar.MINUTE, -notificationTime);
-//        calendar.add(Calendar.DAY_OF_YEAR, -78);
+        calendar.add(Calendar.DAY_OF_YEAR, -55);
         Log.i("AlarmManager", "Event alarm set for : " + calendar.toString());
 
         //Set up the alarm for notification

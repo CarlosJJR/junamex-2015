@@ -345,37 +345,40 @@ public class NavigationDrawerFragment extends Fragment {
                 user.save(((MainActivity) getActivity()).getDB());
             }
 
-            GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(),
-                    new GraphRequest.GraphJSONObjectCallback() {
-                        @Override
-                        public void onCompleted(JSONObject object, GraphResponse response) {
-                            if (response.getError() == null) {
-                                try {
-                                    String name = object.getString("name");
-                                    String facebookId = object.getString("id");
-                                    String facebookLink = object.getString("link");
-                                    String email = object.getString("email");
+            if (AccessToken.getCurrentAccessToken() == null) {
 
-                                    user.setName(name);
-                                    user.setFacebookId(facebookId);
-                                    user.setFacebook(facebookLink);
-                                    user.setEmail(email);
+                GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject object, GraphResponse response) {
+                                if (response.getError() == null) {
+                                    try {
+                                        String name = object.getString("name");
+                                        String facebookId = object.getString("id");
+                                        String facebookLink = object.getString("link");
+                                        String email = object.getString("email");
 
-                                    user.update(database, 1);
+                                        user.setName(name);
+                                        user.setFacebookId(facebookId);
+                                        user.setFacebook(facebookLink);
+                                        user.setEmail(email);
 
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
+                                        user.update(database, 1);
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                } else {
+
+                                    Log.e("Facebook response", "Error fetching user data: " + response.getError().getErrorMessage());
                                 }
-                            } else {
-
-                                Log.e("Facebook response", "Error fetching user data: " + response.getError().getErrorMessage());
                             }
-                        }
-                    });
-            Bundle parameters = new Bundle();
-            parameters.putString("fields", "id,name,link,email");
-            request.setParameters(parameters);
-            request.executeAndWait();
+                        });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name,link,email");
+                request.setParameters(parameters);
+                request.executeAndWait();
+            }
 
             return user;
         }

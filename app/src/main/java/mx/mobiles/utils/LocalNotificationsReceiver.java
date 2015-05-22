@@ -11,11 +11,13 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 
 import java.net.URI;
 import java.util.Calendar;
 
 import mx.mobiles.junamex.EventDetailActivity;
+import mx.mobiles.junamex.MainActivity;
 import mx.mobiles.junamex.MapActivity;
 import mx.mobiles.junamex.MapFragment;
 import mx.mobiles.junamex.R;
@@ -48,7 +50,10 @@ public class LocalNotificationsReceiver extends BroadcastReceiver {
         showEventIntent.putExtra(Event.ID, eventId);
         if (paletteColor != 0)
             showEventIntent.putExtra(Event.PALETTE_COLOR, paletteColor);
-        PendingIntent showEvent = PendingIntent.getActivity(context, (int) System.currentTimeMillis(), showEventIntent, 0);
+        PendingIntent showEvent = TaskStackBuilder.create(context)
+                .addParentStack(EventDetailActivity.class)
+                .addNextIntent(showEventIntent)
+                .getPendingIntent((int) System.currentTimeMillis(), 0);
 
         //Set up the notification content and show it
         Uri sound = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.notification_nokia);

@@ -2,6 +2,7 @@
 <resources>
 
     <dimen name="activity_vertical_margin">24dp</dimen>
+    <dimen name="second_line_content_margin">64dp</dimen>
 
     <dimen name="schedule_width">400dp</dimen>
     <dimen name="tutorial_width">600dp</dimen>

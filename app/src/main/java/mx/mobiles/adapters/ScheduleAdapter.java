@@ -130,15 +130,15 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     if (event.getPaletteColor() != 0)
                         extras.putInt(Event.PALETTE_COLOR, event.getPaletteColor());
 
-                    if (Utilities.isHandset(activity)) {
+//                    if (Utilities.isHandset(activity)) {
                         Intent intent = new Intent(activity, EventDetailActivity.class);
                         intent.putExtras(extras);
                         activity.startActivity(intent);
-                    } else {
-
-                        EventDetailFragment detailFragment = EventDetailFragment.newInstance(extras);
-                        detailFragment.show(activity.getSupportFragmentManager(), "dialog");
-                    }
+//                    } else {
+//
+//                        EventDetailFragment detailFragment = EventDetailFragment.newInstance(extras);
+//                        detailFragment.show(activity.getSupportFragmentManager(), "dialog");
+//                    }
                 }
             });
         }
@@ -242,13 +242,11 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     byte[] photoData = photo.getData();
                     Bitmap bitmap = BitmapFactory.decodeByteArray(photoData, 0, photoData.length);
                     Palette palette = Palette.from(bitmap).generate();
-                    Palette.Swatch vibrant = palette.getVibrantSwatch();
 
-                    if (vibrant != null) {
-                        color = vibrant.getRgb();
-                        event.setPaletteColor(color);
-                        event.saveInBackground();
-                    }
+                    color = palette.getVibrantColor(Color.TRANSPARENT);
+                    event.setPaletteColor(color);
+                    event.saveInBackground();
+
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }

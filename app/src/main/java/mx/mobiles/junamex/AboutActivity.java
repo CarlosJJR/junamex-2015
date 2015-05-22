@@ -5,8 +5,11 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.TextView;
+
+import java.io.File;
 
 /**
  * Created by desarrollo16 on 06/03/15.

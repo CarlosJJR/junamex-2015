@@ -1,6 +1,7 @@
 package mx.mobiles.junamex;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -120,7 +121,7 @@ public class EventDetailFragment extends DialogFragment implements ObservableScr
         paletteColor = getArguments().getInt(Event.PALETTE_COLOR, getResources().getColor(R.color.color_primary));
         getData(eventId);
 
-        if (Utilities.isLollipop())
+        if (Utilities.isLollipop() && Utilities.isHandset(getActivity()))
             getActivity()
                     .getWindow()
                     .setStatusBarColor(Utilities.getSecondaryColor(paletteColor));
@@ -221,6 +222,13 @@ public class EventDetailFragment extends DialogFragment implements ObservableScr
         }
     }
 
+    private void dismissDialogAndActivity() {
+        if (dismissedListener != null)
+            dismissedListener.onFragmentDismissed();
+        else
+            dismiss();
+    }
+
     public void setUpToolbar(Toolbar toolbar) {
 
         if (toolbar != null) {
@@ -233,10 +241,7 @@ public class EventDetailFragment extends DialogFragment implements ObservableScr
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (dismissedListener != null)
-                        dismissedListener.onFragmentDismissed();
-                    else
-                        dismiss();
+                    dismissDialogAndActivity();
                 }
             });
 
@@ -254,6 +259,12 @@ public class EventDetailFragment extends DialogFragment implements ObservableScr
                 }
             });
         }
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        dismissDialogAndActivity();
     }
 
     private void showMap() {
@@ -338,19 +349,15 @@ public class EventDetailFragment extends DialogFragment implements ObservableScr
                                 new Palette.PaletteAsyncListener() {
                                     @Override
                                     public void onGenerated(Palette palette) {
-                                        Palette.Swatch vibrant =
-                                                palette.getVibrantSwatch();
-                                        if (vibrant != null) {
-                                            paletteColor = vibrant.getRgb();
-                                            mHeaderBox.setBackgroundColor(paletteColor);
-                                            mSpeakersHeader.setTextColor(paletteColor);
+                                        paletteColor = palette.getVibrantColor(getResources().getColor(R.color.color_primary));
+                                        mHeaderBox.setBackgroundColor(paletteColor);
+                                        mSpeakersHeader.setTextColor(paletteColor);
 
-                                            if (Utilities.isLollipop())
-                                                getActivity()
-                                                        .getWindow()
-                                                        .setStatusBarColor(Utilities.getSecondaryColor(paletteColor));
+                                        if (Utilities.isLollipop())
+                                            getActivity()
+                                                    .getWindow()
+                                                    .setStatusBarColor(Utilities.getSecondaryColor(paletteColor));
 
-                                        }
                                     }
                                 });
                     }

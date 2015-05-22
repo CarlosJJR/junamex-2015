@@ -75,10 +75,15 @@
         <item quantity="one">%d minuto</item>
         <item quantity="other">%d minutos</item>
     </plurals>
+
     <string name="district_list">"Distrito: "</string>
     <string name="vibration_enabled">Vibrar</string>
     <string name="see_facebook_timeline">Ver perfil</string>
     <string name="not_logged_in_warning">No se pudo conectar con Facebook. Algunas funciones no estarán dispnibles.</string>
+    <string name="share_options_dialog_title">¿Que vás a compartir?</string>
+    <string name="share_options_photo">Foto</string>
+    <string name="share_options_text">Estado</string>
+    <string name="share_options_gallery">Galería</string>
 
 
 </resources>

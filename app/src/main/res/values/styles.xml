@@ -18,6 +18,8 @@
         <item name="android:typeface">serif</item>
     </style>
 
+    <style name="AppTheme.Transparent" parent="AppTheme"/>
+
     <style name="MyProgressBar" parent="@android:style/Widget.ProgressBar.Large">
         <item name="android:indeterminateDrawable">@drawable/indeterminate_progress</item>
     </style>

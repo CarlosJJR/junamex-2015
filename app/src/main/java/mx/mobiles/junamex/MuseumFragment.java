@@ -129,13 +129,19 @@ public class MuseumFragment extends BaseFragment {
         loadingView.setVisibility(View.GONE);
         errorView.setVisibility(View.GONE);
 
-        if (newMuseumItems.isEmpty())
+        if (newMuseumItems.isEmpty()) {
             emptyView.setVisibility(View.VISIBLE);
+            museumItems.clear();
+            adapter.notifyDataSetChanged();
+        }
+        else {
+            emptyView.setVisibility(View.GONE);
 
-        for (MuseumItem item : newMuseumItems) {
-            if (!museumItems.contains(item)) {
-                museumItems.add(item);
-                adapter.notifyDataSetChanged();
+            for (MuseumItem item : newMuseumItems) {
+                if (!museumItems.contains(item)) {
+                    museumItems.add(item);
+                    adapter.notifyDataSetChanged();
+                }
             }
         }
     }

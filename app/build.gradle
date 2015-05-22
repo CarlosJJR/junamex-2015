@@ -8,8 +8,8 @@ android {
         applicationId "mx.mobiles.junamex"
         minSdkVersion 10
         targetSdkVersion 22
-        versionCode 6
-        versionName "0.9.1"
+        versionCode 8
+        versionName "0.9.5"
     }
     buildTypes {
         release {
@@ -22,10 +22,8 @@ android {
 repositories {
     mavenCentral()
     jcenter()
-    maven {
-        url "http://dl.bintray.com/journeyapps/maven"
-    }
-
+    maven { url "http://dl.bintray.com/journeyapps/maven" }
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
@@ -44,4 +42,5 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:4.0.0'
     compile 'me.relex:circleindicator:1.0.0@aar'
     compile 'com.github.mrengineer13:snackbar:1.1.0'
+    compile 'com.github.ozodrukh:CircularReveal:1.0.6@aar'
 }

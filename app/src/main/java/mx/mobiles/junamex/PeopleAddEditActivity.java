@@ -42,7 +42,7 @@ public class PeopleAddEditActivity extends BaseActivity implements View.OnClickL
         notesField = (EditText) findViewById(R.id.add_notes);
 
         String[] districts = getResources().getStringArray(R.array.districts);
-        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.item_dropdown, districts);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.item_dropdown, districts);
         districtField.setAdapter(adapter);
 
         FloatingActionButton actionButton = (FloatingActionButton) findViewById(R.id.save_button);
@@ -62,6 +62,7 @@ public class PeopleAddEditActivity extends BaseActivity implements View.OnClickL
                 String phone = object.getString(People.PHONE);
                 String email = object.getString(People.EMAIL);
                 String facebook = object.getString(People.FACEBOOK);
+                String facebookId = object.getString(People.FACEBOOK_ID);
 
 
                 if (name.equals(getString(R.string.default_name)))
@@ -73,6 +74,7 @@ public class PeopleAddEditActivity extends BaseActivity implements View.OnClickL
                 phoneField.setText(phone);
                 emailField.setText(email);
                 emailField.setTag(facebook);
+                phoneField.setTag(facebookId);
 
                 if (isEditing) {
 
@@ -110,7 +112,8 @@ public class PeopleAddEditActivity extends BaseActivity implements View.OnClickL
         String email = emailField.getText().toString();
         String phone = phoneField.getText().toString();
         String notes = notesField.getText().toString();
-        String facebookId = emailField.getTag().toString();
+        String facebook = emailField.getTag().toString();
+        String facebookId = phoneField.getTag().toString();
 
         People people = new People();
         people.setName(name)
@@ -118,6 +121,7 @@ public class PeopleAddEditActivity extends BaseActivity implements View.OnClickL
                 .setPhone(phone)
                 .setDistrict(district)
                 .setFacebookId(facebookId)
+                .setFacebook(facebook)
                 .setNotes(notes);
 
         if (isEditing)

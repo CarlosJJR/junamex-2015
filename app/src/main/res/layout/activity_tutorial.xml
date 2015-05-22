@@ -20,9 +20,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:background="@drawable/background_tab"
         android:text="@string/zxinglegacy_button_done"
+        android:textSize="16sp"
         android:textColor="@color/white"
-        android:visibility="gone"
-        style="?attr/buttonBarButtonStyle"/>
+        android:visibility="gone"/>
 
 </FrameLayout>

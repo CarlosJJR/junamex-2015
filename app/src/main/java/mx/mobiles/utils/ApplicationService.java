@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.facebook.FacebookSdk;
 import com.parse.Parse;
+import com.parse.ParseAnalytics;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 
