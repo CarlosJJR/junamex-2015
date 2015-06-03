@@ -3,5 +3,5 @@
     <item android:state_pressed="true"
         android:drawable="@color/black_translucent_2" />
 
-    <item android:drawable="@android:color/transparent" />
+    <item android:drawable="@color/cardview_light_background" />
 </selector>

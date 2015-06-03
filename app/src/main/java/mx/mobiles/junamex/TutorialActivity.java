@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import me.relex.circleindicator.CircleIndicator;
 import mx.mobiles.adapters.TutorialAdapter;
@@ -17,9 +18,9 @@ import mx.mobiles.utils.Utilities;
 
 public class TutorialActivity extends ActionBarActivity implements ViewPager.PageTransformer, ViewPager.OnPageChangeListener, View.OnClickListener{
 
-    private CircleIndicator pageIndicator;
-    private Button doneButton;
+    private ImageButton doneButton;
     private boolean fromInfoPage;
+    private ViewPager pager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,15 +36,15 @@ public class TutorialActivity extends ActionBarActivity implements ViewPager.Pag
             launchMainActivity();
         }
 
-        ViewPager pager = (ViewPager) findViewById(R.id.pager);
+        pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(new TutorialAdapter(getSupportFragmentManager()));
         pager.setPageTransformer(false, this);
 
-        pageIndicator = (CircleIndicator) findViewById(R.id.page_indicator);
+        CircleIndicator pageIndicator = (CircleIndicator) findViewById(R.id.page_indicator);
         pageIndicator.setViewPager(pager);
         pageIndicator.setOnPageChangeListener(this);
 
-        doneButton = (Button) findViewById(R.id.done_button);
+        doneButton = (ImageButton) findViewById(R.id.done_button);
         doneButton.setOnClickListener(this);
     }
 
@@ -106,12 +107,10 @@ public class TutorialActivity extends ActionBarActivity implements ViewPager.Pag
             getWindow().setStatusBarColor(Utilities.getSecondaryColor(paletteColor));
         }
 
-        if (position == 4 && !fromInfoPage) {
-            pageIndicator.setVisibility(View.INVISIBLE);
-            doneButton.setVisibility(View.VISIBLE);
+        if (position == 5) {
+            doneButton.setImageResource(R.drawable.ic_done);
         } else {
-            pageIndicator.setVisibility(View.VISIBLE);
-            doneButton.setVisibility(View.GONE);
+            doneButton.setImageResource(R.drawable.ic_next);
         }
     }
 
@@ -133,6 +132,12 @@ public class TutorialActivity extends ActionBarActivity implements ViewPager.Pag
 
     @Override
     public void onClick(View v) {
-        launchMainActivity();
+
+        int position = this.pager.getCurrentItem();
+        if (position < 5) {
+            this.pager.setCurrentItem(position + 1, true);
+        } else {
+            launchMainActivity();
+        }
     }
 }

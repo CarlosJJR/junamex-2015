@@ -72,13 +72,13 @@ public class MainActivity extends BaseActivity
     @Override
     public void onCancel() {
         Log.d("Facebook login", "Uh oh. The user cancelled the Facebook login.");
-        FacebookLogin.showErrorSnackBar(this);
+        FacebookLogin.showErrorSnackBar(mNavigationDrawerFragment.getView());
     }
 
     @Override
     public void onError(FacebookException e) {
         Log.e("Facebook login", e.getLocalizedMessage());
-        FacebookLogin.showErrorSnackBar(this);
+        FacebookLogin.showErrorSnackBar(mNavigationDrawerFragment.getView());
     }
 
     @Override

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/TutorialSize">
 
     <include layout="@layout/no_people_added"/>
@@ -13,16 +13,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <com.melnykov.fab.FloatingActionButton
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
-        android:visibility="gone"
+        app:fabSize="normal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_add"
-        fab:fab_colorNormal="@color/color_primary"
-        fab:fab_colorPressed="@color/color_primary_dark"
-        fab:fab_colorRipple="@color/color_accent" />
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_add"/>
 
 </FrameLayout>

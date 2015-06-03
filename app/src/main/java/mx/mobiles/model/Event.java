@@ -220,7 +220,7 @@ public class Event extends ParseObject {
         //Adjust the time for 10 minutes before every event
         int notificationTime = 10;
         calendar.add(Calendar.MINUTE, -notificationTime);
-        calendar.add(Calendar.DAY_OF_YEAR, -55);
+//        calendar.add(Calendar.DAY_OF_YEAR, -44);
         Log.i("AlarmManager", "Event alarm set for : " + calendar.toString());
 
         //Set up the alarm for notification

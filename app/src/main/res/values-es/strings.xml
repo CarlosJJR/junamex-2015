@@ -35,13 +35,15 @@
     <string name="tutorial_fifth_page">Haz nuevos amigos</string>
     <string name="tutorial_fifth_page_subtitle">Comparte tu información y no pierdas a tus nuevos contactos. ¡Sólo escanea y listo!</string>
     <string name="tutorial_first_page">Bienvenido a Junamex 2015</string>
-    <string name="tutorial_first_page_subtitle">¡Encuentra el mejor contenido de nuestro campamento nacional!\n\nToma un tour de la app -></string>
-    <string name="tutorial_fourth_page">Mantente conectado</string>
-    <string name="tutorial_fourth_page_subtitle">Mira lo que sucede en Junamex a través de las redes sociales </string>
+    <string name="tutorial_first_page_subtitle">¡Encuentra el mejor contenido de nuestro campamento nacional!\n\nToma un tour de la app</string>
+    <string name="tutorial_fourth_page">#junamex\n#comeback</string>
+    <string name="tutorial_fourth_page_subtitle">Mira lo que sucede en Junamex a través de Facebook</string>
     <string name="tutorial_second_page">¡No te pierdas nada!</string>
-    <string name="tutorial_second_page_subtitle">Consulta el horario de toda la semana y marca tus eventos favoritos para recibir recordatorios</string>
+    <string name="tutorial_second_page_subtitle">Consulta el horario de toda la semana y recibe recordatorios de los eventos más importantes.</string>
     <string name="tutorial_third_page">Siempre en el lugar preciso</string>
     <string name="tutorial_third_page_subtitle">¿Primera vez en el Club Dorados?\nNo hay problema. Con el mapa interactivo siempre estarás en el lugar correcto.</string>
+    <string name="tutorial_sixth_page">A un click de distancia, todo el tiempo</string>
+    <string name="tutorial_sixth_page_subtitle">Pon el widget en tu pantalla de inicio y ten el horario siempre a la mano</string>
     <string name="version">"Versión: "</string>
     <string name="comeback_facebook">Comeback en facebook</string>
     <string name="comeback_web">Comeback en la web</string>
@@ -62,28 +64,37 @@
     <string name="till_junamex">para Junamex</string>
 
     <plurals name="days">
-        <item quantity="one">%d día</item>
-        <item quantity="other">%d días</item>
+        <item quantity="one">día</item>
+        <item quantity="other">días</item>
     </plurals>
 
     <plurals name="hours">
-        <item quantity="one">%d hora</item>
-        <item quantity="other">%d horas</item>
+        <item quantity="one">hora</item>
+        <item quantity="other">horas</item>
     </plurals>
 
     <plurals name="minutes">
-        <item quantity="one">%d minuto</item>
-        <item quantity="other">%d minutos</item>
+        <item quantity="one">minuto</item>
+        <item quantity="other">minutos</item>
+    </plurals>
+
+    <plurals name="seconds">
+        <item quantity="one">segundo</item>
+        <item quantity="other">segundos</item>
     </plurals>
 
     <string name="district_list">"Distrito: "</string>
     <string name="vibration_enabled">Vibrar</string>
     <string name="see_facebook_timeline">Ver perfil</string>
-    <string name="not_logged_in_warning">No se pudo conectar con Facebook. Algunas funciones no estarán dispnibles.</string>
+    <string name="not_logged_in_warning">No se pudo conectar con Facebook. Algunas funciones no estarán disponibles.</string>
     <string name="share_options_dialog_title">¿Que vás a compartir?</string>
     <string name="share_options_photo">Foto</string>
     <string name="share_options_text">Estado</string>
     <string name="share_options_gallery">Galería</string>
+    <string name="phone">Teléfono</string>
+    <string name="share">Compartir información</string>
+    <string name="notification_title">¡No lleges tarde! Ya comienza:</string>
+    <string name="day">Día</string>
 
 
 </resources>

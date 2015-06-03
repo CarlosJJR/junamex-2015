@@ -130,15 +130,9 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     if (event.getPaletteColor() != 0)
                         extras.putInt(Event.PALETTE_COLOR, event.getPaletteColor());
 
-//                    if (Utilities.isHandset(activity)) {
-                        Intent intent = new Intent(activity, EventDetailActivity.class);
-                        intent.putExtras(extras);
-                        activity.startActivity(intent);
-//                    } else {
-//
-//                        EventDetailFragment detailFragment = EventDetailFragment.newInstance(extras);
-//                        detailFragment.show(activity.getSupportFragmentManager(), "dialog");
-//                    }
+                    Intent intent = new Intent(activity, EventDetailActivity.class);
+                    intent.putExtras(extras);
+                    activity.startActivity(intent);
                 }
             });
         }

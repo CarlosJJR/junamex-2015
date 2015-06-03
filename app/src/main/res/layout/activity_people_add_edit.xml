@@ -2,12 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
     
     <include layout="@layout/toolbar"/>
 
     <FrameLayout
-        xmlns:fab="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/activity_vertical_margin">
@@ -50,7 +50,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/zxinglegacy_contents_phone"
+                    android:text="@string/phone"
                     android:textAllCaps="true"
                     android:textStyle="bold" />
 
@@ -63,7 +63,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/zxinglegacy_contents_email"
+                    android:text="@string/email"
                     android:textAllCaps="true"
                     android:textStyle="bold" />
 
@@ -89,15 +89,13 @@
 
         </ScrollView>
 
-        <com.melnykov.fab.FloatingActionButton
+        <android.support.design.widget.FloatingActionButton
             android:id="@+id/save_button"
+            app:fabSize="normal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:src="@drawable/ic_done"
-            fab:fab_colorNormal="@color/colorPrimary"
-            fab:fab_colorPressed="@color/colorPrimaryDark"
-            fab:fab_colorRipple="@color/colorAccent" />
+            android:layout_gravity="bottom|end"
+            android:src="@drawable/ic_done"/>
 
     </FrameLayout>
 

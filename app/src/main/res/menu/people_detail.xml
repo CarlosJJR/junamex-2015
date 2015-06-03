@@ -6,7 +6,7 @@
         android:id="@+id/share_qr"
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_qr_code"
-        android:title="@string/zxinglegacy_menu_share"/>
+        android:title="@string/share"/>
 
     <item
         android:id="@+id/edit"

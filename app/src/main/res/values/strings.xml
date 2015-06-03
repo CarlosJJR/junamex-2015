@@ -103,15 +103,17 @@
     </string-array>
 
     <string name="tutorial_first_page">Welcome to Junamex 2015</string>
-    <string name="tutorial_first_page_subtitle">Find the best content of our national camp.\n\nTake a tour of the app -></string>
+    <string name="tutorial_first_page_subtitle">Find the best content of our national camp.\n\nTake a tour of the app</string>
     <string name="tutorial_second_page">Don\'t miss your event!</string>
-    <string name="tutorial_second_page_subtitle">Find the schedule for the week and mark your favorite events to get reminders</string>
+    <string name="tutorial_second_page_subtitle">Find the schedule for the week and get reminders of the main events</string>
     <string name="tutorial_third_page">Be in the right place</string>
-    <string name="tutorial_third_page_subtitle">First time in Club Dorados?\nNo problem! With our map you\'ll always find your way</string>
-    <string name="tutorial_fourth_page">Stay connected</string>
-    <string name="tutorial_fourth_page_subtitle">See what Junamex is doing in the social networks</string>
+    <string name="tutorial_third_page_subtitle">First time in Club Dorados?\nNo problem! With the map you\'ll always find your way</string>
+    <string name="tutorial_fourth_page">#junamex\n#comeback</string>
+    <string name="tutorial_fourth_page_subtitle">See what Junamex is doing in facebook</string>
     <string name="tutorial_fifth_page">Make new friends</string>
     <string name="tutorial_fifth_page_subtitle">Share your info and save new friends. Just scan and save!</string>
+    <string name="tutorial_sixth_page">One click away, all the time</string>
+    <string name="tutorial_sixth_page_subtitle">Add the widget to your home screen and have the daily schedule always at hand</string>
     <string name="junamex_website" translatable="false">http://www.comeback.com.mx</string>
     <string name="version">"Version: "</string>
     <string name="comeback_web">Comeback on the web</string>
@@ -123,6 +125,7 @@
         <item>@string/tutorial_third_page</item>
         <item>@string/tutorial_fourth_page</item>
         <item>@string/tutorial_fifth_page</item>
+        <item>@string/tutorial_sixth_page</item>
     </string-array>
 
     <string-array name="tutorial_subtitles">
@@ -131,6 +134,7 @@
         <item>@string/tutorial_third_page_subtitle</item>
         <item>@string/tutorial_fourth_page_subtitle</item>
         <item>@string/tutorial_fifth_page_subtitle</item>
+        <item>@string/tutorial_sixth_page_subtitle</item>
     </string-array>
 
     <string-array name="tutorial_images" translatable="false">
@@ -139,6 +143,7 @@
         <item>@drawable/tutorial_page_two</item>
         <item>@drawable/tutorial_page_three</item>
         <item>@drawable/tutorial_page_four</item>
+        <item>@drawable/tutorial_page_five</item>
     </string-array>
 
     <string-array name="share_options">
@@ -173,6 +178,11 @@
     <string name="share_options_video" translatable="false">Video</string>
     <string name="hashtag1" translatable="false">#junamex</string>
     <string name="hashtag2" translatable="false">#comeback</string>
+    <string name="email" translatable="false">Email</string>
+    <string name="phone">Phone</string>
+    <string name="share">Share info</string>
+    <string name="notification_title">Don\'t be late! Starting soon:</string>
+    <string name="day">Day</string>
 
     <plurals name="days">
         <item quantity="one">day</item>

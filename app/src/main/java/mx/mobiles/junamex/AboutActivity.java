@@ -1,15 +1,13 @@
 package mx.mobiles.junamex;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
 import android.widget.TextView;
-
-import java.io.File;
 
 /**
  * Created by desarrollo16 on 06/03/15.
@@ -61,7 +59,7 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener{
             case R.id.share_app:
                 intent = new Intent(Intent.ACTION_SEND);
 
-                String text = getString(R.string.share_text) + " " + getString(R.string.junamex_website);
+                String text = getString(R.string.share_text) + " " + "https://play.google.com/store/apps/details?id=" + getPackageName();
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_TEXT, text);
                 break;
@@ -105,12 +103,11 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener{
 
     private Intent getOpenPlayStoreIntent() {
 
-//        String appPackageName = context.getPackageName();
-        String appPackageName = "pl.idreams.skyforcehd";
         try {
-            return new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName));
+            getPackageManager().getPackageInfo("com.android.vending", 0);
+            return new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getPackageName()));
         } catch (Exception e) {
-            return new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName));
+            return new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + getPackageName()));
         }
     }
 }

@@ -28,6 +28,7 @@ import java.util.List;
 import mx.mobiles.adapters.MuseumAdapter;
 import mx.mobiles.adapters.NavigationDrawerAdapter;
 import mx.mobiles.model.MuseumItem;
+import mx.mobiles.ui.VerticalQRScanner;
 import mx.mobiles.utils.RecyclerViewDividers;
 import mx.mobiles.utils.Utilities;
 
@@ -165,9 +166,10 @@ public class MuseumFragment extends BaseFragment {
         if (item.getItemId() == R.id.share_qr) {
 
             IntentIntegrator scanner = IntentIntegrator.forSupportFragment(this);
-            scanner.setLegacyCaptureLayout(R.layout.activity_barcode_scanner)
-                    .setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES)
-                    .setScanningRectangle(512, 512)
+            scanner .setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES)
+                    .setCaptureActivity(VerticalQRScanner.class)
+                    .setOrientationLocked(false)
+                    .setPrompt(getString(R.string.zxing_scanner_message))
                     .initiateScan();
             return true;
         }

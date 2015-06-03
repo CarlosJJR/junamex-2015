@@ -216,6 +216,7 @@ public class MapFragment extends SupportMapFragment implements OnMapReadyCallbac
             if (location.getObjectId().equals(markerId)) {
                 alpha = 1;
                 getMap().animateCamera(CameraUpdateFactory.newLatLngZoom(location.getMarker().getPosition(), 18), 750, null);
+                location.getMarker().showInfoWindow();
             }
             location.getMarker().setAlpha(alpha);
         }

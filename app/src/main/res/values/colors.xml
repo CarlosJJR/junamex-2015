@@ -34,6 +34,7 @@
         <item>@color/tutorial_yellow</item>
         <item>@color/tutorial_green</item>
         <item>@color/tutorial_blue</item>
+        <item>@color/color_primary</item>
     </integer-array>
 
 </resources>

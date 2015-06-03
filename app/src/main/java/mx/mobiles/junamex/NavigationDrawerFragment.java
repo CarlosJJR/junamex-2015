@@ -345,7 +345,7 @@ public class NavigationDrawerFragment extends Fragment {
                 user.save(((MainActivity) getActivity()).getDB());
             }
 
-            if (AccessToken.getCurrentAccessToken() == null) {
+            if (AccessToken.getCurrentAccessToken() != null) {
 
                 GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(),
                         new GraphRequest.GraphJSONObjectCallback() {

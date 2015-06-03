@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,13 +15,13 @@ import android.view.ViewGroup;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 
 import mx.mobiles.adapters.NavigationDrawerAdapter;
 import mx.mobiles.adapters.PeopleAdapter;
 import mx.mobiles.model.People;
+import mx.mobiles.ui.VerticalQRScanner;
 import mx.mobiles.utils.SimpleDividerDecorator;
 
 /**
@@ -56,16 +57,15 @@ public class PeopleFragment extends BaseFragment {
         recyclerView.setAdapter(adapter);
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
-        fab.attachToRecyclerView(recyclerView);
-        fab.setVisibility(View.VISIBLE);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 IntentIntegrator scanner = IntentIntegrator.forSupportFragment(PeopleFragment.this);
-                scanner.setLegacyCaptureLayout(R.layout.activity_barcode_scanner)
-                        .setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES)
-                        .setScanningRectangle(500, 500)
+                scanner .setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES)
+                        .setCaptureActivity(VerticalQRScanner.class)
+                        .setOrientationLocked(false)
+                        .setPrompt(getString(R.string.zxing_scanner_message))
                         .initiateScan();
             }
         });

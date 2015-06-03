@@ -11,4 +11,6 @@
 
     <dimen name="countdown_numbers_font_size">50sp</dimen>
     <dimen name="countdown_subtitle_font_size">40sp</dimen>
+    <dimen name="tutorial_title_text_size">30sp</dimen>
+    <dimen name="tutorial_subtitle_text_size">22sp</dimen>
 </resources>

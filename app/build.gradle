@@ -2,15 +2,17 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 22
+    //Do not update buildToolsVersion or EventDetailActivity will crash
     buildToolsVersion "21.1.2"
 
     defaultConfig {
         applicationId "mx.mobiles.junamex"
         minSdkVersion 10
         targetSdkVersion 22
-        versionCode 8
-        versionName "0.9.5"
+        versionCode 11
+        versionName "1.0"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -28,19 +30,18 @@ repositories {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:22.1.1'
+    compile 'com.android.support:appcompat-v7:22.2.0'
     compile 'com.parse.bolts:bolts-android:1.2.0'
-    compile 'com.android.support:cardview-v7:21.0.3'
-    compile 'com.android.support:recyclerview-v7:22.1.1'
-    compile 'com.android.support:palette-v7:22.1.1'
+    compile 'com.android.support:cardview-v7:22.2.0'
+    compile 'com.android.support:recyclerview-v7:22.2.0'
+    compile 'com.android.support:palette-v7:22.2.0'
+    compile 'com.android.support:design:22.2.0'
     compile 'de.hdodenhof:circleimageview:1.3.0'
-    compile 'com.google.android.gms:play-services-maps:7.3.0'
-    compile 'com.melnykov:floatingactionbutton:1.3.0'
-    compile 'com.journeyapps:zxing-android-legacy:2.0.1@aar'
-    compile 'com.journeyapps:zxing-android-integration:2.0.1@aar'
-    compile 'com.google.zxing:core:3.0.1'
+    compile 'com.google.android.gms:play-services-maps:7.5.0'
+    compile 'com.journeyapps:zxing-android-embedded:3.0.0@aar'
+    compile 'com.google.zxing:core:3.2.0'
     compile 'com.facebook.android:facebook-android-sdk:4.0.0'
     compile 'me.relex:circleindicator:1.0.0@aar'
-    compile 'com.github.mrengineer13:snackbar:1.1.0'
-    compile 'com.github.ozodrukh:CircularReveal:1.0.6@aar'
+    compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.github.ozodrukh:CircularReveal:1.1.0@aar'
 }

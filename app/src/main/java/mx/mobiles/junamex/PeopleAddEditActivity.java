@@ -2,13 +2,13 @@ package mx.mobiles.junamex;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
-import com.melnykov.fab.FloatingActionButton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -63,7 +63,6 @@ public class PeopleAddEditActivity extends BaseActivity implements View.OnClickL
                 String email = object.getString(People.EMAIL);
                 String facebook = object.getString(People.FACEBOOK);
                 String facebookId = object.getString(People.FACEBOOK_ID);
-
 
                 if (name.equals(getString(R.string.default_name)))
                     nameField.setHint(name);

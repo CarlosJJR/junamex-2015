@@ -108,7 +108,7 @@ public class SettingsActivity extends BaseActivity implements CompoundButton.OnC
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(final View view) {
         String tag = (String) view.getTag();
         if (tag.equals(NO_ACTIVE_USER)) {
 
@@ -134,14 +134,14 @@ public class SettingsActivity extends BaseActivity implements CompoundButton.OnC
                 @Override
                 public void onCancel() {
                     Log.d("Facebook login", "Uh oh. The user cancelled the Facebook login.");
-                    FacebookLogin.showErrorSnackBar(SettingsActivity.this);
+                    FacebookLogin.showErrorSnackBar(view);
                     setResult(RESULT_CANCELED);
                 }
 
                 @Override
                 public void onError(FacebookException e) {
                     Log.e("Facebook login", e.getLocalizedMessage());
-                    FacebookLogin.showErrorSnackBar(SettingsActivity.this);
+                    FacebookLogin.showErrorSnackBar(view);
                     setResult(RESULT_CANCELED);
                 }
             });
