@@ -24,7 +24,11 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/countdown_numbers_font_size"
                 android:textColor="@color/white"
-                android:gravity="end" />
+                android:gravity="end"
+                android:shadowColor="@android:color/black"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="1" />
 
             <TextView
                 android:id="@+id/days_indicator"
@@ -36,7 +40,11 @@
                 android:layout_marginLeft="@dimen/activity_vertical_margin"
                 android:layout_marginStart="@dimen/activity_vertical_margin"
                 android:maxLines="1"
-                android:ellipsize="end" />
+                android:ellipsize="end"
+                android:shadowColor="@android:color/black"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="1" />
 
         </LinearLayout>
 
@@ -52,7 +60,11 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/countdown_numbers_font_size"
                 android:textColor="@color/white"
-                android:gravity="end" />
+                android:gravity="end"
+                android:shadowColor="@android:color/black"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="1" />
 
             <TextView
                 android:id="@+id/hours_indicator"
@@ -64,7 +76,11 @@
                 android:layout_marginLeft="@dimen/activity_vertical_margin"
                 android:layout_marginStart="@dimen/activity_vertical_margin"
                 android:maxLines="1"
-                android:ellipsize="end" />
+                android:ellipsize="end"
+                android:shadowColor="@android:color/black"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="1" />
 
         </LinearLayout>
 
@@ -80,7 +96,11 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/countdown_numbers_font_size"
                 android:textColor="@color/white"
-                android:gravity="end" />
+                android:gravity="end"
+                android:shadowColor="@android:color/black"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="1" />
 
             <TextView
                 android:id="@+id/minutes_indicator"
@@ -92,7 +112,11 @@
                 android:layout_marginLeft="@dimen/activity_vertical_margin"
                 android:layout_marginStart="@dimen/activity_vertical_margin"
                 android:maxLines="1"
-                android:ellipsize="end" />
+                android:ellipsize="end"
+                android:shadowColor="@android:color/black"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="1" />
 
         </LinearLayout>
 
@@ -108,7 +132,11 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/countdown_numbers_font_size"
                 android:textColor="@color/white"
-                android:gravity="end" />
+                android:gravity="end"
+                android:shadowColor="@android:color/black"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="1" />
 
             <TextView
                 android:id="@+id/seconds_indicator"
@@ -120,7 +148,11 @@
                 android:layout_marginLeft="@dimen/activity_vertical_margin"
                 android:layout_marginStart="@dimen/activity_vertical_margin"
                 android:maxLines="1"
-                android:ellipsize="end" />
+                android:ellipsize="end"
+                android:shadowColor="@android:color/black"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="1" />
 
         </LinearLayout>
 
@@ -131,7 +163,11 @@
             android:gravity="center"
             android:text="@string/till_junamex"
             android:textSize="@dimen/countdown_subtitle_font_size"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:shadowColor="@android:color/black"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="1"/>
 
     </LinearLayout>
 

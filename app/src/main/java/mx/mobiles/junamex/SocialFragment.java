@@ -62,26 +62,26 @@ public class SocialFragment extends BaseFragment implements View.OnClickListener
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_social, container, false);
+        View view = inflater.inflate(R.layout.empty_view, container, false);
 
-        panel = (LinearLayout) view.findViewById(R.id.options_menu);
-
-        showMenu = (FloatingActionButton) view.findViewById(R.id.show_menu_button);
-        closeMenu = (ImageButton) view.findViewById(R.id.close_menu);
-
-        showMenu.setOnClickListener(this);
-        closeMenu.setOnClickListener(this);
-
-        ViewTreeObserver observer = showMenu.getViewTreeObserver();
-        observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                //in here, place the code that requires you to know the dimensions.
-
-                fabCenterX = (showMenu.getLeft() + showMenu.getRight()) / 2;
-                //this will be called as the layout is finished, prior to displaying.
-            }
-        });
+//        panel = (LinearLayout) view.findViewById(R.id.options_menu);
+//
+//        showMenu = (FloatingActionButton) view.findViewById(R.id.show_menu_button);
+//        closeMenu = (ImageButton) view.findViewById(R.id.close_menu);
+//
+//        showMenu.setOnClickListener(this);
+//        closeMenu.setOnClickListener(this);
+//
+//        ViewTreeObserver observer = showMenu.getViewTreeObserver();
+//        observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//                //in here, place the code that requires you to know the dimensions.
+//
+//                fabCenterX = (showMenu.getLeft() + showMenu.getRight()) / 2;
+//                //this will be called as the layout is finished, prior to displaying.
+//            }
+//        });
         return view;
     }
 
