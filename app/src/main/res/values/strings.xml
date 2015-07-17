@@ -183,6 +183,8 @@
     <string name="share">Share info</string>
     <string name="notification_title">Don\'t be late! Starting soon:</string>
     <string name="day">Day</string>
+    <string name="total_posts_indicator">Total posts: %1$d</string>
+    <string name="countdown_over">The wait is over! Enjoy Junamex!</string>
 
     <plurals name="days">
         <item quantity="one">day</item>

@@ -17,7 +17,7 @@ import java.util.Timer;
 public class CountdownActivity extends BaseActivity {
 
     TextView daysCounter, hoursCounter, minutesCounter, secondsCounter;
-    TextView daysLabel, hoursLabel, minutesLabel, secondsLabel;
+    TextView daysLabel, hoursLabel, minutesLabel, secondsLabel, remainingLabel;
 
     private static final String JUNAMEX_START = "15/07/15 10:00:00";
 
@@ -41,6 +41,7 @@ public class CountdownActivity extends BaseActivity {
         hoursLabel = (TextView) findViewById(R.id.hours_indicator);
         minutesLabel = (TextView) findViewById(R.id.minutes_indicator);
         secondsLabel = (TextView) findViewById(R.id.seconds_indicator);
+        remainingLabel = (TextView) findViewById(R.id.remaining_label);
 
         calculateDaysToJunamex();
     }
@@ -91,6 +92,17 @@ public class CountdownActivity extends BaseActivity {
 
                 @Override
                 public void onFinish() {
+
+                    daysCounter.setVisibility(View.GONE);
+                    hoursCounter.setVisibility(View.GONE);
+                    minutesCounter.setVisibility(View.GONE);
+                    secondsCounter.setVisibility(View.GONE);
+                    daysLabel.setVisibility(View.GONE);
+                    hoursLabel.setVisibility(View.GONE);
+                    minutesLabel.setVisibility(View.GONE);
+                    secondsLabel.setVisibility(View.GONE);
+
+                    remainingLabel.setText(R.string.countdown_over);
 
                 }
             }.start();
